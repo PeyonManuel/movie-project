@@ -13,7 +13,7 @@ const Header = () => {
                 <div className='searchbar'>
                     <input className='search' type='text' />
                     <a className='searchbtn' href='asd'>
-                        <i class='icon fas fa-search fa-lg'></i>
+                        <i className='icon fas fa-search fa-lg'></i>
                     </a>
                 </div>
             </div>
