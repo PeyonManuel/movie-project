@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
+.movie {
+    display: grid;
+    border-radius: 2px;
+    background-color: #256e76;
+    width: 16rem;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 75% 25%;
+    grid-template-areas:
+        'poster poster'
+        'title rating';
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 14px;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.title {
+    font-size: 14px;
+    grid-area: title;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+}
+
+.movie > img {
+    align-self: flex-start;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    width: 100%;
+    grid-area: poster;
+}
+
+.rating {
+    float: right;
+    margin: 0px;
+    width: 2.5rem;
+    height: 1.5rem;
+    display: flex;
+    border-radius: 2px;
+    align-items: center;
+    justify-content: center;
+    background-color: #1b4c52;
+}
+
+@media screen and (max-width: 624px) {
+    .movie {
+        width: 14rem;
+    }
+}

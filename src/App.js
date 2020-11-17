@@ -15,7 +15,7 @@ function App() {
     const [state, dispatch] = useReducer(GlobalReducer, defaultState);
 
     return (
-        <GlobalContext.Provider value={(dispatch, state)}>
+        <GlobalContext.Provider value={{ dispatch: dispatch, state: state }}>
             <Header />
             <MovieList />
         </GlobalContext.Provider>

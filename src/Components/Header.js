@@ -5,11 +5,14 @@ const Header = () => {
     return (
         <>
             <div className='header'>
-                <img
-                    className='logo'
-                    src='https://cdn4.iconfinder.com/data/icons/planner-color/64/popcorn-movie-time-512.png'
-                    alt='popcorn'
-                />
+                <div className='logo'>
+                    <img
+                        src='https://cdn4.iconfinder.com/data/icons/planner-color/64/popcorn-movie-time-512.png'
+                        alt='popcorn'
+                    />
+                    <h1>Moviezz</h1>
+                </div>
+
                 <div className='searchbar'>
                     <input className='search' type='text' />
                     <a className='searchbtn' href='asd'>

@@ -1,3 +1,5 @@
+@import './customscrollbar.css';
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
@@ -6,7 +8,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     width: 100vw;
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #6ccdf0, #23d5ab);
+    background: linear-gradient(-45deg, #ee7752, #63d483, #6ccdf0, #23d5ab);
     background-size: 3000% 3000%;
     animation: gradient 20s ease infinite;
 }
@@ -26,4 +28,12 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
+}
+
+#root {
+    margin-top: 5rem;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
