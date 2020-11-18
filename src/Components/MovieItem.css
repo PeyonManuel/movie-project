@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
 .movie {
+    position: relative;
     display: grid;
     border-radius: 2px;
     background-color: #256e76;
@@ -15,6 +16,7 @@
     -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
 }
 
 .title {
@@ -41,6 +43,33 @@
     align-items: center;
     justify-content: center;
     background-color: #1b4c52;
+}
+
+.red {
+    color: rgb(163, 0, 0);
+}
+
+.yellow {
+    color: rgb(191, 191, 0);
+}
+
+.green {
+    color: rgb(26, 201, 26);
+}
+
+.overview {
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    padding: 1rem;
+    max-height: 100%;
+    overflow: auto;
+    transform: translateY(102%);
+    transition: transform 0.5s;
+}
+
+.movie:hover .overview {
+    transform: translateY(0);
 }
 
 @media screen and (max-width: 624px) {

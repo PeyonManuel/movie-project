@@ -21,7 +21,13 @@ const MovieList = () => {
         <div className='movies'>
             {state.results ? (
                 state.results.map((result) => {
-                    const { id, title, vote_average, poster_path } = result;
+                    const {
+                        id,
+                        title,
+                        vote_average,
+                        poster_path,
+                        overview,
+                    } = result;
                     const poster =
                         'https://image.tmdb.org/t/p/w500/' + poster_path;
                     return (
@@ -31,6 +37,7 @@ const MovieList = () => {
                             title={title}
                             rating={vote_average}
                             poster={poster}
+                            overview={overview}
                         />
                     );
                 })
