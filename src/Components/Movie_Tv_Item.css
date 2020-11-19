@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
-.movie {
+.movietv {
     position: relative;
     display: grid;
     border-radius: 2px;
@@ -20,18 +20,16 @@
     overflow: hidden;
 }
 
-.title {
+.link > h2 {
     font-size: 14px;
-    grid-area: title;
     padding: 0.5rem 0.5rem 0.5rem 1rem;
+    color: black;
 }
 
-.movie > img {
-    align-self: flex-start;
+.link > img {
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     width: 100%;
-    grid-area: poster;
 }
 
 .rating {
@@ -67,8 +65,23 @@
     overflow: auto;
     transform: translateY(102%);
     transition: transform 0.5s;
+    color: black;
 }
 
-.movie:hover .overview {
+.link {
+    text-decoration: none;
+    width: 100%;
+}
+
+.img {
+    grid-area: poster;
+    align-self: flex-start;
+}
+
+.title {
+    grid-area: title;
+}
+
+.movietv:hover .overview {
     transform: translateY(0);
 }

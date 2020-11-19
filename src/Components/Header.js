@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
@@ -52,13 +53,13 @@ const Header = () => {
     return (
         <>
             <div className='header'>
-                <div className='logo'>
+                <Link to='/' className='logo'>
                     <img
                         src='https://cdn4.iconfinder.com/data/icons/planner-color/64/popcorn-movie-time-512.png'
                         alt='popcorn'
                     />
                     <h1>Moviezz</h1>
-                </div>
+                </Link>
                 <div className='searchdiv' ref={wrapperRef}>
                     <div className='searchbar'>
                         <input

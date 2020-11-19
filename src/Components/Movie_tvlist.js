@@ -1,5 +1,5 @@
 import React from 'react';
-import MovieTv from './Movie_Tv';
+import MovieTvItem from './Movie_Tv_Item';
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../App';
 import './Movie_tvlist.css';
@@ -22,13 +22,6 @@ const MovieTvList = () => {
             .then((data) =>
                 dispatch({ type: 'SET_TV', payload: data.results })
             );
-        fetch(
-            'https://api.themoviedb.org/3/person/popular?api_key=792dde4161d1a8ae31ac0fa85780d7fc&language=en-US&page=1'
-        )
-            .then((response) => response.json())
-            .then((data) =>
-                dispatch({ type: 'SET_PEOPLE', payload: data.results })
-            );
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
@@ -47,7 +40,7 @@ const MovieTvList = () => {
                         const poster =
                             'https://image.tmdb.org/t/p/w500/' + poster_path;
                         return (
-                            <MovieTv
+                            <MovieTvItem
                                 key={id}
                                 id={id}
                                 title={title}
@@ -75,7 +68,7 @@ const MovieTvList = () => {
                         const poster =
                             'https://image.tmdb.org/t/p/w500/' + poster_path;
                         return (
-                            <MovieTv
+                            <MovieTvItem
                                 key={id}
                                 id={id}
                                 title={name}

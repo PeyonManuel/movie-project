@@ -2,7 +2,7 @@ import React from 'react';
 import Person from './Person';
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../App';
-import './Movie_Tv.css';
+import './PeopleList.css';
 
 const MovieTvList = () => {
     const { dispatch, state } = useContext(GlobalContext);
@@ -19,7 +19,7 @@ const MovieTvList = () => {
 
     return (
         <div>
-            <h1 className='headlines'>Popular movies right now</h1>
+            <h1 className='headlines'>Popular celebrities right now</h1>
             <div className='lists'>
                 {state.people ? (
                     state.people.map((result) => {
