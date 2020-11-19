@@ -27,6 +27,7 @@
 .logo > h1 {
     font-family: 'Permanent Marker', cursive;
     margin-left: 0.7rem;
+    user-select: none;
 }
 .searchdiv {
     height: 50%;

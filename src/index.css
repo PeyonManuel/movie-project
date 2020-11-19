@@ -11,6 +11,7 @@ body {
     background: linear-gradient(-45deg, #ee7752, #63d483, #6ccdf0, #23d5ab);
     background-size: 3000% 3000%;
     animation: gradient 20s ease infinite;
+    overflow-x: hidden;
 }
 
 @keyframes gradient {
@@ -32,8 +33,11 @@ code {
 
 #root {
     margin-top: 5rem;
+    margin-bottom: 4rem;
+
     width: 100vw;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 }

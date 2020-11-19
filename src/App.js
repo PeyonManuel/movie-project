@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Components/Header';
-import MovieList from './Components/MovieList';
+import MovieTvList from './Components/Movie_tvlist';
+import PeopleList from './Components/PeopleList';
 import { useReducer, createContext } from 'react';
 import GlobalReducer from './GlobalReducer';
 
@@ -9,7 +10,9 @@ export const GlobalContext = createContext();
 function App() {
     const defaultState = {
         searchQuery: '',
-        results: [],
+        movies: [],
+        tv: [],
+        people: [],
     };
 
     const [state, dispatch] = useReducer(GlobalReducer, defaultState);
@@ -17,7 +20,8 @@ function App() {
     return (
         <GlobalContext.Provider value={{ dispatch: dispatch, state: state }}>
             <Header />
-            <MovieList />
+            <MovieTvList />
+            <PeopleList />
         </GlobalContext.Provider>
     );
 }

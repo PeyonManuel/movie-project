@@ -4,7 +4,7 @@
     display: grid;
     border-radius: 2px;
     background-color: #256e76;
-    width: 16rem;
+    width: 15rem;
     justify-content: center;
     align-items: center;
     grid-template-columns: 75% 25%;
@@ -12,6 +12,7 @@
         'poster poster'
         'title rating';
     font-family: 'Merriweather Sans', sans-serif;
+    margin: 0.5rem;
     font-size: 14px;
     -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
@@ -70,10 +71,4 @@
 
 .movie:hover .overview {
     transform: translateY(0);
-}
-
-@media screen and (max-width: 624px) {
-    .movie {
-        width: 14rem;
-    }
 }

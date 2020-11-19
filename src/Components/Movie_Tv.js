@@ -1,6 +1,6 @@
 import React from 'react';
-import './MovieItem.css';
-const Movie = ({ id, title, rating, poster, overview }) => {
+import './Movie_Tv.css';
+const MovieTv = ({ id, title, rating, poster, overview }) => {
     return (
         <div className='movie' key={id}>
             <img src={poster} alt={title + ' poster'} />
@@ -21,4 +21,4 @@ const Movie = ({ id, title, rating, poster, overview }) => {
     );
 };
 
-export default Movie;
+export default MovieTv;

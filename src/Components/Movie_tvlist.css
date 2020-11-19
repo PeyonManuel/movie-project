@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto&display=swap');
+
+.lists {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    margin-bottom: 1rem;
+    overflow: auto;
+    height: 30rem;
+}
+
+.headlines {
+    font-family: 'Permanent Marker', cursive;
+    margin: 0.5rem;
+}
