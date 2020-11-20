@@ -28,7 +28,7 @@ const Movie = () => {
         )
             .then((response) => response.json())
             .then((data) => setMovieCredits(data));
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
     const {
         poster_path,
         title,
@@ -68,7 +68,7 @@ const Movie = () => {
                                 <h6 key={genre.key}>{genre.name}</h6>
                             ))}
                     </div>
-                    <h2>{director.name}</h2>
+                    {director && <h2>{director.name}</h2>}
                     <h3>{tagline}</h3>
                     <p>{overview}</p>
                 </div>

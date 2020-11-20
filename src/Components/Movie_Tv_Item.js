@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 const MovieTvItem = ({ id, title, rating, poster, overview }) => {
     return (
         <div className='movietv'>
-            <Link to={'/movies/' + id} className='link img'>
+            <Link to={'/movie/' + id} className='link img'>
                 <img src={poster} alt={title + ' poster'} />
             </Link>
-            <Link to={'/movies/' + id} className='link title'>
+            <Link to={'/movie/' + id} className='link title'>
                 <h2>{title}</h2>
             </Link>
             <h3

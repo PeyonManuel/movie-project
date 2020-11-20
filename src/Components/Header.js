@@ -7,24 +7,43 @@ const Header = () => {
     const [options, setOptions] = useState([]);
     const [displayOptions, setDisplayOptions] = useState(false);
     const [search, setSearch] = useState('');
+    const [selectedOption, setSelectedOption] = useState(0);
 
     const wrapperRef = useRef(null);
 
     const handleClickOutside = (event) => {
         const { current: wrap } = wrapperRef;
         if (wrap && !wrap.contains(event.target)) {
+            setSelectedOption(0);
             setDisplayOptions(false);
         }
     };
 
     const handleSearchChange = (e) => {
         setSearch(e.target.value);
+        setSelectedOption(0);
     };
 
     const handleSearchBarClick = () => {
         if (displayOptions === false) setDisplayOptions(true);
     };
 
+    const handleResultOnMouseOver = (option) => {
+        setSelectedOption(option);
+    };
+
+    const handleSearchonKeyDown = (e) => {
+        if (e.keyCode === 38) {
+            if (selectedOption === 0) return;
+            setSelectedOption(selectedOption - 1);
+        }
+        if (e.keyCode === 40) {
+            if (selectedOption + 1 === options.length) return;
+            setSelectedOption(selectedOption + 1);
+        }
+        if (e.keyCode === 13) {
+        }
+    };
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -68,6 +87,7 @@ const Header = () => {
                             placeholder='Search...'
                             onChange={(e) => handleSearchChange(e)}
                             onClick={() => handleSearchBarClick()}
+                            onKeyDown={(e) => handleSearchonKeyDown(e)}
                         />
                         <a className='searchbtn' href='asd'>
                             <i className='icon fas fa-search fa-lg'></i>
@@ -75,7 +95,7 @@ const Header = () => {
                     </div>
                     {displayOptions > 0 && (
                         <div className='autocontainer'>
-                            {options.map((result) => {
+                            {options.map((result, i) => {
                                 const {
                                     id,
                                     name,
@@ -84,48 +104,39 @@ const Header = () => {
                                     profile_path,
                                     poster_path,
                                 } = result;
-                                const poster = poster_path
-                                    ? 'https://image.tmdb.org/t/p/w500/' +
-                                      poster_path
-                                    : 'https://www.kindpng.com/picc/m/1-10251_cinema-movie-icon-png-transparent-png.png';
-                                const profile = profile_path
-                                    ? 'https://image.tmdb.org/t/p/w500/' +
-                                      profile_path
-                                    : 'https://cdn.onlinewebfonts.com/svg/img_957.png';
 
-                                return media_type === 'movie' ? (
-                                    <div className='result' key={id}>
-                                        <img src={poster} alt='' />
-                                        <h2>{title}</h2>
+                                const image =
+                                    media_type === 'person'
+                                        ? profile_path
+                                            ? 'https://image.tmdb.org/t/p/w500/' +
+                                              profile_path
+                                            : 'https://cdn.onlinewebfonts.com/svg/img_957.png'
+                                        : poster_path
+                                        ? 'https://image.tmdb.org/t/p/w500/' +
+                                          poster_path
+                                        : 'https://www.kindpng.com/picc/m/1-10251_cinema-movie-icon-png-transparent-png.png';
+                                return (
+                                    <Link
+                                        to={'/' + media_type + '/' + id}
+                                        className={
+                                            selectedOption === i
+                                                ? 'result selected'
+                                                : 'result'
+                                        }
+                                        onMouseOver={() =>
+                                            handleResultOnMouseOver(i)
+                                        }
+                                        key={i}
+                                    >
+                                        <img src={image} alt='' />
+                                        <h2>{title || name}</h2>
                                         <p>
                                             {media_type
                                                 .charAt(0)
                                                 .toUpperCase() +
                                                 media_type.slice(1)}
                                         </p>
-                                    </div>
-                                ) : media_type === 'tv' ? (
-                                    <div className='result' key={id}>
-                                        <img src={poster} alt='' />
-                                        <h2>{name}</h2>
-                                        <p>
-                                            {media_type
-                                                .charAt(0)
-                                                .toUpperCase() +
-                                                media_type.slice(1)}
-                                        </p>
-                                    </div>
-                                ) : (
-                                    <div className='result' key={id}>
-                                        <img src={profile} alt='' />
-                                        <h2>{name}</h2>
-                                        <p>
-                                            {media_type
-                                                .charAt(0)
-                                                .toUpperCase() +
-                                                media_type.slice(1)}
-                                        </p>
-                                    </div>
+                                    </Link>
                                 );
                             })}
                         </div>

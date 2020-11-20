@@ -32,7 +32,7 @@ function App() {
                         <MovieTvList />
                         <PeopleList />
                     </Route>
-                    <Route path='/movies/:id' children={<Movie />}></Route>
+                    <Route path='/movie/:id' children={<Movie />}></Route>
                     <Route path='/tv/:id' children={<Tv />}></Route>
                     <Route path='*'>
                         <Error />
