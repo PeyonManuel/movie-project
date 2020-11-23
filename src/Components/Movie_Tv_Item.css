@@ -4,15 +4,17 @@
     display: grid;
     border-radius: 2px;
     background-color: #256e76;
+    height: 26rem;
     width: 15rem;
     justify-content: center;
     align-items: center;
+    grid-template-rows: 87% 13%;
     grid-template-columns: 75% 25%;
     grid-template-areas:
         'poster poster'
         'title rating';
     font-family: 'Merriweather Sans', sans-serif;
-    margin: 0.5rem;
+    margin-right: 1rem;
     font-size: 14px;
     -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
@@ -26,10 +28,20 @@
     color: black;
 }
 
-.link > img {
+.imgdiv {
+    align-self: flex-start;
+    height: 22.5rem;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.imgdiv > img {
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     width: 100%;
+    height: auto;
 }
 
 .rating {
@@ -56,12 +68,17 @@
     color: rgb(26, 201, 26);
 }
 
+.white {
+    color: lightgray;
+}
+
 .overview {
     position: absolute;
     bottom: 0;
     background-color: white;
     padding: 1rem;
     max-height: 100%;
+    width: calc(100% - 2rem);
     overflow: auto;
     transform: translateY(102%);
     transition: transform 0.5s;

@@ -1,0 +1,33 @@
+.person {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 2px;
+    background-color: #256e76;
+    width: 15rem;
+    height: 26rem;
+    align-items: center;
+    font-family: 'Merriweather Sans', sans-serif;
+    margin-right: 1rem;
+    font-size: 14px;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+}
+
+.person > .link {
+    width: 100%;
+}
+
+.name {
+    font-size: 14px;
+    grid-area: name;
+}
+
+.person > .link > img {
+    align-self: flex-start;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    width: 100%;
+    grid-area: poster;
+}

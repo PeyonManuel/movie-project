@@ -1,29 +1,75 @@
-.person {
-    display: flex;
-    flex-wrap: wrap;
-    border-radius: 2px;
-    background-color: #256e76;
-    width: 15rem;
-    align-items: center;
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
+
+* {
     font-family: 'Merriweather Sans', sans-serif;
-    margin: 0.5rem;
-    font-size: 14px;
+}
+
+.personcard {
+    width: 95vw;
+    background-color: #143a3e5b;
+    border-radius: 8px;
+    padding: 1rem;
+    display: grid;
+    grid-template-rows: 3rem auto auto;
+    grid-template-columns: 22rem auto;
+    grid-template-areas:
+        'imageinfo name'
+        'imageinfo biography'
+        'imageinfo filmography';
+    overflow: hidden;
     -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-    overflow: hidden;
 }
 
+.imginfo {
+    grid-area: imageinfo;
+    height: 100%;
+}
+
+.imginfo > img {
+    border-radius: 4px;
+    width: 20rem;
+}
+
+.infodiv > h4 {
+    margin-bottom: 0.3rem;
+}
+
+.infodiv > h5 {
+    margin: 0;
+    font-weight: 500;
+}
 .name {
-    font-size: 14px;
     grid-area: name;
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.person > img {
-    align-self: flex-start;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
+.biography {
     width: 100%;
-    grid-area: poster;
+    grid-area: biography;
+}
+
+.biography > h4 {
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+.biography > p {
+    word-wrap: break-word;
+    word-break: break-all;
+    text-align: justify;
+    text-justify: inter-word;
+    width: auto;
+}
+
+.filmography {
+    grid-area: filmography;
+    width: 100%;
+}
+
+.filmography > h2 {
+    margin: 0;
+    margin-top: 2rem;
 }

@@ -25,7 +25,7 @@ const MovieTvList = () => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div>
+        <div style={{ width: '99vw' }}>
             <h1 className='headlines'>Popular movies right now</h1>
             <div className='lists'>
                 {state.movies ? (
@@ -47,6 +47,7 @@ const MovieTvList = () => {
                                 rating={vote_average}
                                 poster={poster}
                                 overview={overview}
+                                mediaType={'movie'}
                             />
                         );
                     })
@@ -75,6 +76,7 @@ const MovieTvList = () => {
                                 rating={vote_average}
                                 poster={poster}
                                 overview={overview}
+                                mediaType={'tv'}
                             />
                         );
                     })

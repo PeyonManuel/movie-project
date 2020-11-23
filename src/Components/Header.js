@@ -107,14 +107,10 @@ const Header = () => {
 
                                 const image =
                                     media_type === 'person'
-                                        ? profile_path
-                                            ? 'https://image.tmdb.org/t/p/w500/' +
-                                              profile_path
-                                            : 'https://cdn.onlinewebfonts.com/svg/img_957.png'
-                                        : poster_path
                                         ? 'https://image.tmdb.org/t/p/w500/' +
-                                          poster_path
-                                        : 'https://www.kindpng.com/picc/m/1-10251_cinema-movie-icon-png-transparent-png.png';
+                                          profile_path
+                                        : 'https://image.tmdb.org/t/p/w500/' +
+                                          poster_path;
                                 return (
                                     <Link
                                         to={'/' + media_type + '/' + id}

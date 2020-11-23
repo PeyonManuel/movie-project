@@ -4,6 +4,7 @@ import MovieTvList from './Components/Movie_tvlist';
 import PeopleList from './Components/PeopleList';
 import Movie from './Components/Movie';
 import Tv from './Components/Tv';
+import Person from './Components/Person';
 import Error from './Components/Error';
 import { useReducer, createContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -34,6 +35,7 @@ function App() {
                     </Route>
                     <Route path='/movie/:id' children={<Movie />}></Route>
                     <Route path='/tv/:id' children={<Tv />}></Route>
+                    <Route path='/person/:id' children={<Person />}></Route>
                     <Route path='*'>
                         <Error />
                     </Route>

@@ -1,5 +1,5 @@
 import React from 'react';
-import Person from './Person';
+import Person from './PersonItem';
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../App';
 import './PeopleList.css';
@@ -18,7 +18,7 @@ const MovieTvList = () => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div>
+        <div style={{ width: '99vw' }}>
             <h1 className='headlines'>Popular celebrities right now</h1>
             <div className='lists'>
                 {state.people ? (
