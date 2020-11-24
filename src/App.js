@@ -29,14 +29,22 @@ function App() {
             >
                 <Header />
                 <Switch>
-                    <Route exact path='/'>
+                    <Route key='home' exact path='/'>
                         <MovieTvList />
                         <PeopleList />
                     </Route>
-                    <Route path='/movie/:id' children={<Movie />}></Route>
-                    <Route path='/tv/:id' children={<Tv />}></Route>
-                    <Route path='/person/:id' children={<Person />}></Route>
-                    <Route path='*'>
+                    <Route
+                        key='movie'
+                        path='/movie/:id'
+                        children={<Movie />}
+                    ></Route>
+                    <Route key='tv' path='/tv/:id' children={<Tv />}></Route>
+                    <Route
+                        key='person'
+                        path='/person/:id'
+                        children={<Person />}
+                    ></Route>
+                    <Route key='*' path='*'>
                         <Error />
                     </Route>
                 </Switch>

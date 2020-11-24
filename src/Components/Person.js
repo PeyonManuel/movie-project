@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import MovieTvItem from './Movie_Tv_Item';
 import './Person.css';
 
@@ -20,6 +19,10 @@ const Person = () => {
         }
         return age;
     };
+
+    useEffect(() => {
+        document.title = person.name ? person.name + ' - Moviezz' : 'Moviezz';
+    }, [person]);
 
     useEffect(() => {
         fetch(
@@ -55,15 +58,93 @@ const Person = () => {
     } = person;
 
     let { cast, crew } = personCredits;
-    cast && cast.sort((a, b) => b.popularity - a.popularity);
+    cast &&
+        cast.sort((a, b) => {
+            return (
+                (b.release_date
+                    ? new Date(b.release_date).getTime()
+                    : b.first_air_date
+                    ? new Date(b.first_air_date).getTime()
+                    : 999999999999999999999999) -
+                (a.release_date
+                    ? new Date(a.release_date).getTime()
+                    : a.first_air_date
+                    ? new Date(a.first_air_date).getTime()
+                    : 9999999999999999999999999)
+            );
+        });
+
+    crew &&
+        crew.sort((a, b) => {
+            return (
+                (b.release_date
+                    ? new Date(b.release_date).getTime()
+                    : b.first_air_date
+                    ? new Date(b.first_air_date).getTime()
+                    : 999999999999999999999999) -
+                (a.release_date
+                    ? new Date(a.release_date).getTime()
+                    : a.first_air_date
+                    ? new Date(a.first_air_date).getTime()
+                    : 9999999999999999999999999)
+            );
+        });
+    let filmographyNoDups = [];
+    cast &&
+        crew &&
+        [...cast, ...crew].map((film, index) => {
+            !filmographyNoDups.find(
+                (filmographyItem) => film.id === filmographyItem.id
+            ) && filmographyNoDups.push(film);
+            return '';
+        });
+    filmographyNoDups &&
+        filmographyNoDups.sort((a, b) => b.popularity - a.popularity);
+
+    let filmography = cast && crew && [...cast, ...crew];
+
+    let filmographyDepartmentsArray =
+        filmography && filmography.map((item) => item.department || 'Acting');
+
+    filmographyDepartmentsArray = filmographyDepartmentsArray && [
+        ...new Set(filmographyDepartmentsArray),
+    ];
+    let filmographyDepartmentsObject = {};
+    if (filmographyDepartmentsArray)
+        for (let i = 0; i < filmographyDepartmentsArray.length; i++) {
+            filmographyDepartmentsObject[filmographyDepartmentsArray[i]] = [];
+        }
+
+    filmography &&
+        filmography.map((item) => {
+            const department = item.department || 'Acting';
+            const findingDepartment = filmographyDepartmentsObject[
+                department
+            ].find(
+                (department) =>
+                    department.id === item.id &&
+                    department.mediaType === item.media_type
+            );
+            return findingDepartment
+                ? filmographyDepartmentsObject[department][
+                      filmographyDepartmentsObject[department].indexOf(
+                          findingDepartment
+                      )
+                  ].job.push(item.job || item.character || 'Unknown')
+                : filmographyDepartmentsObject[department].push({
+                      id: item.id,
+                      mediaType: item.media_type,
+                      title: item.title || item.name || '-',
+                      release: item.release_date || item.first_air_date,
+                      job: [item.job || item.character || 'Unknown'],
+                      episodeCount: item.episode_count,
+                  });
+        });
+
     return (
         <>
             {profile_path ? (
                 <>
-                    <Helmet>
-                        <title>{name + ' - Moviezz'}</title>
-                    </Helmet>
-
                     <div className='personcard'>
                         <div className='imginfo'>
                             {profile_path && (
@@ -124,8 +205,8 @@ const Person = () => {
                             <div className='filmography'>
                                 <h2>Filmography</h2>
                                 <div className='lists'>
-                                    {cast ? (
-                                        cast.map((result) => {
+                                    {filmographyNoDups ? (
+                                        filmographyNoDups.map((result) => {
                                             const {
                                                 id,
                                                 title,
@@ -139,15 +220,17 @@ const Person = () => {
                                                 'https://image.tmdb.org/t/p/w500/' +
                                                 poster_path;
                                             return (
-                                                <MovieTvItem
-                                                    key={id}
-                                                    id={id}
-                                                    title={title || name}
-                                                    rating={vote_average}
-                                                    poster={poster}
-                                                    overview={overview}
-                                                    mediaType={media_type}
-                                                />
+                                                <>
+                                                    <MovieTvItem
+                                                        key={id}
+                                                        id={id}
+                                                        title={title || name}
+                                                        rating={vote_average}
+                                                        poster={poster}
+                                                        overview={overview}
+                                                        mediaType={media_type}
+                                                    />
+                                                </>
                                             );
                                         })
                                     ) : (
@@ -156,31 +239,47 @@ const Person = () => {
                                 </div>
                             </div>
                             <div>
-                                {crew && (
-                                    <>
-                                        <h2>Acting</h2>
-                                        {cast.map((role) => (
-                                            <p key={role.id}>
-                                                {role.release_date
-                                                    ? role.release_date.split(
-                                                          '-'
-                                                      )[0]
-                                                    : role.first_air_date
-                                                    ? role.first_air_date.split(
-                                                          '-'
-                                                      )[0]
-                                                    : 'TBA'}
-                                                {' - '}
-                                                <b>
-                                                    {role.title || role.name
-                                                        ? role.title ||
-                                                          role.name
-                                                        : '-'}
-                                                </b>
-                                            </p>
-                                        ))}
-                                    </>
-                                )}
+                                {filmographyDepartmentsArray &&
+                                    filmographyDepartmentsArray.map(
+                                        (department) => (
+                                            <>
+                                                <h2>{department}</h2>{' '}
+                                                {filmographyDepartmentsObject[
+                                                    department
+                                                ].map((departmentItem, i) => {
+                                                    const {
+                                                        title,
+                                                        release,
+                                                        job,
+                                                        episodeCount,
+                                                    } = departmentItem;
+                                                    return (
+                                                        <p key={i}>
+                                                            {(release
+                                                                ? release.split(
+                                                                      '-'
+                                                                  )[0]
+                                                                : 'TBA') +
+                                                                ' - '}{' '}
+                                                            <b>{title}</b>
+                                                            {episodeCount &&
+                                                                ' (' +
+                                                                    episodeCount +
+                                                                    (episodeCount >
+                                                                    1
+                                                                        ? ' Episodes)'
+                                                                        : ' Episode)')}
+                                                            {(department !==
+                                                            'Acting'
+                                                                ? ' ... '
+                                                                : ' as ') +
+                                                                job.join(', ')}
+                                                        </p>
+                                                    );
+                                                })}
+                                            </>
+                                        )
+                                    )}
                             </div>
                         </div>
                     </div>
