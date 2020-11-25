@@ -26,26 +26,27 @@ const Person = () => {
     }, [person]);
 
     useEffect(() => {
-        fetch(
+        let promise1 = fetch(
             'https://api.themoviedb.org/3/person/' +
                 id +
                 '?api_key=' +
                 '792dde4161d1a8ae31ac0fa85780d7fc' +
                 '&language=en-US'
-        )
-            .then((response) => response.json())
-            .then((data) => setPerson(data));
+        );
 
-        fetch(
+        let promise2 = fetch(
             'https://api.themoviedb.org/3/person/' +
                 id +
                 '/combined_credits' +
                 '?api_key=' +
                 '792dde4161d1a8ae31ac0fa85780d7fc' +
                 '&language=en-US'
-        )
-            .then((response) => response.json())
-            .then((data) => setPersonCredits(data));
+        );
+
+        Promise.all([promise1, promise2]).then((files) => {
+            files[0].json().then((data) => setPerson(data));
+            files[1].json().then((data) => setPersonCredits(data));
+        });
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
     const {
         profile_path,
@@ -61,6 +62,7 @@ const Person = () => {
 
     let { cast, crew } = personCredits;
     cast &&
+        crew &&
         cast.sort((a, b) => {
             return (
                 (b.release_date
@@ -76,7 +78,8 @@ const Person = () => {
             );
         });
 
-    crew &&
+    cast &&
+        crew &&
         crew.sort((a, b) => {
             return (
                 (b.release_date
@@ -142,7 +145,6 @@ const Person = () => {
                       episodeCount: item.episode_count,
                   });
         });
-
     return (
         <>
             {profile_path ? (
@@ -272,7 +274,7 @@ const Person = () => {
                                                                 : 'TBA'}
                                                         </span>
                                                         <i class='fas fa-dot-circle'></i>
-                                                        <div>
+                                                        <span>
                                                             <Link
                                                                 to={
                                                                     (media_type ===
@@ -303,7 +305,7 @@ const Person = () => {
                                                             <span className='job'>
                                                                 {job.join(', ')}
                                                             </span>
-                                                        </div>
+                                                        </span>
                                                     </p>
                                                 );
                                             })}

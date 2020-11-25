@@ -79,13 +79,17 @@
     position: absolute;
     bottom: 0;
     background-color: white;
-    padding: 1rem;
+    padding: 0rem 1rem 1rem 1rem;
     max-height: 100%;
     width: calc(100% - 2rem);
     overflow: auto;
     transform: translateY(102%);
     transition: transform 0.5s;
     color: black;
+}
+
+.overview > h4 {
+    padding-top: 1rem;
 }
 
 .link {

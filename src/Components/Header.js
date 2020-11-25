@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
@@ -10,6 +10,8 @@ const Header = () => {
     const [selectedOption, setSelectedOption] = useState(0);
 
     const wrapperRef = useRef(null);
+
+    const history = useHistory();
 
     const handleClickOutside = (event) => {
         const { current: wrap } = wrapperRef;
@@ -44,8 +46,18 @@ const Header = () => {
             setSelectedOption(selectedOption + 1);
         }
         if (e.keyCode === 13) {
+            setSelectedOption(0);
+            setDisplayOptions(false);
+            const { media_type, id } = options[selectedOption];
+            history.push('/' + media_type + '/' + id);
         }
     };
+
+    const handleLinkClick = () => {
+        setSelectedOption(0);
+        setDisplayOptions(false);
+    };
+
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -72,7 +84,7 @@ const Header = () => {
     }, [options]);
 
     return (
-        <>
+        <div className='headerdiv'>
             <div className='header'>
                 <Link to='/' className='logo'>
                     <img
@@ -87,6 +99,7 @@ const Header = () => {
                             className='search'
                             type='text'
                             placeholder='Search...'
+                            value={search}
                             onChange={(e) => handleSearchChange(e)}
                             onClick={() => handleSearchBarClick()}
                             onKeyDown={(e) => handleSearchonKeyDown(e)}
@@ -125,6 +138,7 @@ const Header = () => {
                                             handleResultOnMouseOver(i)
                                         }
                                         key={i}
+                                        onClick={() => handleLinkClick()}
                                     >
                                         <img id='img' src={image} alt='' />
                                         <h2>{title || name}</h2>
@@ -141,7 +155,7 @@ const Header = () => {
                     )}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

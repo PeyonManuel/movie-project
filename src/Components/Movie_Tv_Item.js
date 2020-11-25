@@ -22,7 +22,7 @@ const MovieTvItem = ({ id, title, rating, poster, overview, mediaType }) => {
                     />
                 </div>
             </Link>
-            <Link to={'/movie/' + id} className='link title'>
+            <Link to={'/' + mediaType + '/' + id} className='link title'>
                 <h2>{title}</h2>
             </Link>
             <h3
@@ -39,10 +39,12 @@ const MovieTvItem = ({ id, title, rating, poster, overview, mediaType }) => {
             >
                 {rating ? rating : 'NYR'}
             </h3>
-            <div className='overview'>
-                <h4>Overview:</h4>
-                {overview ? overview : '-'}
-            </div>
+            <Link to={'/' + mediaType + '/' + id} className='link title'>
+                <div className='overview'>
+                    <h4>Overview:</h4>
+                    {overview ? overview : '-'}
+                </div>
+            </Link>
         </div>
     );
 };

@@ -84,7 +84,7 @@ const Loading = () => {
                         stroke='#eeeeee'
                         fill='none'
                         stroke-width='2'
-                        stroke-linecap='round'
+                        strokeLinecap='round'
                     >
                         <animate
                             attributeName='r'

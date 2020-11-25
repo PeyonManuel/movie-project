@@ -8,22 +8,27 @@ const MovieTvList = () => {
     const { dispatch, state } = useContext(GlobalContext);
 
     useEffect(() => {
-        fetch(
+        let promise1 = fetch(
             'https://api.themoviedb.org/3/movie/popular?api_key=792dde4161d1a8ae31ac0fa85780d7fc&language=en-US&page=1'
-        )
-            .then((response) => response.json())
-            .then((data) =>
-                dispatch({ type: 'SET_MOVIES', payload: data.results })
-            );
-        fetch(
+        );
+        let promise2 = fetch(
             'https://api.themoviedb.org/3/tv/popular?api_key=792dde4161d1a8ae31ac0fa85780d7fc&language=en-US&page=1'
-        )
-            .then((response) => response.json())
-            .then((data) =>
-                dispatch({ type: 'SET_TV', payload: data.results })
-            );
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        );
 
+        Promise.all([promise1, promise2]).then((files) => {
+            files[0]
+                .json()
+                .then((data) =>
+                    dispatch({ type: 'SET_MOVIES', payload: data.results })
+                );
+            files[1]
+                .json()
+                .then((data) =>
+                    dispatch({ type: 'SET_TV', payload: data.results })
+                );
+        });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    console.log('hi im rerendering');
     return (
         <div style={{ width: '99vw' }}>
             <h1 className='headlines'>Popular movies right now</h1>
