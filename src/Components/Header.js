@@ -34,10 +34,12 @@ const Header = () => {
 
     const handleSearchonKeyDown = (e) => {
         if (e.keyCode === 38) {
+            e.preventDefault();
             if (selectedOption === 0) return;
             setSelectedOption(selectedOption - 1);
         }
         if (e.keyCode === 40) {
+            e.preventDefault();
             if (selectedOption + 1 === options.length) return;
             setSelectedOption(selectedOption + 1);
         }
@@ -105,7 +107,7 @@ const Header = () => {
                                     poster_path,
                                 } = result;
 
-                                const image =
+                                let image =
                                     media_type === 'person'
                                         ? 'https://image.tmdb.org/t/p/w500/' +
                                           profile_path
@@ -124,7 +126,7 @@ const Header = () => {
                                         }
                                         key={i}
                                     >
-                                        <img src={image} alt='' />
+                                        <img id='img' src={image} alt='' />
                                         <h2>{title || name}</h2>
                                         <p>
                                             {media_type

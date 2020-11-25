@@ -1,24 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap');
 
 * {
     font-family: 'Merriweather Sans', sans-serif;
 }
 
 .personcard {
-    width: 95vw;
-    background-color: #143a3e5b;
-    border-radius: 8px;
-    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.768);
+    border-radius: 4px;
+    padding: 2rem;
     display: grid;
-    grid-template-rows: 3rem auto auto;
-    grid-template-columns: 22rem auto;
+    grid-template-columns: 20rem auto;
     grid-template-areas:
-        'imageinfo name'
-        'imageinfo biography'
-        'imageinfo filmography';
+        'imageinfo career'
+        'imageinfo filmography-details';
+    grid-gap: 1rem;
     overflow: hidden;
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    height: 110%;
+    width: 100vw;
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
@@ -27,9 +26,32 @@
     height: 100%;
 }
 
-.imginfo > img {
+.career {
+    grid-area: career;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 1rem;
+    margin-top: 0.5rem;
     border-radius: 4px;
-    width: 20rem;
+}
+
+.name {
+    margin: 0;
+}
+
+.infodiv {
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+}
+
+.infodiv > img {
+    border-radius: 4px;
+    width: 100%;
 }
 
 .infodiv > h4 {
@@ -49,19 +71,22 @@
 .biography {
     width: 100%;
     grid-area: biography;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.biography > h4 {
+.biography > h3 {
     margin-top: 2rem;
     margin-bottom: 0;
+    font-family: 'Lato', sans-serif;
 }
 
-.biography > p {
-    word-wrap: break-word;
-    word-break: break-all;
-    text-align: justify;
-    text-justify: inter-word;
-    width: auto;
+.biography > pre {
+    display: block;
+    white-space: pre-wrap;
+    margin: 1em 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
 }
 
 .filmography {
@@ -69,7 +94,53 @@
     width: 100%;
 }
 
-.filmography > h2 {
+.filmography > h3 {
     margin: 0;
-    margin-top: 2rem;
+    margin-top: 0.5rem;
+}
+
+.filmography-details {
+    grid-area: filmography-details;
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 0 1rem 0 1rem;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+}
+
+.department {
+    border-bottom: 1px solid lightgray;
+}
+
+.credit {
+    word-break: break-all;
+    font-family: 'Lato', sans-serif;
+    display: grid;
+    grid-template-columns: 2.5rem repeat(2, auto);
+    justify-content: flex-start;
+    grid-gap: 1rem;
+}
+
+.year {
+    font-family: 'Lato', sans-serif;
+    font-weight: 550;
+    font-size: 15px;
+}
+
+.credit-title {
+    font-family: 'Lato', sans-serif;
+    text-decoration: none;
+    color: black;
+}
+
+.episode-count,
+.middle,
+.job {
+    color: rgb(75, 75, 75);
+    font-weight: 400;
+    font-family: 'Lato', sans-serif;
+}
+
+.job {
+    color: black;
 }

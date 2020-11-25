@@ -1,5 +1,6 @@
 import React from 'react';
 import Person from './PersonItem';
+import Loading from './Loading';
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../App';
 import './PeopleList.css';
@@ -19,26 +20,29 @@ const MovieTvList = () => {
 
     return (
         <div style={{ width: '99vw' }}>
-            <h1 className='headlines'>Popular celebrities right now</h1>
-            <div className='lists'>
-                {state.people ? (
-                    state.people.map((result) => {
-                        const { id, name, profile_path } = result;
-                        const profile =
-                            'https://image.tmdb.org/t/p/w500/' + profile_path;
-                        return (
-                            <Person
-                                key={id}
-                                id={id}
-                                name={name}
-                                profile={profile}
-                            />
-                        );
-                    })
-                ) : (
-                    <h1>Loading...</h1>
-                )}
-            </div>
+            {state.people ? (
+                <>
+                    <h1 className='headlines'>Popular celebrities right now</h1>
+                    <div className='lists'>
+                        {state.people.map((result) => {
+                            const { id, name, profile_path } = result;
+                            const profile =
+                                'https://image.tmdb.org/t/p/w500/' +
+                                profile_path;
+                            return (
+                                <Person
+                                    key={id}
+                                    id={id}
+                                    name={name}
+                                    profile={profile}
+                                />
+                            );
+                        })}
+                    </div>
+                </>
+            ) : (
+                <Loading />
+            )}
         </div>
     );
 };

@@ -15,6 +15,7 @@
         'title rating';
     font-family: 'Merriweather Sans', sans-serif;
     margin-right: 1rem;
+    margin-left: 2px;
     font-size: 14px;
     -webkit-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
@@ -26,6 +27,11 @@
     font-size: 14px;
     padding: 0.5rem 0.5rem 0.5rem 1rem;
     color: black;
+    word-break: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-wrap: break-word;
+    overflow: hidden;
 }
 
 .imgdiv {
@@ -46,7 +52,6 @@
 
 .rating {
     float: right;
-    margin: 0px;
     width: 2.5rem;
     height: 1.5rem;
     display: flex;

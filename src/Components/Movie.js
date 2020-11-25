@@ -56,11 +56,11 @@ const Movie = () => {
                         />
                     )}
                     <h1>{title}</h1>
-                    <div className='votediv'>
+                    <div className='movietvvotediv'>
                         <h4>{vote_average}</h4>
                         <h5>{vote_count}</h5>
                     </div>
-                    <div className='infodiv'>
+                    <div className='movietvinfodiv'>
                         <h4>{release_date}</h4>
                         <h5>{runtime}</h5>
                         {genres &&

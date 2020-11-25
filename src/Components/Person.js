@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import MovieTvItem from './Movie_Tv_Item';
+import Loading from './Loading';
 import './Person.css';
 
 const Person = () => {
@@ -55,6 +56,7 @@ const Person = () => {
         known_for_department,
         biography,
         also_known_as,
+        place_of_birth,
     } = person;
 
     let { cast, crew } = personCredits;
@@ -147,17 +149,18 @@ const Person = () => {
                 <>
                     <div className='personcard'>
                         <div className='imginfo'>
-                            {profile_path && (
-                                <img
-                                    src={
-                                        'https://image.tmdb.org/t/p/w500/' +
-                                        profile_path
-                                    }
-                                    alt={person.title + ' poster'}
-                                />
-                            )}
                             <div className='infodiv'>
-                                <h4 key='h4birth'>{'Birth date: '}</h4>
+                                {profile_path && (
+                                    <img
+                                        src={
+                                            'https://image.tmdb.org/t/p/w500/' +
+                                            profile_path
+                                        }
+                                        alt={person.title + ' poster'}
+                                    />
+                                )}
+                                <h3 key='h3header'>Personal Info</h3>
+                                <h4 key='h4birth'>{'Birth date '}</h4>
                                 <h5 key='h5birth'>
                                     {birthday
                                         ? birthday +
@@ -167,9 +170,9 @@ const Person = () => {
                                         : '-'}
                                 </h5>
                                 {deathday && (
-                                    <h5>{'Day of death: ' + deathday}</h5>
+                                    <h5>{'Day of death ' + deathday}</h5>
                                 )}
-                                <h4 key='h4death'>{'Gender: '}</h4>
+                                <h4 key='h4death'>{'Gender '}</h4>
                                 <h5 key='h5death'>
                                     {gender
                                         ? gender === 1
@@ -177,13 +180,15 @@ const Person = () => {
                                             : 'Male'
                                         : '-'}
                                 </h5>
-                                <h4 key='h4known'>{'Known for: '}</h4>
+                                <h4 key='h4known'>{'Known for '}</h4>
                                 <h5 key='h5known'>
                                     {known_for_department
                                         ? known_for_department
                                         : '-'}
                                 </h5>
-                                <h4 key='h4also'>{'Also known as: '}</h4>
+                                <h4 key='h4place'>Place of birth</h4>
+                                <h5>{place_of_birth ? place_of_birth : '-'}</h5>
+                                <h4 key='h4also'>{'Also known as '}</h4>
                                 {also_known_as
                                     ? also_known_as.map((known) => (
                                           <h5 key={known}>{known}</h5>
@@ -191,19 +196,19 @@ const Person = () => {
                                     : '-'}
                             </div>
                         </div>
-                        <h1 className='name'>{name}</h1>
-                        <div>
+                        <div className='career'>
+                            <h1 className='name'>{name}</h1>
                             <div className='biography'>
-                                <h4>Biography: </h4>
-                                <p>
+                                <h3>Biography </h3>
+                                <pre>
                                     {biography
                                         ? biography
                                         : 'We dont have a biography for ' +
                                           name}
-                                </p>
+                                </pre>
                             </div>
                             <div className='filmography'>
-                                <h2>Filmography</h2>
+                                <h3>Filmography</h3>
                                 <div className='lists'>
                                     {filmographyNoDups ? (
                                         filmographyNoDups.map((result) => {
@@ -220,72 +225,96 @@ const Person = () => {
                                                 'https://image.tmdb.org/t/p/w500/' +
                                                 poster_path;
                                             return (
-                                                <>
-                                                    <MovieTvItem
-                                                        key={id}
-                                                        id={id}
-                                                        title={title || name}
-                                                        rating={vote_average}
-                                                        poster={poster}
-                                                        overview={overview}
-                                                        mediaType={media_type}
-                                                    />
-                                                </>
+                                                <MovieTvItem
+                                                    key={id}
+                                                    id={id}
+                                                    title={title || name}
+                                                    rating={vote_average}
+                                                    poster={poster}
+                                                    overview={overview}
+                                                    mediaType={media_type}
+                                                />
                                             );
                                         })
                                     ) : (
-                                        <h1>Loading...</h1>
+                                        <Loading />
                                     )}
                                 </div>
                             </div>
-                            <div>
-                                {filmographyDepartmentsArray &&
-                                    filmographyDepartmentsArray.map(
-                                        (department) => (
-                                            <>
-                                                <h2>{department}</h2>{' '}
-                                                {filmographyDepartmentsObject[
-                                                    department
-                                                ].map((departmentItem, i) => {
-                                                    const {
-                                                        title,
-                                                        release,
-                                                        job,
-                                                        episodeCount,
-                                                    } = departmentItem;
-                                                    return (
-                                                        <p key={i}>
-                                                            {(release
+                        </div>
+                        <div className='filmography-details'>
+                            {filmographyDepartmentsArray &&
+                                filmographyDepartmentsArray.map(
+                                    (department) => (
+                                        <div className='department'>
+                                            <h3>{department}</h3>{' '}
+                                            {filmographyDepartmentsObject[
+                                                department
+                                            ].map((departmentItem) => {
+                                                const {
+                                                    title,
+                                                    release,
+                                                    job,
+                                                    episodeCount,
+                                                    media_type,
+                                                    id,
+                                                } = departmentItem;
+                                                return (
+                                                    <p
+                                                        key={(media_type, id)}
+                                                        className='credit'
+                                                    >
+                                                        <span className='year'>
+                                                            {release
                                                                 ? release.split(
                                                                       '-'
                                                                   )[0]
-                                                                : 'TBA') +
-                                                                ' - '}{' '}
-                                                            <b>{title}</b>
-                                                            {episodeCount &&
-                                                                ' (' +
-                                                                    episodeCount +
-                                                                    (episodeCount >
-                                                                    1
-                                                                        ? ' Episodes)'
-                                                                        : ' Episode)')}
-                                                            {(department !==
-                                                            'Acting'
-                                                                ? ' ... '
-                                                                : ' as ') +
-                                                                job.join(', ')}
-                                                        </p>
-                                                    );
-                                                })}
-                                            </>
-                                        )
-                                    )}
-                            </div>
+                                                                : 'TBA'}
+                                                        </span>
+                                                        <i class='fas fa-dot-circle'></i>
+                                                        <div>
+                                                            <Link
+                                                                to={
+                                                                    (media_type ===
+                                                                    'tv'
+                                                                        ? '/tv/'
+                                                                        : '/movie/') +
+                                                                    id
+                                                                }
+                                                                className='credit-title'
+                                                            >
+                                                                <b>{title}</b>
+                                                            </Link>
+                                                            <span className='episode-count'>
+                                                                {episodeCount &&
+                                                                    ' (' +
+                                                                        episodeCount +
+                                                                        (episodeCount >
+                                                                        1
+                                                                            ? ' Episodes)'
+                                                                            : ' Episode)')}
+                                                            </span>
+                                                            <span className='middle'>
+                                                                {department !==
+                                                                'Acting'
+                                                                    ? ' ... '
+                                                                    : ' as '}
+                                                            </span>
+                                                            <span className='job'>
+                                                                {job.join(', ')}
+                                                            </span>
+                                                        </div>
+                                                    </p>
+                                                );
+                                            })}
+                                        </div>
+                                    )
+                                )}
                         </div>
                     </div>
                 </>
             ) : (
-                <h1>Loading...</h1>
+                <Loading />
             )}
         </>
     );
