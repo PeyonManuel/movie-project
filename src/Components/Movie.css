@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap');
+
+* {
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+.moviecard {
+    background-color: rgba(255, 255, 255, 0.768);
+    border-radius: 4px;
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100vw;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.img-info {
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 0.5rem;
+    border-radius: 4px;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-areas: 'img info';
+}
+
+.img-info > img {
+    width: 20rem;
+    border-radius: 4px;
+    grid-area: img;
+}
+
+.infocard {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+}
+
+.title {
+    width: 100%;
+    grid-area: title;
+    margin: 0.5rem 0 0.2rem 0;
+}
+
+.tec-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.tec-info > h5 {
+    margin: 0 0.5rem 0.5rem 0;
+}
+
+.vote-trailer {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+}
+
+.vote {
+    grid-area: vote;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    min-width: 4.5rem;
+    justify-content: space-around;
+}
+
+.vote-numbers > * {
+    margin: 1px;
+}
+
+.vote-numbers > p {
+    color: rgb(75, 75, 75);
+    font-size: 12px;
+}
+
+.fa-star {
+    color: gold;
+}
+
+.average {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+.average > p {
+    color: rgb(75, 75, 75);
+    font-size: 12px;
+}
+.average * {
+    margin: 0;
+}
+
+.trailer {
+    grid-area: trailer;
+    margin: 0.5rem;
+}
+
+.gray {
+    color: rgb(109, 109, 109);
+}
