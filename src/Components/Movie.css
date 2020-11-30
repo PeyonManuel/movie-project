@@ -24,10 +24,17 @@
     display: grid;
     grid-gap: 1rem;
     grid-template-areas: 'img info';
+    height: 25.5rem;
 }
 
-.img-info > img {
-    width: 20rem;
+.posterdiv {
+    width: 17rem;
+    overflow: hidden;
+}
+
+.posterdiv > img {
+    align-self: flex-start;
+    width: 100%;
     border-radius: 4px;
     grid-area: img;
 }
@@ -37,6 +44,8 @@
     flex-wrap: wrap;
     flex-direction: row;
     align-content: flex-start;
+    height: 32rem;
+    overflow: scroll;
 }
 
 .title {
@@ -99,9 +108,65 @@
     margin: 0;
 }
 
-.trailer {
+.watch-trailer {
+    cursor: pointer;
     grid-area: trailer;
     margin: 0.5rem;
+}
+
+.tagline {
+    color: rgb(75, 75, 75);
+    font-style: italic;
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+.description {
+    display: block;
+    white-space: pre-wrap;
+    margin: 1rem 0 0.5rem 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+}
+
+.description > h4 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.director-writer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.director-writer > * {
+    margin: 0;
+}
+.trailer::after {
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+}
+.trailer-div {
+    align-self: center;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    top: calc((100vh - (90vw / 1.77777777778)) / 2);
+    height: 100vh;
+    vertical-align: middle;
+    display: table-cell;
+    z-index: 100;
+}
+.trailer {
+    width: 90vw;
+    height: calc(90vw / 1.77777777778);
+    background-color: black;
+    border: none;
 }
 
 .gray {

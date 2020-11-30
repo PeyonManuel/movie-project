@@ -1,13 +1,19 @@
 .person {
-    display: flex;
-    flex-wrap: wrap;
+    position: relative;
+    display: grid;
     border-radius: 2px;
     background-color: #256e76;
-    width: 15rem;
     height: 26rem;
+    width: 15rem;
+    justify-content: center;
     align-items: center;
+    grid-template-rows: 87% 13%;
     font-family: 'Merriweather Sans', sans-serif;
+    grid-template-areas:
+        'profile'
+        'name';
     margin-right: 1rem;
+    margin-left: 2px;
     font-size: 14px;
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
     overflow: hidden;
@@ -18,15 +24,15 @@
 }
 
 .name {
-    font-size: 14px;
     grid-area: name;
-    padding-bottom: 0.3rem;
+    font-size: 14px;
 }
 
 .person > .link > img {
-    align-self: flex-start;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     width: 100%;
-    grid-area: poster;
+}
+.person > .img {
+    grid-area: profile;
 }

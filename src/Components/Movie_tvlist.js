@@ -2,6 +2,7 @@ import React from 'react';
 import MovieTvItem from './Movie_Tv_Item';
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../App';
+import Loading from './Loading';
 import './Movie_tvlist.css';
 
 const MovieTvList = () => {
@@ -31,64 +32,64 @@ const MovieTvList = () => {
     console.log('hi im rerendering');
     return (
         <div style={{ width: '99vw' }}>
-            <h1 className='headlines'>Popular movies right now</h1>
-            <div className='lists'>
-                {state.movies ? (
-                    state.movies.map((result) => {
-                        const {
-                            id,
-                            title,
-                            vote_average,
-                            poster_path,
-                            overview,
-                        } = result;
-                        const poster =
-                            'https://image.tmdb.org/t/p/w500/' + poster_path;
-                        return (
-                            <MovieTvItem
-                                key={id}
-                                id={id}
-                                title={title}
-                                rating={vote_average}
-                                poster={poster}
-                                overview={overview}
-                                mediaType={'movie'}
-                            />
-                        );
-                    })
-                ) : (
-                    <h1>Loading...</h1>
-                )}
-            </div>
-            <h1 className='headlines'>Popular tv shows right now</h1>
-            <div className='lists'>
-                {state.tv ? (
-                    state.tv.map((result) => {
-                        const {
-                            id,
-                            name,
-                            vote_average,
-                            poster_path,
-                            overview,
-                        } = result;
-                        const poster =
-                            'https://image.tmdb.org/t/p/w500/' + poster_path;
-                        return (
-                            <MovieTvItem
-                                key={id}
-                                id={id}
-                                title={name}
-                                rating={vote_average}
-                                poster={poster}
-                                overview={overview}
-                                mediaType={'tv'}
-                            />
-                        );
-                    })
-                ) : (
-                    <h1>Loading...</h1>
-                )}
-            </div>
+            {state.movies && state.tv ? (
+                <>
+                    <h1 className='headlines'>Popular movies right now</h1>
+                    <div className='lists'>
+                        {state.movies.map((result) => {
+                            const {
+                                id,
+                                title,
+                                vote_average,
+                                poster_path,
+                                overview,
+                            } = result;
+                            const poster =
+                                'https://image.tmdb.org/t/p/w500/' +
+                                poster_path;
+                            return (
+                                <MovieTvItem
+                                    key={id}
+                                    id={id}
+                                    title={title}
+                                    rating={vote_average}
+                                    poster={poster}
+                                    overview={overview}
+                                    mediaType={'movie'}
+                                />
+                            );
+                        })}
+                    </div>
+                    <h1 className='headlines'>Popular tv shows right now</h1>
+                    <div className='lists'>
+                        {state.tv.map((result) => {
+                            const {
+                                id,
+                                name,
+                                vote_average,
+                                poster_path,
+                                overview,
+                            } = result;
+                            const poster =
+                                'https://image.tmdb.org/t/p/w500/' +
+                                poster_path;
+                            return (
+                                <MovieTvItem
+                                    key={id}
+                                    id={id}
+                                    title={name}
+                                    rating={vote_average}
+                                    poster={poster}
+                                    overview={overview}
+                                    mediaType={'tv'}
+                                />
+                            );
+                        })}
+                    </div>
+                </>
+            ) : (
+                <Loading />
+            )}
         </div>
     );
 };

@@ -4,15 +4,21 @@ import './PersonItem.css';
 
 const Person = ({ id, name, profile }) => {
     return (
-        <div className='person' key={id}>
-            <Link className='link img' to={'/person/' + id}>
-                <img src={profile} alt={name + ' profile'} />
-            </Link>
+        <>
+            {profile && (
+                <>
+                    <div className='person' key={id}>
+                        <Link className='link img' to={'/person/' + id}>
+                            <img src={profile} alt={name + ' profile'} />
+                        </Link>
 
-            <Link className='link name' to={'/person/' + id}>
-                <h2 className='name'>{name}</h2>
-            </Link>
-        </div>
+                        <Link className='link name' to={'/person/' + id}>
+                            <h2 className='name'>{name}</h2>
+                        </Link>
+                    </div>
+                </>
+            )}
+        </>
     );
 };
 
