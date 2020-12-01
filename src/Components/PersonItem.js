@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './PersonItem.css';
 
-const Person = ({ id, name, profile }) => {
+const Person = React.memo(({ id, name, profile, character }) => {
     const [profilePath, setProfilePath] = useState(profile);
     return (
         <>
@@ -21,15 +21,21 @@ const Person = ({ id, name, profile }) => {
                                 }
                             />
                         </Link>
-
-                        <Link className='link name' to={'/person/' + id}>
-                            <h2 className='name'>{name}</h2>
-                        </Link>
+                        <div className='name-character'>
+                            <Link className='link name' to={'/person/' + id}>
+                                <h2 className='name'>{name}</h2>
+                            </Link>
+                            {character && (
+                                <h3 className='character'>
+                                    {'As ' + character}
+                                </h3>
+                            )}
+                        </div>
                     </div>
                 </>
             )}
         </>
     );
-};
+});
 
 export default Person;

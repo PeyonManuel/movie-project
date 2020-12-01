@@ -22,10 +22,20 @@
 .person > .link {
     width: 100%;
 }
+.name-character {
+    grid-area: name;
+}
 
 .name {
-    grid-area: name;
     font-size: 14px;
+}
+
+.character {
+    font-size: 12px;
+    margin: 0;
+    padding-left: 1rem;
+    padding-bottom: 0.5rem;
+    font-weight: 100;
 }
 
 .person > .link > img {

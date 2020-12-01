@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from './Loading';
 import PersonItem from './PersonItem';
@@ -13,6 +13,7 @@ const Movie = () => {
     const [releaseDates, setReleaseDates] = useState([]);
     const [countryCode, setCountryCode] = useState([]);
     const [displayTrailer, setDisplayTrailer] = useState(false);
+    const [releaseCode, setReleaseCode] = useState('');
 
     const { id } = useParams();
 
@@ -86,6 +87,93 @@ const Movie = () => {
         };
     }, []);
 
+    const setDirectorValue = (movieCrew) => {
+        return movieCrew
+            ? movieCrew.filter((person) => person.job === 'Director')
+            : '';
+    };
+
+    const setWriterValue = (movieCrew) => {
+        return movieCrew
+            ? movieCrew.filter(
+                  (person) => person.job === 'Writing' || person.job === 'Story'
+              )
+            : '';
+    };
+
+    const setScreenplayValue = (movieCrew) => {
+        return movieCrew
+            ? movieCrew.filter((person) => person.job === 'Screenplay')
+            : '';
+    };
+
+    const setCharactersValue = (movieCrew) => {
+        return movieCrew
+            ? movieCrew.filter((person) => person.job === 'Characters')
+            : '';
+    };
+
+    const setNovelValue = (movieCrew) => {
+        return movieCrew
+            ? movieCrew.filter((person) => person.job === 'Novel')
+            : '';
+    };
+
+    const setReleaseDateValue = (releaseDates, countryCode) => {
+        const temporaryRelease =
+            releaseDates &&
+            countryCode &&
+            (releaseDates.find(
+                (release) => release.iso_3166_1 === countryCode
+            ) ||
+                releaseDates.find((release) => release.iso_3166_1 === 'US') ||
+                releaseDates.find((release) =>
+                    release.release_dates.find(
+                        (rlsd) => rlsd.release_date !== null
+                    )
+                ));
+        temporaryRelease && setReleaseCode(temporaryRelease.iso_3166_1);
+        return (
+            (temporaryRelease &&
+                temporaryRelease.release_dates.find(
+                    (release) => release.type === 3
+                )) ||
+            (temporaryRelease &&
+                temporaryRelease.release_dates.find(
+                    (release) => release.release_date
+                ))
+        );
+    };
+
+    const setReleaseCertificationValue = (releaseDates, countryCode) => {
+        const temporaryRelease =
+            releaseDates &&
+            countryCode &&
+            (releaseDates.find(
+                (release) =>
+                    release.iso_3166_1 === countryCode &&
+                    release.release_dates.find((rlsd) => rlsd.certification)
+            ) ||
+                releaseDates.find(
+                    (release) =>
+                        release.iso_3166_1 === 'US' &&
+                        release.release_dates.find((rlsd) => rlsd.certification)
+                ) ||
+                releaseDates.find((release) =>
+                    release.release_dates.find((rlsd) => rlsd.certification)
+                ));
+
+        return (
+            temporaryRelease &&
+            (temporaryRelease.release_dates.find(
+                (release) => release.type === 3 && release.certification
+            ) ||
+                temporaryRelease.release_dates.find(
+                    (release) => release.certification
+                ))
+        );
+    };
+
     const {
         poster_path,
         title,
@@ -97,64 +185,31 @@ const Movie = () => {
         tagline,
         overview,
     } = movie;
-    const director = movieCredits.crew
-        ? movieCredits.crew.filter((person) => person.job === 'Director')
-        : '';
-    const writer = movieCredits.crew
-        ? movieCredits.crew.filter(
-              (person) => person.job === 'Writing' || person.job === 'Story'
-          )
-        : '';
-    const screenplay = movieCredits.crew
-        ? movieCredits.crew.filter((person) => person.job === 'Screenplay')
-        : '';
-    const characters = movieCredits.crew
-        ? movieCredits.crew.filter((person) => person.job === 'Characters')
-        : '';
-    const novel = movieCredits.crew
-        ? movieCredits.crew.filter((person) => person.job === 'Novel')
-        : '';
-    let releaseDate =
-        releaseDates &&
-        countryCode &&
-        (releaseDates.find((release) => release.iso_3166_1 === countryCode) ||
-            releaseDates.find((release) => release.iso_3166_1 === 'US') ||
-            releaseDates.find((release) =>
-                release.release_dates.find((rlsd) => rlsd.release_date !== null)
-            ));
+    const director = useMemo(() => setDirectorValue(movieCredits.crew), [
+        movieCredits.crew,
+    ]);
+    const writer = useMemo(() => setWriterValue(movieCredits.crew), [
+        movieCredits.crew,
+    ]);
+    const screenplay = useMemo(() => setScreenplayValue(movieCredits.crew), [
+        movieCredits.crew,
+    ]);
+    const characters = useMemo(() => setCharactersValue(movieCredits.crew), [
+        movieCredits.crew,
+    ]);
+    const novel = useMemo(() => setNovelValue(movieCredits.crew), [
+        movieCredits.crew,
+    ]);
+    let releaseDate = useMemo(
+        () => setReleaseDateValue(releaseDates, countryCode),
+        [releaseDates, countryCode]
+    );
 
-    const releaseCode = releaseDate && releaseDate.iso_3166_1;
+    let releaseCertification = useMemo(
+        () => setReleaseCertificationValue(releaseDates, countryCode),
+        [releaseDates, countryCode]
+    );
 
-    releaseDate =
-        releaseDate &&
-        (releaseDate.release_dates.find((release) => release.type === 3) ||
-            releaseDate.release_dates.find((release) => release.release_date));
-
-    let releaseCertification =
-        releaseDates &&
-        countryCode &&
-        (releaseDates.find(
-            (release) =>
-                release.iso_3166_1 === countryCode &&
-                release.release_dates.find((rlsd) => rlsd.certification)
-        ) ||
-            releaseDates.find(
-                (release) =>
-                    release.iso_3166_1 === 'US' &&
-                    release.release_dates.find((rlsd) => rlsd.certification)
-            ) ||
-            releaseDates.find((release) =>
-                release.release_dates.find((rlsd) => rlsd.certification)
-            ));
-
-    releaseCertification =
-        releaseCertification &&
-        (releaseCertification.release_dates.find(
-            (release) => release.type === 3
-        ) ||
-            releaseCertification.release_dates.find(
-                (release) => release.certification
-            ));
     return (
         <>
             {poster_path ? (
@@ -286,7 +341,12 @@ const Movie = () => {
                     <div className='cast'>
                         {movieCredits.cast &&
                             movieCredits.cast.map((person) => {
-                                const { id, name, profile_path } = person;
+                                const {
+                                    id,
+                                    name,
+                                    profile_path,
+                                    character,
+                                } = person;
                                 const profile =
                                     'https://image.tmdb.org/t/p/w500/' +
                                     profile_path;
@@ -296,6 +356,7 @@ const Movie = () => {
                                         id={id}
                                         name={name}
                                         profile={profile}
+                                        character={character}
                                     />
                                 );
                             })}
