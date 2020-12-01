@@ -8,6 +8,10 @@ import './Person.css';
 const Person = () => {
     const [person, setPerson] = useState([]);
     const [personCredits, setPersonCredits] = useState([]);
+    const [profilePath, setProfilePath] = useState(
+        'https://i.imgur.com/sdkYiCr.png'
+    );
+
     const { id } = useParams();
 
     const getAge = (dateString) => {
@@ -23,6 +27,9 @@ const Person = () => {
 
     useEffect(() => {
         document.title = person.name ? person.name + ' - Moviezz' : 'Moviezz';
+        setProfilePath(
+            'https://image.tmdb.org/t/p/w500/' + person.profile_path
+        );
     }, [person]);
 
     useEffect(() => {
@@ -49,7 +56,6 @@ const Person = () => {
         });
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
     const {
-        profile_path,
         name,
         birthday,
         deathday,
@@ -147,18 +153,20 @@ const Person = () => {
         });
     return (
         <>
-            {profile_path ? (
+            {person ? (
                 <>
                     <div className='personcard'>
                         <div className='imginfo'>
                             <div className='infodiv'>
-                                {profile_path && (
+                                {profilePath && (
                                     <img
-                                        src={
-                                            'https://image.tmdb.org/t/p/w500/' +
-                                            profile_path
-                                        }
+                                        src={profilePath}
                                         alt={person.title + ' poster'}
+                                        onError={() =>
+                                            setProfilePath(
+                                                'https://i.imgur.com/sdkYiCr.png'
+                                            )
+                                        }
                                     />
                                 )}
                                 <h3 key='h3header'>Personal Info</h3>
@@ -172,10 +180,14 @@ const Person = () => {
                                         : '-'}
                                 </h5>
                                 {deathday && (
-                                    <h5>{'Day of death ' + deathday}</h5>
+                                    <>
+                                        <h4 key='h4death'>Day of death</h4>
+                                        <h5 key='h5death'>{deathday}</h5>
+                                    </>
                                 )}
-                                <h4 key='h4death'>{'Gender '}</h4>
-                                <h5 key='h5death'>
+
+                                <h4 key='h4gender'>{'Gender '}</h4>
+                                <h5 key='h5gender'>
                                     {gender
                                         ? gender === 1
                                             ? 'Female'
@@ -191,23 +203,29 @@ const Person = () => {
                                 <h4 key='h4place'>Place of birth</h4>
                                 <h5>{place_of_birth ? place_of_birth : '-'}</h5>
                                 <h4 key='h4also'>{'Also known as '}</h4>
-                                {also_known_as
-                                    ? also_known_as.map((known) => (
-                                          <h5 key={known}>{known}</h5>
-                                      ))
-                                    : '-'}
+                                {also_known_as &&
+                                    (also_known_as.length > 0
+                                        ? also_known_as.map((known) => (
+                                              <h5 key={known}>{known}</h5>
+                                          ))
+                                        : '-')}
                             </div>
                         </div>
                         <div className='career'>
                             <h1 className='name'>{name}</h1>
                             <div className='biography'>
                                 <h3>Biography </h3>
-                                <pre>
-                                    {biography
-                                        ? biography
-                                        : 'We dont have a biography for ' +
-                                          name}
-                                </pre>
+                                {biography ? (
+                                    <pre>{biography}</pre>
+                                ) : (
+                                    <>
+                                        <br />
+                                        <pre>
+                                            {'We dont have a biography for ' +
+                                                name}
+                                        </pre>
+                                    </>
+                                )}
                             </div>
                             <div className='filmography'>
                                 <h3>Filmography</h3>
@@ -258,12 +276,12 @@ const Person = () => {
                                                     release,
                                                     job,
                                                     episodeCount,
-                                                    media_type,
+                                                    mediaType,
                                                     id,
                                                 } = departmentItem;
                                                 return (
                                                     <p
-                                                        key={(media_type, id)}
+                                                        key={(mediaType, id)}
                                                         className='credit'
                                                     >
                                                         <span className='year'>
@@ -273,14 +291,13 @@ const Person = () => {
                                                                   )[0]
                                                                 : 'TBA'}
                                                         </span>
-                                                        <i class='fas fa-dot-circle'></i>
+                                                        <i className='fas fa-dot-circle'></i>
                                                         <span>
                                                             <Link
                                                                 to={
-                                                                    (media_type ===
-                                                                    'tv'
-                                                                        ? '/tv/'
-                                                                        : '/movie/') +
+                                                                    '/' +
+                                                                    mediaType +
+                                                                    '/' +
                                                                     id
                                                                 }
                                                                 className='credit-title'

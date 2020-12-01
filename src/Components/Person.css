@@ -82,6 +82,7 @@
 }
 
 .biography > pre {
+    width: 100%;
     display: block;
     white-space: pre-wrap;
     margin: 1em 0;

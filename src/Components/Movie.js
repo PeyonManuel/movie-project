@@ -2,6 +2,8 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from './Loading';
+import PersonItem from './PersonItem';
+
 import './Movie.css';
 
 const Movie = () => {
@@ -280,6 +282,23 @@ const Movie = () => {
                                 )}
                             </div>
                         </div>
+                    </div>
+                    <div className='cast'>
+                        {movieCredits.cast &&
+                            movieCredits.cast.map((person) => {
+                                const { id, name, profile_path } = person;
+                                const profile =
+                                    'https://image.tmdb.org/t/p/w500/' +
+                                    profile_path;
+                                return (
+                                    <PersonItem
+                                        key={id}
+                                        id={id}
+                                        name={name}
+                                        profile={profile}
+                                    />
+                                );
+                            })}
                     </div>
                 </div>
             ) : (

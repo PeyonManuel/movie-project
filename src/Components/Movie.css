@@ -9,9 +9,8 @@
     background-color: rgba(255, 255, 255, 0.768);
     border-radius: 4px;
     padding: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    height: 100%;
+    display: grid;
+    grid-gap: 1rem;
     width: 100vw;
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
 }
@@ -156,17 +155,35 @@
     position: fixed;
     text-align: center;
     width: 100%;
-    top: calc((100vh - (90vw / 1.77777777778)) / 2);
     height: 100vh;
     vertical-align: middle;
     display: table-cell;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.926);
     z-index: 100;
+    top: 0;
 }
 .trailer {
     width: 90vw;
     height: calc(90vw / 1.77777777778);
     background-color: black;
     border: none;
+}
+
+.cast {
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    height: 30rem;
 }
 
 .gray {

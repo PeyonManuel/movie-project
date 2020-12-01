@@ -1,5 +1,5 @@
 import React from 'react';
-import Person from './PersonItem';
+import PersonItem from './PersonItem';
 import Loading from './Loading';
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from '../App';
@@ -30,7 +30,7 @@ const MovieTvList = () => {
                                 'https://image.tmdb.org/t/p/w500/' +
                                 profile_path;
                             return (
-                                <Person
+                                <PersonItem
                                     key={id}
                                     id={id}
                                     name={name}

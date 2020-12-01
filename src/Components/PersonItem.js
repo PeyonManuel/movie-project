@@ -1,15 +1,25 @@
 import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './PersonItem.css';
 
 const Person = ({ id, name, profile }) => {
+    const [profilePath, setProfilePath] = useState(profile);
     return (
         <>
-            {profile && (
+            {id && (
                 <>
                     <div className='person' key={id}>
                         <Link className='link img' to={'/person/' + id}>
-                            <img src={profile} alt={name + ' profile'} />
+                            <img
+                                src={profilePath}
+                                alt={name + ' profile'}
+                                onError={() =>
+                                    setProfilePath(
+                                        'https://i.imgur.com/sdkYiCr.png'
+                                    )
+                                }
+                            />
                         </Link>
 
                         <Link className='link name' to={'/person/' + id}>
