@@ -1,0 +1,63 @@
+.review-item {
+    display: grid;
+    grid-template-columns: 5% 95%;
+    grid-template-areas:
+        'img author-rating'
+        '. content';
+    width: 100%;
+    overflow: hidden;
+}
+
+.img-div {
+    width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+    display: flex;
+    align-content: center;
+    position: relative;
+    align-items: center;
+    border-radius: 50%;
+    margin-top: 1.5rem;
+    margin-left: 0.2rem;
+}
+
+.img-div > img {
+    display: block;
+    width: 100%;
+}
+
+.author-profile {
+    margin: 0;
+    grid-area: img;
+    width: 3rem;
+}
+
+.author-rating {
+    grid-area: author-rating;
+}
+
+.author-rating > h2 {
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
+}
+
+.review-rating {
+    font-size: 18px;
+    font-weight: 500;
+    padding-left: 0.5rem;
+}
+
+.createdat {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+.content {
+    grid-area: content;
+    display: block;
+    white-space: pre-wrap;
+    margin: 1rem 0 0.5rem 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+}

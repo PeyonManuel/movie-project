@@ -181,9 +181,62 @@
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    align-content: flex-start;
     overflow: auto;
     height: 30rem;
+}
+
+.reviews {
+    position: relative;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    overflow: hidden;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    display: grid;
+    grid-template-columns: 90% repeat(2, 5%);
+    grid-template-areas:
+        'header . .'
+        'reviews reviews reviews';
+}
+
+.reviews-div {
+    grid-area: reviews;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    height: 0;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.reviews-header {
+    grid-area: header;
+    width: 100%;
+    padding: 0 0 0 1rem;
+}
+
+.more-reviewsbtn-down {
+    position: absolute;
+    right: 0;
+}
+
+.more-reviewsbtn-up {
+    position: absolute;
+    right: 2rem;
+}
+
+.reviewsbtn {
+    height: 1.5rem;
+    border: none;
+    outline: none;
+    background-color: white;
+    bottom: 0;
 }
 
 .gray {

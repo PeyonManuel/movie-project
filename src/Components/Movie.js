@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Loading from './Loading';
 import PersonItem from './PersonItem';
+import ReviewItem from './ReviewItem';
 
 import './Movie.css';
 
@@ -14,6 +15,7 @@ const Movie = () => {
     const [countryCode, setCountryCode] = useState([]);
     const [displayTrailer, setDisplayTrailer] = useState(false);
     const [releaseCode, setReleaseCode] = useState('');
+    const [reviews, setReviews] = useState({});
 
     const { id } = useParams();
 
@@ -74,6 +76,17 @@ const Movie = () => {
         fetch('https://ipapi.co/json/')
             .then((response) => response.json())
             .then((data) => setCountryCode(data.country_code));
+
+        fetch(
+            'https://api.themoviedb.org/3/movie/' +
+                id +
+                '/reviews' +
+                '?api_key=' +
+                '792dde4161d1a8ae31ac0fa85780d7fc' +
+                '&language=en-US'
+        )
+            .then((response) => response.json())
+            .then((data) => setReviews(data));
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
@@ -96,7 +109,7 @@ const Movie = () => {
     const setWriterValue = (movieCrew) => {
         return movieCrew
             ? movieCrew.filter(
-                  (person) => person.job === 'Writing' || person.job === 'Story'
+                  (person) => person.job === 'Writer' || person.job === 'Story'
               )
             : '';
     };
@@ -209,10 +222,9 @@ const Movie = () => {
         () => setReleaseCertificationValue(releaseDates, countryCode),
         [releaseDates, countryCode]
     );
-
     return (
         <>
-            {poster_path ? (
+            {movie ? (
                 <div className='moviecard'>
                     <div className='img-info'>
                         <div className='posterdiv'>
@@ -229,63 +241,91 @@ const Movie = () => {
                         <div className='infocard'>
                             <h1 className='title'>
                                 {title}
-                                <span className='gray'>
-                                    {' (' + release_date.split('-')[0] + ')'}
-                                </span>
+                                {release_date && (
+                                    <span className='gray'>
+                                        {' (' +
+                                            release_date.split('-')[0] +
+                                            ')'}
+                                    </span>
+                                )}
                             </h1>
                             <div className='tec-info'>
-                                <h5 className='certification'>
-                                    {releaseCertification &&
-                                        releaseCertification.certification &&
-                                        releaseCertification.certification}
-                                </h5>
-                                <h5>•</h5>
-                                <h5>
-                                    {releaseDate &&
-                                        releaseDate.release_date.split('T')[0] +
-                                            (releaseCode &&
-                                                ' (' + releaseCode + ')')}
-                                </h5>
-                                <h5>•</h5>
-                                <h5>
-                                    {genres &&
-                                        genres
-                                            .map((genre) => genre.name)
-                                            .join(', ')}
-                                </h5>
-                                <h5>•</h5>
-                                <h5 className='runtime'>
-                                    {Math.floor(runtime / 60) / 60 > 0 &&
-                                        Math.floor(runtime / 60) + 'h'}{' '}
-                                    {(runtime % 60) + 'm'}
-                                </h5>
+                                {releaseCertification && (
+                                    <>
+                                        <h5 className='certification'>
+                                            {releaseCertification.certification &&
+                                                releaseCertification.certification}
+                                        </h5>
+                                        <h5>•</h5>
+                                    </>
+                                )}
+                                {releaseDate && (
+                                    <>
+                                        <h5>
+                                            {releaseDate.release_date.split(
+                                                'T'
+                                            )[0] +
+                                                (releaseCode &&
+                                                    ' (' + releaseCode + ')')}
+                                        </h5>
+                                    </>
+                                )}
+                                {genres && (
+                                    <>
+                                        <h5>•</h5>
+                                        <h5>
+                                            {genres
+                                                .map((genre) => genre.name)
+                                                .join(', ')}
+                                        </h5>
+                                    </>
+                                )}
+                                {runtime > 0 && (
+                                    <>
+                                        <h5>•</h5>
+                                        <h5 className='runtime'>
+                                            {Math.floor(runtime / 60) / 60 >
+                                                0 &&
+                                                Math.floor(runtime / 60) + 'h'}
+                                            {(runtime % 60) + 'm'}
+                                        </h5>
+                                    </>
+                                )}
                             </div>
-                            <div className='vote-trailer'>
-                                <div className='vote'>
-                                    <i className='fas fa-star fa-2x'></i>{' '}
-                                    <div className='vote-numbers'>
-                                        <div className='average'>
-                                            <h4>{' ' + vote_average}</h4>
-                                            <p>/10</p>
+                            {vote_average && (
+                                <div className='vote-trailer'>
+                                    <div className='vote'>
+                                        <i className='fas fa-star fa-2x'></i>{' '}
+                                        <div className='vote-numbers'>
+                                            <div className='average'>
+                                                <h4>{' ' + vote_average}</h4>
+                                                <p>/10</p>
+                                            </div>
+                                            <p>{vote_count}</p>
                                         </div>
-                                        <p>{vote_count}</p>
                                     </div>
+                                    {movieVideos && movieVideos.length > 0 && (
+                                        <h5
+                                            className='watch-trailer'
+                                            onClick={() =>
+                                                setDisplayTrailer(true)
+                                            }
+                                        >
+                                            <i className='fas fa-play'></i>
+                                            {' Watch trailer'}
+                                        </h5>
+                                    )}
                                 </div>
-                                <h5
-                                    className='watch-trailer'
-                                    onClick={() => setDisplayTrailer(true)}
-                                >
-                                    <i className='fas fa-play'></i>
-                                    {' Watch trailer'}
-                                </h5>
-                            </div>
+                            )}
                             <h4 className='tagline'>{tagline}</h4>
-                            <pre className='description'>
-                                <h4>Overview</h4>
-                                {overview}
-                            </pre>
+                            {overview && (
+                                <pre className='description'>
+                                    <h4>Overview</h4>
+                                    {overview}
+                                </pre>
+                            )}
                             <div className='director-writer'>
-                                {director && (
+                                {director.length > 0 && (
                                     <p>
                                         <b>Director </b> <br />
                                         <span>
@@ -361,11 +401,100 @@ const Movie = () => {
                                 );
                             })}
                     </div>
+
+                    <div className='reviews'>
+                        <h2 className='reviews-header'>Reviews</h2>
+                        <div id='reviews-div' className='reviews-div'>
+                            {reviews &&
+                                reviews.results &&
+                                reviews.results.map((review) => {
+                                    const {
+                                        author,
+                                        author_details,
+                                        content,
+                                        created_at,
+                                        id,
+                                    } = review;
+                                    const {
+                                        avatar_path,
+                                        rating,
+                                    } = author_details;
+                                    return (
+                                        <ReviewItem
+                                            author={author}
+                                            avatarPath={avatar_path}
+                                            content={content}
+                                            createdAt={created_at}
+                                            rating={rating}
+                                            id={id}
+                                        />
+                                    );
+                                })}
+                        </div>
+                        {reviews && reviews.results && (
+                            <>
+                                <button
+                                    className='more-reviewsbtn-up reviewsbtn'
+                                    onClick={() => {
+                                        switch (
+                                            document.getElementById(
+                                                'reviews-div'
+                                            ).style.height
+                                        ) {
+                                            case '40rem':
+                                                document.getElementById(
+                                                    'reviews-div'
+                                                ).style.height = '10rem';
+                                                document.getElementById(
+                                                    'reviews-div'
+                                                ).style.overflow = 'hidden';
+                                                break;
+                                            case '10rem':
+                                                document.getElementById(
+                                                    'reviews-div'
+                                                ).style.height = '0';
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }}
+                                >
+                                    <i className='fas fa-caret-up fa-1x'></i>
+                                </button>
+                                <button
+                                    className='more-reviewsbtn-down reviewsbtn'
+                                    onClick={() => {
+                                        if (
+                                            !document.getElementById(
+                                                'reviews-div'
+                                            ).style.height ||
+                                            document.getElementById(
+                                                'reviews-div'
+                                            ).style.height === '0px'
+                                        ) {
+                                            document.getElementById(
+                                                'reviews-div'
+                                            ).style.height = '10rem';
+                                        } else {
+                                            document.getElementById(
+                                                'reviews-div'
+                                            ).style.height = '40rem';
+                                            document.getElementById(
+                                                'reviews-div'
+                                            ).style.overflow = 'auto';
+                                        }
+                                    }}
+                                >
+                                    <i className='fas fa-caret-down fa-1x'></i>
+                                </button>
+                            </>
+                        )}
+                    </div>
                 </div>
             ) : (
                 <Loading />
             )}
-            {displayTrailer && movieVideos && (
+            {displayTrailer && movieVideos && movieVideos.length > 0 && (
                 <div className='trailer-div'>
                     <iframe
                         className='trailer'

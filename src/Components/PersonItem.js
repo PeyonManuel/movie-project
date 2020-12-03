@@ -26,9 +26,7 @@ const Person = React.memo(({ id, name, profile, character }) => {
                                 <h2 className='name'>{name}</h2>
                             </Link>
                             {character && (
-                                <h3 className='character'>
-                                    {'As ' + character}
-                                </h3>
+                                <h3 className='character'>{character}</h3>
                             )}
                         </div>
                     </div>
