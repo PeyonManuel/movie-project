@@ -401,58 +401,80 @@ const Movie = () => {
                                 );
                             })}
                     </div>
+                    {reviews && reviews.results && reviews.results.length > 0 && (
+                        <>
+                            <div className='reviews'>
+                                <h2 className='reviews-header'>Reviews</h2>
+                                <div id='reviews-div' className='reviews-div'>
+                                    {reviews &&
+                                        reviews.results &&
+                                        reviews.results.map((review) => {
+                                            const {
+                                                author,
+                                                author_details,
+                                                content,
+                                                created_at,
+                                                id,
+                                            } = review;
+                                            const {
+                                                avatar_path,
+                                                rating,
+                                            } = author_details;
+                                            return (
+                                                <ReviewItem
+                                                    author={author}
+                                                    avatarPath={avatar_path}
+                                                    content={content}
+                                                    createdAt={created_at}
+                                                    rating={rating}
+                                                    id={id}
+                                                />
+                                            );
+                                        })}
+                                </div>
 
-                    <div className='reviews'>
-                        <h2 className='reviews-header'>Reviews</h2>
-                        <div id='reviews-div' className='reviews-div'>
-                            {reviews &&
-                                reviews.results &&
-                                reviews.results.map((review) => {
-                                    const {
-                                        author,
-                                        author_details,
-                                        content,
-                                        created_at,
-                                        id,
-                                    } = review;
-                                    const {
-                                        avatar_path,
-                                        rating,
-                                    } = author_details;
-                                    return (
-                                        <ReviewItem
-                                            author={author}
-                                            avatarPath={avatar_path}
-                                            content={content}
-                                            createdAt={created_at}
-                                            rating={rating}
-                                            id={id}
-                                        />
-                                    );
-                                })}
-                        </div>
-                        {reviews && reviews.results && (
-                            <>
                                 <button
                                     className='more-reviewsbtn-up reviewsbtn'
                                     onClick={() => {
+                                        const firstReviewSize =
+                                            document
+                                                .querySelectorAll(
+                                                    '.reviews-div'
+                                                )[0]
+                                                .childNodes[0].clientHeight.toString() +
+                                            'px';
+                                        const childNodes = document.querySelectorAll(
+                                            '.reviews-div'
+                                        )[0].childNodes;
+                                        let acumulator = 0;
+                                        for (let i = 0; i < 3; i++) {
+                                            acumulator += childNodes[i]
+                                                ? childNodes[i].clientHeight
+                                                : 0;
+                                        }
+                                        const firstThreeReviewsSize =
+                                            acumulator.toString() + 'px';
+
                                         switch (
                                             document.getElementById(
                                                 'reviews-div'
                                             ).style.height
                                         ) {
-                                            case '40rem':
+                                            case firstThreeReviewsSize:
                                                 document.getElementById(
                                                     'reviews-div'
-                                                ).style.height = '10rem';
+                                                ).style.height = firstReviewSize;
                                                 document.getElementById(
                                                     'reviews-div'
-                                                ).style.overflow = 'hidden';
+                                                ).style.overflow = 'visible';
                                                 break;
-                                            case '10rem':
+                                            case firstReviewSize:
                                                 document.getElementById(
                                                     'reviews-div'
                                                 ).style.height = '0';
+                                                document.getElementById(
+                                                    'reviews-div'
+                                                ).style.overflow = 'visible';
                                                 break;
                                             default:
                                                 break;
@@ -464,6 +486,24 @@ const Movie = () => {
                                 <button
                                     className='more-reviewsbtn-down reviewsbtn'
                                     onClick={() => {
+                                        const firstReviewSize =
+                                            document
+                                                .querySelectorAll(
+                                                    '.reviews-div'
+                                                )[0]
+                                                .childNodes[0].clientHeight.toString() +
+                                            'px';
+                                        const childNodes = document.querySelectorAll(
+                                            '.reviews-div'
+                                        )[0].childNodes;
+                                        let acumulator = 0;
+                                        for (let i = 0; i < 3; i++) {
+                                            acumulator += childNodes[i]
+                                                ? childNodes[i].clientHeight
+                                                : 0;
+                                        }
+                                        const firstThreeReviewsSize =
+                                            acumulator.toString() + 'px';
                                         if (
                                             !document.getElementById(
                                                 'reviews-div'
@@ -474,11 +514,11 @@ const Movie = () => {
                                         ) {
                                             document.getElementById(
                                                 'reviews-div'
-                                            ).style.height = '10rem';
+                                            ).style.height = firstReviewSize;
                                         } else {
                                             document.getElementById(
                                                 'reviews-div'
-                                            ).style.height = '40rem';
+                                            ).style.height = firstThreeReviewsSize;
                                             document.getElementById(
                                                 'reviews-div'
                                             ).style.overflow = 'auto';
@@ -487,9 +527,9 @@ const Movie = () => {
                                 >
                                     <i className='fas fa-caret-down fa-1x'></i>
                                 </button>
-                            </>
-                        )}
-                    </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             ) : (
                 <Loading />
