@@ -1,23 +1,18 @@
 import React from 'react';
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import Loading from './Loading';
-import PersonItem from './PersonItem';
-import ReviewItem from './ReviewItem';
+import { useState, useEffect, useRef, useMemo, useContext } from 'react';
+import { MovieContext } from './Movie';
+import Loading from '../Loading';
+import './InfoCard.css';
 
-import './Movie.css';
-
-const Movie = () => {
+const InfoCard = ({ id }) => {
     const [movie, setMovie] = useState([]);
-    const [movieCredits, setMovieCredits] = useState([]);
     const [movieVideos, setMovieVideos] = useState([]);
     const [releaseDates, setReleaseDates] = useState([]);
     const [countryCode, setCountryCode] = useState([]);
-    const [displayTrailer, setDisplayTrailer] = useState(false);
     const [releaseCode, setReleaseCode] = useState('');
-    const [reviews, setReviews] = useState({});
+    const [displayTrailer, setDisplayTrailer] = useState(false);
 
-    const { id } = useParams();
+    const { dispatch, state } = useContext(MovieContext);
 
     const wrapperRef = useRef(null);
 
@@ -27,6 +22,13 @@ const Movie = () => {
             setDisplayTrailer(false);
         }
     };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => {
         fetch(
@@ -48,7 +50,9 @@ const Movie = () => {
                 '&language=en-US'
         )
             .then((response) => response.json())
-            .then((data) => setMovieCredits(data));
+            .then((data) => {
+                dispatch({ type: 'SET_MOVIE_CREDITS', payload: data });
+            });
 
         fetch(
             'https://api.themoviedb.org/3/movie/' +
@@ -60,6 +64,7 @@ const Movie = () => {
         )
             .then((response) => response.json())
             .then((data) => setMovieVideos(data.results));
+
         fetch(
             'https://api.themoviedb.org/3/movie/' +
                 id +
@@ -76,29 +81,11 @@ const Movie = () => {
         fetch('https://ipapi.co/json/')
             .then((response) => response.json())
             .then((data) => setCountryCode(data.country_code));
-
-        fetch(
-            'https://api.themoviedb.org/3/movie/' +
-                id +
-                '/reviews' +
-                '?api_key=' +
-                '792dde4161d1a8ae31ac0fa85780d7fc' +
-                '&language=en-US'
-        )
-            .then((response) => response.json())
-            .then((data) => setReviews(data));
-    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         document.title = movie.title ? movie.title + ' - Moviezz' : 'Moviezz';
     }, [movie]);
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
     const setDirectorValue = (movieCrew) => {
         return movieCrew
@@ -198,6 +185,9 @@ const Movie = () => {
         tagline,
         overview,
     } = movie;
+
+    const { movieCredits } = state;
+
     const director = useMemo(() => setDirectorValue(movieCredits.crew), [
         movieCredits.crew,
     ]);
@@ -222,11 +212,12 @@ const Movie = () => {
         () => setReleaseCertificationValue(releaseDates, countryCode),
         [releaseDates, countryCode]
     );
+
     return (
         <>
-            {movie ? (
-                <div className='moviecard'>
-                    <div className='img-info'>
+            <div className='img-info'>
+                {movie ? (
+                    <>
                         <div className='posterdiv'>
                             {poster_path && (
                                 <img
@@ -377,163 +368,12 @@ const Movie = () => {
                                 )}
                             </div>
                         </div>
-                    </div>
-                    <div className='cast'>
-                        {movieCredits.cast &&
-                            movieCredits.cast.map((person) => {
-                                const {
-                                    id,
-                                    name,
-                                    profile_path,
-                                    character,
-                                } = person;
-                                const profile =
-                                    'https://image.tmdb.org/t/p/w500/' +
-                                    profile_path;
-                                return (
-                                    <PersonItem
-                                        key={id}
-                                        id={id}
-                                        name={name}
-                                        profile={profile}
-                                        character={character}
-                                    />
-                                );
-                            })}
-                    </div>
-                    {reviews && reviews.results && reviews.results.length > 0 && (
-                        <>
-                            <div className='reviews'>
-                                <h2 className='reviews-header'>Reviews</h2>
-                                <div id='reviews-div' className='reviews-div'>
-                                    {reviews &&
-                                        reviews.results &&
-                                        reviews.results.map((review) => {
-                                            const {
-                                                author,
-                                                author_details,
-                                                content,
-                                                created_at,
-                                                id,
-                                            } = review;
-                                            const {
-                                                avatar_path,
-                                                rating,
-                                            } = author_details;
-                                            return (
-                                                <ReviewItem
-                                                    author={author}
-                                                    avatarPath={avatar_path}
-                                                    content={content}
-                                                    createdAt={created_at}
-                                                    rating={rating}
-                                                    id={id}
-                                                />
-                                            );
-                                        })}
-                                </div>
+                    </>
+                ) : (
+                    <Loading />
+                )}
+            </div>
 
-                                <button
-                                    className='more-reviewsbtn-up reviewsbtn'
-                                    onClick={() => {
-                                        const firstReviewSize =
-                                            document
-                                                .querySelectorAll(
-                                                    '.reviews-div'
-                                                )[0]
-                                                .childNodes[0].clientHeight.toString() +
-                                            'px';
-                                        const childNodes = document.querySelectorAll(
-                                            '.reviews-div'
-                                        )[0].childNodes;
-                                        let acumulator = 0;
-                                        for (let i = 0; i < 3; i++) {
-                                            acumulator += childNodes[i]
-                                                ? childNodes[i].clientHeight
-                                                : 0;
-                                        }
-                                        const firstThreeReviewsSize =
-                                            acumulator.toString() + 'px';
-
-                                        switch (
-                                            document.getElementById(
-                                                'reviews-div'
-                                            ).style.height
-                                        ) {
-                                            case firstThreeReviewsSize:
-                                                document.getElementById(
-                                                    'reviews-div'
-                                                ).style.height = firstReviewSize;
-                                                document.getElementById(
-                                                    'reviews-div'
-                                                ).style.overflow = 'visible';
-                                                break;
-                                            case firstReviewSize:
-                                                document.getElementById(
-                                                    'reviews-div'
-                                                ).style.height = '0';
-                                                document.getElementById(
-                                                    'reviews-div'
-                                                ).style.overflow = 'visible';
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    }}
-                                >
-                                    <i className='fas fa-caret-up fa-1x'></i>
-                                </button>
-                                <button
-                                    className='more-reviewsbtn-down reviewsbtn'
-                                    onClick={() => {
-                                        const firstReviewSize =
-                                            document
-                                                .querySelectorAll(
-                                                    '.reviews-div'
-                                                )[0]
-                                                .childNodes[0].clientHeight.toString() +
-                                            'px';
-                                        const childNodes = document.querySelectorAll(
-                                            '.reviews-div'
-                                        )[0].childNodes;
-                                        let acumulator = 0;
-                                        for (let i = 0; i < 3; i++) {
-                                            acumulator += childNodes[i]
-                                                ? childNodes[i].clientHeight
-                                                : 0;
-                                        }
-                                        const firstThreeReviewsSize =
-                                            acumulator.toString() + 'px';
-                                        if (
-                                            !document.getElementById(
-                                                'reviews-div'
-                                            ).style.height ||
-                                            document.getElementById(
-                                                'reviews-div'
-                                            ).style.height === '0px'
-                                        ) {
-                                            document.getElementById(
-                                                'reviews-div'
-                                            ).style.height = firstReviewSize;
-                                        } else {
-                                            document.getElementById(
-                                                'reviews-div'
-                                            ).style.height = firstThreeReviewsSize;
-                                            document.getElementById(
-                                                'reviews-div'
-                                            ).style.overflow = 'auto';
-                                        }
-                                    }}
-                                >
-                                    <i className='fas fa-caret-down fa-1x'></i>
-                                </button>
-                            </div>
-                        </>
-                    )}
-                </div>
-            ) : (
-                <Loading />
-            )}
             {displayTrailer && movieVideos && movieVideos.length > 0 && (
                 <div className='trailer-div'>
                     <iframe
@@ -559,4 +399,4 @@ const Movie = () => {
     );
 };
 
-export default Movie;
+export default InfoCard;

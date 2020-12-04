@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Components/Header';
 import MovieTvList from './Components/Movie_tvlist';
 import PeopleList from './Components/PeopleList';
-import Movie from './Components/Movie';
+import Movie from './Components/Movie-site/Movie';
 import Tv from './Components/Tv';
 import Person from './Components/Person';
 import Error from './Components/Error';
@@ -23,7 +23,7 @@ function App() {
     const [state, dispatch] = useReducer(GlobalReducer, defaultState);
 
     return (
-        <Router>
+        <Router forceRefresh={true}>
             <GlobalContext.Provider
                 value={{ dispatch: dispatch, state: state }}
             >

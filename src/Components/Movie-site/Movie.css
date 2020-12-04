@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap');
+
+* {
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+.moviecard {
+    background-color: rgba(255, 255, 255, 0.768);
+    border-radius: 4px;
+    padding: 2rem;
+    display: grid;
+    grid-gap: 1rem;
+    width: 100vw;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.cast-div {
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.cast-header {
+    width: 100%;
+    padding: 0 0 0 1rem;
+    margin: 0;
+    margin-top: 0.5rem;
+    margin-bottom: -0.5rem;
+}
+
+.cast {
+    margin-top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    overflow: auto;
+    height: 30rem;
+}
+
+.reviews {
+    position: relative;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    overflow: hidden;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    display: grid;
+    grid-template-columns: 90% repeat(2, 5%);
+    grid-template-areas:
+        'header . .'
+        'reviews reviews reviews';
+}
+
+.reviews-div {
+    grid-area: reviews;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    height: 0;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.reviews-header {
+    grid-area: header;
+    width: 100%;
+    padding: 0 0 0 1rem;
+}
+
+.more-reviewsbtn-down {
+    position: absolute;
+    right: 0;
+}
+
+.more-reviewsbtn-up {
+    position: absolute;
+    right: 2rem;
+}
+
+.reviewsbtn {
+    height: 1.5rem;
+    border: none;
+    outline: none;
+    background-color: white;
+    bottom: 0;
+}

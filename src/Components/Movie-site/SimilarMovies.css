@@ -1,0 +1,19 @@
+.smilar-movies-div {
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.similar-movies {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    margin-bottom: 1rem;
+    overflow: auto;
+    height: 30rem;
+}
