@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useReducer, createContext } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PersonItem from '../PersonItem';
 import ReviewItem from '../ReviewItem';
 import SimilarMovies from './SimilarMovies';
@@ -40,11 +40,12 @@ const Movie = () => {
         <MovieContext.Provider value={{ dispatch: dispatch, state: state }}>
             <div className='moviecard'>
                 <InfoCard id={id} />
-                <div className='cast-div'>
-                    <h2 className='cast-header'>Cast</h2>
-                    <div className='cast'>
-                        {movieCredits.cast &&
-                            movieCredits.cast.map((person) => {
+
+                {movieCredits.cast && (
+                    <div className='cast-div'>
+                        <h2 className='cast-header'>Cast</h2>
+                        <div className='cast'>
+                            {movieCredits.cast.map((person) => {
                                 const {
                                     id,
                                     name,
@@ -64,8 +65,9 @@ const Movie = () => {
                                     />
                                 );
                             })}
+                        </div>
                     </div>
-                </div>
+                )}
                 {reviews && reviews.results && reviews.results.length > 0 && (
                     <>
                         <div className='reviews'>
@@ -93,6 +95,7 @@ const Movie = () => {
                                                 createdAt={created_at}
                                                 rating={rating}
                                                 id={id}
+                                                key={id}
                                             />
                                         );
                                     })}

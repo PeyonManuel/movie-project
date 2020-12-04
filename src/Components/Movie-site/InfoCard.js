@@ -4,7 +4,7 @@ import { MovieContext } from './Movie';
 import Loading from '../Loading';
 import './InfoCard.css';
 
-const InfoCard = ({ id }) => {
+const InfoCard = React.memo(({ id }) => {
     const [movie, setMovie] = useState([]);
     const [movieVideos, setMovieVideos] = useState([]);
     const [releaseDates, setReleaseDates] = useState([]);
@@ -212,12 +212,11 @@ const InfoCard = ({ id }) => {
         () => setReleaseCertificationValue(releaseDates, countryCode),
         [releaseDates, countryCode]
     );
-
     return (
         <>
-            <div className='img-info'>
-                {movie ? (
-                    <>
+            {movie ? (
+                <>
+                    <div className='img-info'>
                         <div className='posterdiv'>
                             {poster_path && (
                                 <img
@@ -368,11 +367,11 @@ const InfoCard = ({ id }) => {
                                 )}
                             </div>
                         </div>
-                    </>
-                ) : (
-                    <Loading />
-                )}
-            </div>
+                    </div>
+                </>
+            ) : (
+                <Loading />
+            )}
 
             {displayTrailer && movieVideos && movieVideos.length > 0 && (
                 <div className='trailer-div'>
@@ -397,6 +396,5 @@ const InfoCard = ({ id }) => {
             )}
         </>
     );
-};
-
+});
 export default InfoCard;

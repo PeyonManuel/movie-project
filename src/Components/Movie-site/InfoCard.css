@@ -7,6 +7,7 @@
     grid-gap: 1rem;
     grid-template-areas: 'img info';
     height: 25.5rem;
+    overflow: hidden;
 }
 
 .posterdiv {
@@ -26,8 +27,8 @@
     flex-wrap: wrap;
     flex-direction: row;
     align-content: flex-start;
-    height: 32rem;
     overflow: scroll;
+    margin-bottom: -1rem;
 }
 
 .title {
@@ -120,7 +121,7 @@
 .director-writer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
     grid-gap: 1rem;
     margin-top: 1rem;
     width: 100%;
