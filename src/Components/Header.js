@@ -128,7 +128,16 @@ const Header = () => {
                                           poster_path;
                                 return (
                                     <Link
-                                        to={'/' + media_type + '/' + id}
+                                        to={
+                                            '/' +
+                                            media_type +
+                                            '/' +
+                                            id +
+                                            '-' +
+                                            (title
+                                                ? title.split(' ').join('-')
+                                                : name.split(' ').join('-'))
+                                        }
                                         className={
                                             selectedOption === i
                                                 ? 'result selected'

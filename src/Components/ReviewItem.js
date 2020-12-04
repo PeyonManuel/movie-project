@@ -1,11 +1,33 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './ReviewItem.css';
+import Marked from 'marked';
 
-const ReviewItem = ({ author, avatarPath, content, createdAt, rating, id }) => {
+const ReviewItem = ({
+    author,
+    avatarPath,
+    content,
+    createdAt,
+    rating,
+    id,
+    index,
+}) => {
     const [image, setImage] = useState(
         'https://image.tmdb.org/t/p/w500' + avatarPath
     );
+    const [readMore, setReadMore] = useState(false);
+
+    useEffect(() => {
+        const childNodes = document.querySelectorAll('.reviews-div')[0]
+            .childNodes;
+        let acumulator = 0;
+        for (let i = 0; i < 3; i++) {
+            acumulator += childNodes[i] ? childNodes[i].clientHeight : 0;
+        }
+        document.getElementById('reviews-div').style.height =
+            acumulator.toString() + 'px';
+    }, [readMore]); // eslint-disable-line react-hooks/exhaustive-deps
+
     const months = [
         'January',
         'February',
@@ -54,7 +76,33 @@ const ReviewItem = ({ author, avatarPath, content, createdAt, rating, id }) => {
             )}
 
             {content && (
-                <pre className='content'>{content.slice(0, 450) + '...'}</pre>
+                <pre
+                    className='content'
+                    dangerouslySetInnerHTML={{
+                        __html:
+                            !readMore && Marked(content).length > 500
+                                ? Marked(content).slice(0, 500) + '...'
+                                : Marked(content),
+                    }}
+                ></pre>
+            )}
+            {Marked(content).length > 500 && (
+                <button
+                    id='readbtn'
+                    className='readbtn'
+                    onClick={() => {
+                        setReadMore(!readMore);
+                        document.getElementsByClassName('readbtn')[
+                            index
+                        ].innerHTML =
+                            document.getElementsByClassName('readbtn')[index]
+                                .innerHTML === 'Read more'
+                                ? 'Read less'
+                                : 'Read more';
+                    }}
+                >
+                    Read more
+                </button>
             )}
         </div>
     );

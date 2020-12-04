@@ -17,8 +17,8 @@ const Movie = () => {
     };
 
     const [state, dispatch] = useReducer(MovieReducer, defaultState);
-
     const [reviews, setReviews] = useState({});
+    const [reviewSize, setReviewSize] = useState(0);
 
     const { id } = useParams();
 
@@ -75,7 +75,7 @@ const Movie = () => {
                             <div id='reviews-div' className='reviews-div'>
                                 {reviews &&
                                     reviews.results &&
-                                    reviews.results.map((review) => {
+                                    reviews.results.map((review, i) => {
                                         const {
                                             author,
                                             author_details,
@@ -96,6 +96,7 @@ const Movie = () => {
                                                 rating={rating}
                                                 id={id}
                                                 key={id}
+                                                index={i}
                                             />
                                         );
                                     })}
@@ -167,6 +168,7 @@ const Movie = () => {
                                     }
                                     const firstThreeReviewsSize =
                                         acumulator.toString() + 'px';
+                                    console.log(firstReviewSize);
                                     if (
                                         !document.getElementById('reviews-div')
                                             .style.height ||

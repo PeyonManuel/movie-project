@@ -9,7 +9,14 @@ const MovieTvItem = React.memo(
         return (
             <div className='movietv'>
                 <Link
-                    to={(mediaType === 'movie' ? '/movie/' : '/tv/') + id}
+                    to={
+                        '/' +
+                        mediaType +
+                        '/' +
+                        id +
+                        '-' +
+                        title.split(' ').join('-')
+                    }
                     className='link img'
                 >
                     <div className='imgdiv'>
@@ -24,7 +31,17 @@ const MovieTvItem = React.memo(
                         />
                     </div>
                 </Link>
-                <Link to={'/' + mediaType + '/' + id} className='link title'>
+                <Link
+                    to={
+                        '/' +
+                        mediaType +
+                        '/' +
+                        id +
+                        '-' +
+                        title.split(' ').join('-')
+                    }
+                    className='link title'
+                >
                     <h2>{title}</h2>
                 </Link>
                 <h3
