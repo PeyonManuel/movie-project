@@ -97,6 +97,7 @@ const Movie = () => {
                                                 id={id}
                                                 key={id}
                                                 index={i}
+                                                size={reviewSize}
                                             />
                                         );
                                     })}
@@ -133,6 +134,8 @@ const Movie = () => {
                                             document.getElementById(
                                                 'reviews-div'
                                             ).style.overflow = 'visible';
+                                            setReviewSize(1);
+
                                             break;
                                         case firstReviewSize:
                                             document.getElementById(
@@ -141,6 +144,8 @@ const Movie = () => {
                                             document.getElementById(
                                                 'reviews-div'
                                             ).style.overflow = 'visible';
+                                            setReviewSize(0);
+
                                             break;
                                         default:
                                             break;
@@ -168,7 +173,6 @@ const Movie = () => {
                                     }
                                     const firstThreeReviewsSize =
                                         acumulator.toString() + 'px';
-                                    console.log(firstReviewSize);
                                     if (
                                         !document.getElementById('reviews-div')
                                             .style.height ||
@@ -178,6 +182,7 @@ const Movie = () => {
                                         document.getElementById(
                                             'reviews-div'
                                         ).style.height = firstReviewSize;
+                                        setReviewSize(1);
                                     } else {
                                         document.getElementById(
                                             'reviews-div'
@@ -185,6 +190,7 @@ const Movie = () => {
                                         document.getElementById(
                                             'reviews-div'
                                         ).style.overflow = 'auto';
+                                        setReviewSize(2);
                                     }
                                 }}
                             >

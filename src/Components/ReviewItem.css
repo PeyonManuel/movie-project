@@ -7,6 +7,7 @@
         '. readbtn';
     width: 100%;
     overflow: hidden;
+    transition: 0.5s;
 }
 
 .img-div {

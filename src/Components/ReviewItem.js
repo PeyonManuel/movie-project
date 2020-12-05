@@ -11,13 +11,14 @@ const ReviewItem = ({
     rating,
     id,
     index,
+    size,
 }) => {
     const [image, setImage] = useState(
         'https://image.tmdb.org/t/p/w500' + avatarPath
     );
     const [readMore, setReadMore] = useState(false);
 
-    useEffect(() => {
+    const setSizeToFirstThreeReviewsSize = () => {
         const childNodes = document.querySelectorAll('.reviews-div')[0]
             .childNodes;
         let acumulator = 0;
@@ -26,7 +27,47 @@ const ReviewItem = ({
         }
         document.getElementById('reviews-div').style.height =
             acumulator.toString() + 'px';
+    };
+
+    const setSizeToFirstReviewSize = () => {
+        document.getElementById('reviews-div').style.height =
+            document
+                .querySelectorAll('.reviews-div')[0]
+                .childNodes[0].clientHeight.toString() + 'px';
+    };
+
+    const setSizeToZero = () => {
+        document.getElementById('reviews-div').style.height = '0px';
+    };
+
+    useEffect(() => {
+        switch (size) {
+            case 0:
+                setSizeToZero();
+                break;
+            case 1:
+                setSizeToFirstReviewSize();
+                break;
+            case 2:
+                setSizeToFirstThreeReviewsSize();
+                break;
+            default:
+                break;
+        }
     }, [readMore]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        switch (size) {
+            case 0:
+                setReadMore(false);
+                break;
+            case 1:
+                setReadMore(false);
+                break;
+            default:
+                break;
+        }
+    }, [size]);
 
     const months = [
         'January',
@@ -65,7 +106,7 @@ const ReviewItem = ({
                     </h2>
                     {createdAt && (
                         <h6 className='createdat'>
-                            {months[parseInt(createdAt.split('-')[1])] +
+                            {months[parseInt(createdAt.split('-')[1]) - 1] +
                                 ' ' +
                                 parseInt(createdAt.split('-')[2]) +
                                 ', ' +
@@ -92,16 +133,9 @@ const ReviewItem = ({
                     className='readbtn'
                     onClick={() => {
                         setReadMore(!readMore);
-                        document.getElementsByClassName('readbtn')[
-                            index
-                        ].innerHTML =
-                            document.getElementsByClassName('readbtn')[index]
-                                .innerHTML === 'Read more'
-                                ? 'Read less'
-                                : 'Read more';
                     }}
                 >
-                    Read more
+                    {readMore ? 'Read less' : 'Read more'}
                 </button>
             )}
         </div>
