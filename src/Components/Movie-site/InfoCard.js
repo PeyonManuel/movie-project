@@ -5,7 +5,6 @@ import Loading from '../Loading';
 import './InfoCard.css';
 
 const InfoCard = React.memo(({ id }) => {
-    const [movie, setMovie] = useState([]);
     const [movieVideos, setMovieVideos] = useState([]);
     const [releaseDates, setReleaseDates] = useState([]);
     const [countryCode, setCountryCode] = useState([]);
@@ -13,6 +12,8 @@ const InfoCard = React.memo(({ id }) => {
     const [displayTrailer, setDisplayTrailer] = useState(false);
 
     const { dispatch, state } = useContext(MovieContext);
+
+    const { movie } = state;
 
     const wrapperRef = useRef(null);
 
@@ -31,16 +32,6 @@ const InfoCard = React.memo(({ id }) => {
     }, []);
 
     useEffect(() => {
-        fetch(
-            'https://api.themoviedb.org/3/movie/' +
-                id +
-                '?api_key=' +
-                '792dde4161d1a8ae31ac0fa85780d7fc' +
-                '&language=en-US'
-        )
-            .then((response) => response.json())
-            .then((data) => setMovie(data));
-
         fetch(
             'https://api.themoviedb.org/3/movie/' +
                 id +

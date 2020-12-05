@@ -66,8 +66,9 @@
     color: rgb(60, 60, 60);
 }
 
-.content > p {
+.content > * {
     margin: 0.2rem;
+    padding: 0;
 }
 
 .readbtn {

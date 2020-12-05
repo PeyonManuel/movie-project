@@ -8,17 +8,7 @@ const MovieTvItem = React.memo(
         console.log('hi2');
         return (
             <div className='movietv'>
-                <Link
-                    to={
-                        '/' +
-                        mediaType +
-                        '/' +
-                        id +
-                        '-' +
-                        title.split(' ').join('-')
-                    }
-                    className='link img'
-                >
+                <Link to={'/' + mediaType + '/' + id} className='link img'>
                     <div className='imgdiv'>
                         <img
                             src={posterSrc}
@@ -31,17 +21,7 @@ const MovieTvItem = React.memo(
                         />
                     </div>
                 </Link>
-                <Link
-                    to={
-                        '/' +
-                        mediaType +
-                        '/' +
-                        id +
-                        '-' +
-                        title.split(' ').join('-')
-                    }
-                    className='link title'
-                >
+                <Link to={'/' + mediaType + '/' + id} className='link title'>
                     <h2>{title}</h2>
                 </Link>
                 <h3

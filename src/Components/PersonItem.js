@@ -10,15 +10,7 @@ const Person = React.memo(({ id, name, profile, character }) => {
             {id && (
                 <>
                     <div className='person' key={id}>
-                        <Link
-                            className='link img'
-                            to={
-                                '/person/' +
-                                id +
-                                '-' +
-                                name.split(' ').join('-')
-                            }
-                        >
+                        <Link className='link img' to={'/person/' + id}>
                             <img
                                 src={profilePath}
                                 alt={name + ' profile'}
@@ -30,15 +22,7 @@ const Person = React.memo(({ id, name, profile, character }) => {
                             />
                         </Link>
                         <div className='name-character'>
-                            <Link
-                                className='link name'
-                                to={
-                                    '/person/' +
-                                    id +
-                                    '-' +
-                                    name.split(' ').join('-')
-                                }
-                            >
+                            <Link className='link name' to={'/person/' + id}>
                                 <h2 className='name'>{name}</h2>
                             </Link>
                             {character && (

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import PersonItem from '../PersonItem';
 import ReviewItem from '../ReviewItem';
 import SimilarMovies from './SimilarMovies';
+import Details from './Details';
 import InfoCard from './InfoCard';
 import MovieReducer from './MovieReducer';
 
@@ -13,6 +14,7 @@ export const MovieContext = createContext();
 
 const Movie = () => {
     const defaultState = {
+        movie: [],
         movieCredits: [],
     };
 
@@ -33,6 +35,15 @@ const Movie = () => {
         )
             .then((response) => response.json())
             .then((data) => setReviews(data));
+        fetch(
+            'https://api.themoviedb.org/3/movie/' +
+                id +
+                '?api_key=' +
+                '792dde4161d1a8ae31ac0fa85780d7fc' +
+                '&language=en-US'
+        )
+            .then((response) => response.json())
+            .then((data) => dispatch({ type: 'SET_MOVIE', payload: data }));
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const { movieCredits } = state;
@@ -199,6 +210,7 @@ const Movie = () => {
                         </div>
                     </>
                 )}
+                <Details />
                 <SimilarMovies id={id} />
             </div>
         </MovieContext.Provider>
