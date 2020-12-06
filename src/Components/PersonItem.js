@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './PersonItem.css';
 
-const Person = React.memo(({ id, name, profile, character }) => {
+const Person = React.memo(({ id, name, profile, character, episodeCount }) => {
     const [profilePath, setProfilePath] = useState(profile);
     return (
         <>
@@ -26,7 +26,17 @@ const Person = React.memo(({ id, name, profile, character }) => {
                                 <h2 className='name'>{name}</h2>
                             </Link>
                             {character && (
-                                <h3 className='character'>{character}</h3>
+                                <h3 className='character'>
+                                    {character.length > 30
+                                        ? character.slice(0, 30) + '...'
+                                        : character}
+                                </h3>
+                            )}
+                            {episodeCount && (
+                                <h4 className='tv-episode-count'>
+                                    {' '}
+                                    {'Episode count (' + episodeCount + ')'}
+                                </h4>
                             )}
                         </div>
                     </div>

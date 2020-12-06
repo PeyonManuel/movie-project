@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { useParams } from 'react-router-dom';
 import TvReducer from './TvReducer';
-// import InfoCard from './InfoCard';
+import TvInfoCard from './TvInfoCard';
 import './Tv.css';
 
 const PersonItem = lazy(() => import('../PersonItem'));
@@ -28,14 +28,34 @@ const Tv = () => {
     const [state, dispatch] = useReducer(TvReducer, defaultState);
     const [reviews, setReviews] = useState({});
     const [reviewSize, setReviewSize] = useState(0);
+    const [displayAllCast, setDisplayAllCast] = useState(false);
 
     const { id } = useParams();
+
+    const castComponent = (cast) => {
+        return cast.map((person) => {
+            const { id, name, profile_path, roles } = person;
+            const profile = 'https://image.tmdb.org/t/p/w500/' + profile_path;
+            return (
+                <PersonItem
+                    key={id}
+                    id={id}
+                    name={name}
+                    profile={profile}
+                    character={roles.map((role) => role.character).join(', ')}
+                    episodeCount={roles
+                        .map((role) => role.episode_count)
+                        .join(', ')}
+                />
+            );
+        });
+    };
 
     useEffect(() => {
         fetch(
             'https://api.themoviedb.org/3/tv/' +
                 id +
-                '/credits' +
+                '/aggregate_credits' +
                 '?api_key=' +
                 '792dde4161d1a8ae31ac0fa85780d7fc' +
                 '&language=en-US'
@@ -69,33 +89,34 @@ const Tv = () => {
     return (
         <TvContext.Provider value={{ dispatch: dispatch, state: state }}>
             <div className='tvcard'>
-                {/* <InfoCard id={id} /> */}
+                <TvInfoCard id={id} />
 
                 {tvCredits.cast && (
                     <div className='cast-div'>
                         <h2 className='cast-header'>Cast</h2>
                         <Suspense fallback={<h3>Loading...</h3>}>
                             <div className='cast'>
-                                {tvCredits.cast.map((person) => {
-                                    const {
-                                        id,
-                                        name,
-                                        profile_path,
-                                        character,
-                                    } = person;
-                                    const profile =
-                                        'https://image.tmdb.org/t/p/w500/' +
-                                        profile_path;
-                                    return (
-                                        <PersonItem
-                                            key={id}
-                                            id={id}
-                                            name={name}
-                                            profile={profile}
-                                            character={character}
-                                        />
-                                    );
-                                })}
+                                {
+                                    <>
+                                        {castComponent(
+                                            tvCredits.cast.slice(0, 30)
+                                        )}{' '}
+                                        {!displayAllCast ? (
+                                            <button
+                                                className='load-all-castbtn'
+                                                onClick={() =>
+                                                    setDisplayAllCast(true)
+                                                }
+                                            >
+                                                Load all
+                                            </button>
+                                        ) : (
+                                            castComponent(
+                                                tvCredits.cast.slice(30)
+                                            )
+                                        )}{' '}
+                                    </>
+                                }
                             </div>
                         </Suspense>
                     </div>

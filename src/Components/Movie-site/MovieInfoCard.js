@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState, useEffect, useRef, useMemo, useContext } from 'react';
 import { MovieContext } from './Movie';
-import './InfoCard.css';
+import './MovieInfoCard.css';
 
-const InfoCard = React.memo(({ id }) => {
+const MovieInfoCard = React.memo(({ id }) => {
     const [movieVideos, setMovieVideos] = useState([]);
     const [releaseDates, setReleaseDates] = useState([]);
     const [countryCode, setCountryCode] = useState([]);
@@ -11,9 +11,9 @@ const InfoCard = React.memo(({ id }) => {
     const [displayTrailer, setDisplayTrailer] = useState(false);
     const [displayInfo, setDisplayInfo] = useState(false);
 
-    const { dispatch, state } = useContext(MovieContext);
+    const { state } = useContext(MovieContext);
 
-    const { movie } = state;
+    const { movie, movieCredits } = state;
 
     const wrapperRef = useRef(null);
 
@@ -32,8 +32,6 @@ const InfoCard = React.memo(({ id }) => {
     }, []);
 
     useEffect(() => {
-        
-
         fetch(
             'https://api.themoviedb.org/3/movie/' +
                 id +
@@ -165,8 +163,6 @@ const InfoCard = React.memo(({ id }) => {
         tagline,
         overview,
     } = movie;
-
-    const { movieCredits } = state;
 
     const director = useMemo(() => setDirectorValue(movieCredits.crew), [
         movieCredits.crew,
@@ -387,4 +383,4 @@ const InfoCard = React.memo(({ id }) => {
         </>
     );
 });
-export default InfoCard;
+export default MovieInfoCard;

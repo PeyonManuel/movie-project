@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { useParams } from 'react-router-dom';
 import MovieReducer from './MovieReducer';
-import InfoCard from './InfoCard';
+import MovieInfoCard from './MovieInfoCard';
 import './Movie.css';
 
 const PersonItem = lazy(() => import('../PersonItem'));
@@ -69,7 +69,7 @@ const Movie = () => {
     return (
         <MovieContext.Provider value={{ dispatch: dispatch, state: state }}>
             <div className='moviecard'>
-                <InfoCard id={id} />
+                <MovieInfoCard id={id} />
 
                 {movieCredits.cast && (
                     <div className='cast-div'>
