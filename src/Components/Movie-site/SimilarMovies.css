@@ -16,14 +16,14 @@
 .similar-header > h2 {
     margin: 0.5rem 0 -0.5rem 1rem;
 }
-.selected {
+.selectedop {
     background-color: white;
     position: relative;
     display: inline-block;
     text-align: center;
 }
 
-.selected::after {
+.selectedop::after {
     content: '';
     position: absolute;
     display: inline-block;
@@ -36,7 +36,7 @@
     transition: 0.3s ease all 0.1s;
 }
 
-.selected:hover::after {
+.selectedop:hover::after {
     width: 100%;
     left: 0;
     transition: 0.4s ease all;

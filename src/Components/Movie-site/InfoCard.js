@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef, useMemo, useContext } from 'react';
 import { MovieContext } from './Movie';
-import Loading from '../Loading';
 import './InfoCard.css';
 
 const InfoCard = React.memo(({ id }) => {
@@ -10,6 +9,7 @@ const InfoCard = React.memo(({ id }) => {
     const [countryCode, setCountryCode] = useState([]);
     const [releaseCode, setReleaseCode] = useState('');
     const [displayTrailer, setDisplayTrailer] = useState(false);
+    const [displayInfo, setDisplayInfo] = useState(false);
 
     const { dispatch, state } = useContext(MovieContext);
 
@@ -32,18 +32,7 @@ const InfoCard = React.memo(({ id }) => {
     }, []);
 
     useEffect(() => {
-        fetch(
-            'https://api.themoviedb.org/3/movie/' +
-                id +
-                '/credits' +
-                '?api_key=' +
-                '792dde4161d1a8ae31ac0fa85780d7fc' +
-                '&language=en-US'
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                dispatch({ type: 'SET_MOVIE_CREDITS', payload: data });
-            });
+        
 
         fetch(
             'https://api.themoviedb.org/3/movie/' +
@@ -205,164 +194,174 @@ const InfoCard = React.memo(({ id }) => {
     );
     return (
         <>
-            {movie ? (
-                <>
-                    <div className='img-info'>
-                        <div className='posterdiv'>
-                            {poster_path && (
-                                <img
-                                    src={
-                                        'https://image.tmdb.org/t/p/w500/' +
-                                        poster_path
-                                    }
-                                    alt={title + ' poster'}
-                                />
+            <div className='img-info'>
+                <div className='posterdiv'>
+                    {poster_path && (
+                        <img
+                            src={
+                                'https://image.tmdb.org/t/p/w500/' + poster_path
+                            }
+                            alt={title + ' poster'}
+                            onLoad={() => setDisplayInfo(true)}
+                        />
+                    )}
+                </div>
+                {displayInfo && (
+                    <div className='infocard'>
+                        <h1 className='title'>
+                            {title}
+                            {release_date && (
+                                <span className='gray'>
+                                    {' (' + release_date.split('-')[0] + ')'}
+                                </span>
+                            )}
+                        </h1>
+                        <div className='tec-info'>
+                            {releaseCertification && (
+                                <>
+                                    <h5 className='certification'>
+                                        {releaseCertification.certification &&
+                                            releaseCertification.certification}
+                                    </h5>
+                                    <h5>•</h5>
+                                </>
+                            )}
+                            {releaseDate && (
+                                <>
+                                    <h5>
+                                        {releaseDate.release_date.split(
+                                            'T'
+                                        )[0] +
+                                            (releaseCode &&
+                                                ' (' + releaseCode + ')')}
+                                    </h5>
+                                </>
+                            )}
+                            {genres && (
+                                <>
+                                    <h5>•</h5>
+                                    <h5>
+                                        {genres
+                                            .map((genre) => genre.name)
+                                            .join(', ')}
+                                    </h5>
+                                </>
+                            )}
+                            {runtime > 0 && (
+                                <>
+                                    <h5>•</h5>
+                                    <h5 className='runtime'>
+                                        {Math.floor(runtime / 60) / 60 > 0 &&
+                                            Math.floor(runtime / 60) + 'h'}
+                                        {(runtime % 60) + 'm'}
+                                    </h5>
+                                </>
                             )}
                         </div>
-                        <div className='infocard'>
-                            <h1 className='title'>
-                                {title}
-                                {release_date && (
-                                    <span className='gray'>
-                                        {' (' +
-                                            release_date.split('-')[0] +
-                                            ')'}
-                                    </span>
-                                )}
-                            </h1>
-                            <div className='tec-info'>
-                                {releaseCertification && (
-                                    <>
-                                        <h5 className='certification'>
-                                            {releaseCertification.certification &&
-                                                releaseCertification.certification}
-                                        </h5>
-                                        <h5>•</h5>
-                                    </>
-                                )}
-                                {releaseDate && (
-                                    <>
-                                        <h5>
-                                            {releaseDate.release_date.split(
-                                                'T'
-                                            )[0] +
-                                                (releaseCode &&
-                                                    ' (' + releaseCode + ')')}
-                                        </h5>
-                                    </>
-                                )}
-                                {genres && (
-                                    <>
-                                        <h5>•</h5>
-                                        <h5>
-                                            {genres
-                                                .map((genre) => genre.name)
-                                                .join(', ')}
-                                        </h5>
-                                    </>
-                                )}
-                                {runtime > 0 && (
-                                    <>
-                                        <h5>•</h5>
-                                        <h5 className='runtime'>
-                                            {Math.floor(runtime / 60) / 60 >
-                                                0 &&
-                                                Math.floor(runtime / 60) + 'h'}
-                                            {(runtime % 60) + 'm'}
-                                        </h5>
-                                    </>
+                        {vote_average > 0 ? (
+                            <div className='vote-trailer'>
+                                <div className='vote'>
+                                    <i className='fas fa-star fa-2x'></i>{' '}
+                                    <div className='vote-numbers'>
+                                        <div className='average'>
+                                            <h4>{' ' + vote_average}</h4>
+                                            <p>/10</p>
+                                        </div>
+                                        <p>{vote_count}</p>
+                                    </div>
+                                </div>
+                                {movieVideos && movieVideos.length > 0 && (
+                                    <h5
+                                        className='watch-trailer'
+                                        onClick={() => setDisplayTrailer(true)}
+                                    >
+                                        <i className='fas fa-play'></i>
+                                        {' Watch trailer'}
+                                    </h5>
                                 )}
                             </div>
-                            {vote_average && (
+                        ) : (
+                            title && (
                                 <div className='vote-trailer'>
                                     <div className='vote'>
                                         <i className='fas fa-star fa-2x'></i>{' '}
                                         <div className='vote-numbers'>
                                             <div className='average'>
-                                                <h4>{' ' + vote_average}</h4>
-                                                <p>/10</p>
+                                                <h4
+                                                    style={{
+                                                        marginTop: '0.4rem',
+                                                    }}
+                                                >
+                                                    NYR
+                                                </h4>
                                             </div>
-                                            <p>{vote_count}</p>
                                         </div>
                                     </div>
-                                    {movieVideos && movieVideos.length > 0 && (
-                                        <h5
-                                            className='watch-trailer'
-                                            onClick={() =>
-                                                setDisplayTrailer(true)
-                                            }
-                                        >
-                                            <i className='fas fa-play'></i>
-                                            {' Watch trailer'}
-                                        </h5>
-                                    )}
                                 </div>
+                            )
+                        )}
+                        <h4 className='tagline'>{tagline}</h4>
+                        {overview && (
+                            <pre className='description'>
+                                <h4>Overview</h4>
+                                {overview}
+                            </pre>
+                        )}
+                        <div className='director-writer'>
+                            {director.length > 0 && (
+                                <p>
+                                    <b>Director </b> <br />
+                                    <span>
+                                        {director
+                                            .map((dir) => dir.name)
+                                            .join(', ')}
+                                    </span>
+                                </p>
                             )}
-                            <h4 className='tagline'>{tagline}</h4>
-                            {overview && (
-                                <pre className='description'>
-                                    <h4>Overview</h4>
-                                    {overview}
-                                </pre>
+                            {writer.length > 0 && (
+                                <p>
+                                    <b>Writer </b> <br />
+                                    <span>
+                                        {writer
+                                            .map((wri) => wri.name)
+                                            .join(', ')}
+                                    </span>
+                                </p>
                             )}
-                            <div className='director-writer'>
-                                {director.length > 0 && (
-                                    <p>
-                                        <b>Director </b> <br />
-                                        <span>
-                                            {director
-                                                .map((dir) => dir.name)
-                                                .join(', ')}
-                                        </span>
-                                    </p>
-                                )}
-                                {writer.length > 0 && (
-                                    <p>
-                                        <b>Writer </b> <br />
-                                        <span>
-                                            {writer
-                                                .map((wri) => wri.name)
-                                                .join(', ')}
-                                        </span>
-                                    </p>
-                                )}
-                                {screenplay.length > 0 && (
-                                    <p>
-                                        <b>Screenplay </b> <br />
-                                        <span>
-                                            {screenplay
-                                                .map((scr) => scr.name)
-                                                .join(', ')}
-                                        </span>
-                                    </p>
-                                )}
-                                {characters.length > 0 && (
-                                    <p>
-                                        <b>Characters </b> <br />
-                                        <span>
-                                            {characters
-                                                .map((char) => char.name)
-                                                .join(', ')}
-                                        </span>
-                                    </p>
-                                )}
-                                {novel.length > 0 && (
-                                    <p>
-                                        <b>Novel </b> <br />
-                                        <span>
-                                            {novel
-                                                .map((nov) => nov.name)
-                                                .join(', ')}
-                                        </span>
-                                    </p>
-                                )}
-                            </div>
+                            {screenplay.length > 0 && (
+                                <p>
+                                    <b>Screenplay </b> <br />
+                                    <span>
+                                        {screenplay
+                                            .map((scr) => scr.name)
+                                            .join(', ')}
+                                    </span>
+                                </p>
+                            )}
+                            {characters.length > 0 && (
+                                <p>
+                                    <b>Characters </b> <br />
+                                    <span>
+                                        {characters
+                                            .map((char) => char.name)
+                                            .join(', ')}
+                                    </span>
+                                </p>
+                            )}
+                            {novel.length > 0 && (
+                                <p>
+                                    <b>Novel </b> <br />
+                                    <span>
+                                        {novel
+                                            .map((nov) => nov.name)
+                                            .join(', ')}
+                                    </span>
+                                </p>
+                            )}
                         </div>
                     </div>
-                </>
-            ) : (
-                <Loading />
-            )}
+                )}
+            </div>
 
             {displayTrailer && movieVideos && movieVideos.length > 0 && (
                 <div className='trailer-div'>

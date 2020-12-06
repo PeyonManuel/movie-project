@@ -3,7 +3,7 @@ import Header from './Components/Header';
 import MovieTvList from './Components/Movie_tvlist';
 import PeopleList from './Components/PeopleList';
 import Movie from './Components/Movie-site/Movie';
-import Tv from './Components/Tv';
+import Tv from './Components/Tv-site/Tv';
 import Person from './Components/Person';
 import Error from './Components/Error';
 import { useReducer, createContext } from 'react';

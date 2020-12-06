@@ -52,7 +52,7 @@ const SimilarMovies = React.memo(({ id }) => {
                             <h2
                                 className={
                                     belongs_to_collection && selected === 0
-                                        ? 'selected'
+                                        ? 'selectedop'
                                         : ''
                                 }
                                 onClick={() => {
@@ -63,7 +63,9 @@ const SimilarMovies = React.memo(({ id }) => {
                             </h2>
                             {belongs_to_collection && (
                                 <h2
-                                    className={selected === 1 ? 'selected' : ''}
+                                    className={
+                                        selected === 1 ? 'selectedop' : ''
+                                    }
                                     onClick={() => {
                                         setSelected(1);
                                     }}

@@ -8,24 +8,24 @@ import {
     Suspense,
 } from 'react';
 import { useParams } from 'react-router-dom';
-import MovieReducer from './MovieReducer';
-import InfoCard from './InfoCard';
-import './Movie.css';
+import TvReducer from './TvReducer';
+// import InfoCard from './InfoCard';
+import './Tv.css';
 
 const PersonItem = lazy(() => import('../PersonItem'));
-const ReviewItem = lazy(() => import('./ReviewItem'));
-const Details = lazy(() => import('./Details'));
-const SimilarMovies = lazy(() => import('./SimilarMovies'));
+//const ReviewItem = lazy(() => import('./ReviewItem'));
+//const Details = lazy(() => import('./Details'));
+//const SimilarMovies = lazy(() => import('./SimilarMovies'));
 
-export const MovieContext = createContext();
+export const TvContext = createContext();
 
-const Movie = () => {
+const Tv = () => {
     const defaultState = {
-        movie: [],
-        movieCredits: [],
+        tv: [],
+        tvCredits: [],
     };
 
-    const [state, dispatch] = useReducer(MovieReducer, defaultState);
+    const [state, dispatch] = useReducer(TvReducer, defaultState);
     const [reviews, setReviews] = useState({});
     const [reviewSize, setReviewSize] = useState(0);
 
@@ -33,7 +33,7 @@ const Movie = () => {
 
     useEffect(() => {
         fetch(
-            'https://api.themoviedb.org/3/movie/' +
+            'https://api.themoviedb.org/3/tv/' +
                 id +
                 '/credits' +
                 '?api_key=' +
@@ -42,10 +42,10 @@ const Movie = () => {
         )
             .then((response) => response.json())
             .then((data) => {
-                dispatch({ type: 'SET_MOVIE_CREDITS', payload: data });
+                dispatch({ type: 'SET_TV_CREDITS', payload: data });
             });
         fetch(
-            'https://api.themoviedb.org/3/movie/' +
+            'https://api.themoviedb.org/3/tv/' +
                 id +
                 '/reviews' +
                 '?api_key=' +
@@ -55,28 +55,28 @@ const Movie = () => {
             .then((response) => response.json())
             .then((data) => setReviews(data));
         fetch(
-            'https://api.themoviedb.org/3/movie/' +
+            'https://api.themoviedb.org/3/tv/' +
                 id +
                 '?api_key=' +
                 '792dde4161d1a8ae31ac0fa85780d7fc' +
                 '&language=en-US'
         )
             .then((response) => response.json())
-            .then((data) => dispatch({ type: 'SET_MOVIE', payload: data }));
+            .then((data) => dispatch({ type: 'SET_TV', payload: data }));
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const { movieCredits } = state;
+    const { tvCredits } = state;
     return (
-        <MovieContext.Provider value={{ dispatch: dispatch, state: state }}>
-            <div className='moviecard'>
-                <InfoCard id={id} />
+        <TvContext.Provider value={{ dispatch: dispatch, state: state }}>
+            <div className='tvcard'>
+                {/* <InfoCard id={id} /> */}
 
-                {movieCredits.cast && (
+                {tvCredits.cast && (
                     <div className='cast-div'>
                         <h2 className='cast-header'>Cast</h2>
                         <Suspense fallback={<h3>Loading...</h3>}>
                             <div className='cast'>
-                                {movieCredits.cast.map((person) => {
+                                {tvCredits.cast.map((person) => {
                                     const {
                                         id,
                                         name,
@@ -100,11 +100,9 @@ const Movie = () => {
                         </Suspense>
                     </div>
                 )}
-                <Suspense fallback={<></>}>
-                    <Details />
-                </Suspense>
+                <Suspense fallback={<></>}>{/* <Details /> */}</Suspense>
 
-                {reviews && reviews.results && reviews.results.length > 0 && (
+                {/* {reviews && reviews.results && reviews.results.length > 0 && (
                     <>
                         <div className='reviews'>
                             <h2 className='reviews-header'>Reviews</h2>
@@ -235,13 +233,13 @@ const Movie = () => {
                             </button>
                         </div>
                     </>
-                )}
-                <Suspense fallback={<></>}>
+                )} */}
+                {/* <Suspense fallback={<></>}>
                     <SimilarMovies id={id} />
-                </Suspense>
+                </Suspense> */}
             </div>
-        </MovieContext.Provider>
+        </TvContext.Provider>
     );
 };
 
-export default Movie;
+export default Tv;

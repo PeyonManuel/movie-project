@@ -53,7 +53,7 @@ const Details = () => {
                                 </h5>
                             </div>
                         )}
-                        {budget && (
+                        {budget > 0 && (
                             <div>
                                 <h4 className='detail-item'>Budget</h4>
                                 <h5 className='detail-item detail-info'>
@@ -61,7 +61,7 @@ const Details = () => {
                                 </h5>
                             </div>
                         )}
-                        {revenue && (
+                        {revenue > 0 && (
                             <div>
                                 <h4 className='detail-item'>Revenue</h4>
                                 <h5 className='detail-item detail-info'>
