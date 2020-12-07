@@ -28,8 +28,25 @@ const Movie = () => {
     const [state, dispatch] = useReducer(MovieReducer, defaultState);
     const [reviews, setReviews] = useState({});
     const [reviewSize, setReviewSize] = useState(0);
+    const [displayAllCast, setDisplayAllCast] = useState(false);
 
     const { id } = useParams();
+
+    const castComponent = (cast) => {
+        return cast.map((person) => {
+            const { id, name, profile_path, character } = person;
+            const profile = 'https://image.tmdb.org/t/p/w500/' + profile_path;
+            return (
+                <PersonItem
+                    key={id}
+                    id={id}
+                    name={name}
+                    profile={profile}
+                    character={character}
+                />
+            );
+        });
+    };
 
     useEffect(() => {
         fetch(
@@ -76,26 +93,29 @@ const Movie = () => {
                         <h2 className='cast-header'>Cast</h2>
                         <Suspense fallback={<h3>Loading...</h3>}>
                             <div className='cast'>
-                                {movieCredits.cast.map((person) => {
-                                    const {
-                                        id,
-                                        name,
-                                        profile_path,
-                                        character,
-                                    } = person;
-                                    const profile =
-                                        'https://image.tmdb.org/t/p/w500/' +
-                                        profile_path;
-                                    return (
-                                        <PersonItem
-                                            key={id}
-                                            id={id}
-                                            name={name}
-                                            profile={profile}
-                                            character={character}
-                                        />
-                                    );
-                                })}
+                                {movieCredits.cast.length > 30 ? (
+                                    <>
+                                        {castComponent(
+                                            movieCredits.cast.slice(0, 30)
+                                        )}{' '}
+                                        {!displayAllCast ? (
+                                            <button
+                                                className='load-all-castbtn'
+                                                onClick={() =>
+                                                    setDisplayAllCast(true)
+                                                }
+                                            >
+                                                Load all
+                                            </button>
+                                        ) : (
+                                            castComponent(
+                                                movieCredits.cast.slice(30)
+                                            )
+                                        )}{' '}
+                                    </>
+                                ) : (
+                                    castComponent(movieCredits.cast)
+                                )}
                             </div>
                         </Suspense>
                     </div>
