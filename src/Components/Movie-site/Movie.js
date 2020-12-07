@@ -71,7 +71,7 @@ const Movie = () => {
             <div className='moviecard'>
                 <MovieInfoCard id={id} />
 
-                {movieCredits.cast && (
+                {movieCredits.cast && movieCredits.cast.length > 0 && (
                     <div className='cast-div'>
                         <h2 className='cast-header'>Cast</h2>
                         <Suspense fallback={<h3>Loading...</h3>}>
@@ -164,16 +164,6 @@ const Movie = () => {
                                         document.getElementById('reviews-div')
                                             .style.height
                                     ) {
-                                        case firstThreeReviewsSize:
-                                            document.getElementById(
-                                                'reviews-div'
-                                            ).style.height = firstReviewSize;
-                                            document.getElementById(
-                                                'reviews-div'
-                                            ).style.overflow = 'visible';
-                                            setReviewSize(1);
-
-                                            break;
                                         case firstReviewSize:
                                             document.getElementById(
                                                 'reviews-div'
@@ -182,8 +172,17 @@ const Movie = () => {
                                                 'reviews-div'
                                             ).style.overflow = 'visible';
                                             setReviewSize(0);
-
                                             break;
+                                        case firstThreeReviewsSize:
+                                            document.getElementById(
+                                                'reviews-div'
+                                            ).style.height = firstReviewSize;
+                                            document.getElementById(
+                                                'reviews-div'
+                                            ).style.overflow = 'visible';
+                                            setReviewSize(1);
+                                            break;
+
                                         default:
                                             break;
                                     }
