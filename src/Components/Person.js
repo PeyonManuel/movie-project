@@ -137,18 +137,23 @@ const Person = () => {
                     department.mediaType === item.media_type
             );
             return findingDepartment
-                ? filmographyDepartmentsObject[department][
+                ? (filmographyDepartmentsObject[department][
                       filmographyDepartmentsObject[department].indexOf(
                           findingDepartment
                       )
-                  ].job.push(item.job || item.character || 'Unknown')
+                  ].job.push(item.job || item.character || 'Unknown'),
+                  filmographyDepartmentsObject[department][
+                      filmographyDepartmentsObject[department].indexOf(
+                          findingDepartment
+                      )
+                  ].episodeCount.push(item.episode_count))
                 : filmographyDepartmentsObject[department].push({
                       id: item.id,
                       mediaType: item.media_type,
                       title: item.title || item.name || '-',
                       release: item.release_date || item.first_air_date,
                       job: [item.job || item.character || 'Unknown'],
-                      episodeCount: item.episode_count,
+                      episodeCount: [item.episode_count],
                   });
         });
     return (
@@ -305,9 +310,15 @@ const Person = () => {
                                                                 <b>{title}</b>
                                                             </Link>
                                                             <span className='episode-count'>
-                                                                {episodeCount &&
+                                                                {episodeCount.filter(
+                                                                    (count) =>
+                                                                        count &&
+                                                                        episodeCount
+                                                                ).length > 0 &&
                                                                     ' (' +
-                                                                        episodeCount +
+                                                                        episodeCount.join(
+                                                                            ', '
+                                                                        ) +
                                                                         (episodeCount >
                                                                         1
                                                                             ? ' Episodes)'

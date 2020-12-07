@@ -96,7 +96,7 @@ const Tv = () => {
                         <h2 className='cast-header'>Cast</h2>
                         <Suspense fallback={<h3>Loading...</h3>}>
                             <div className='cast'>
-                                {
+                                {tvCredits.cast.length > 30 ? (
                                     <>
                                         {castComponent(
                                             tvCredits.cast.slice(0, 30)
@@ -116,7 +116,9 @@ const Tv = () => {
                                             )
                                         )}{' '}
                                     </>
-                                }
+                                ) : (
+                                    castComponent(tvCredits.cast)
+                                )}
                             </div>
                         </Suspense>
                     </div>
