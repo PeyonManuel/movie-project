@@ -5,14 +5,17 @@ import './SimilarMovies.css';
 import { MovieContext } from './Movie';
 
 const SimilarMovies = React.memo(({ id }) => {
-    const [similarMovies, setSimilarMovies] = useState({});
+    const [similarMovies, setSimilarMovies] = useState([]);
     const [collectionMovies, setCollectionMovies] = useState([]);
     const [selected, setSelected] = useState(0);
+    const [loadedCollection, setLoadedCollection] = useState(false);
 
     const { state } = useContext(MovieContext);
     const { belongs_to_collection } = state.movie;
 
     useEffect(() => {
+        setSelected(0);
+        setLoadedCollection(false);
         fetch(
             'https://api.themoviedb.org/3/movie/' +
                 id +
@@ -27,9 +30,12 @@ const SimilarMovies = React.memo(({ id }) => {
                     .sort((a, b) => b.popularity - a.popularity)
                     .slice(0, 10);
                 setSimilarMovies(temporaryMovies);
+                console.log('fetching');
             });
+    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-        belongs_to_collection &&
+    useEffect(() => {
+        if ((!loadedCollection && selected === 1) || similarMovies.length < 0) {
             fetch(
                 'https://api.themoviedb.org/3/collection/' +
                     belongs_to_collection.id +
@@ -40,9 +46,10 @@ const SimilarMovies = React.memo(({ id }) => {
                 .then((response) => response.json())
                 .then((data) => {
                     setCollectionMovies(data.parts);
+                    setLoadedCollection(true);
                 });
-    }, [belongs_to_collection]); // eslint-disable-line react-hooks/exhaustive-deps
-
+        }
+    }, [selected]); // eslint-disable-line react-hooks/exhaustive-deps
     return (
         <>
             {similarMovies.length > 0 && (

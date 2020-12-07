@@ -13,9 +13,9 @@ import TvInfoCard from './TvInfoCard';
 import './Tv.css';
 
 const PersonItem = lazy(() => import('../PersonItem'));
-//const ReviewItem = lazy(() => import('./ReviewItem'));
+const TvReviewItem = lazy(() => import('./TvReviewItem'));
 //const Details = lazy(() => import('./Details'));
-//const SimilarMovies = lazy(() => import('./SimilarMovies'));
+const SimilarTvShows = lazy(() => import('./SimilarTvShows'));
 
 export const TvContext = createContext();
 
@@ -90,7 +90,6 @@ const Tv = () => {
         <TvContext.Provider value={{ dispatch: dispatch, state: state }}>
             <div className='tvcard'>
                 <TvInfoCard id={id} />
-
                 {tvCredits.cast && (
                     <div className='cast-div'>
                         <h2 className='cast-header'>Cast</h2>
@@ -124,8 +123,7 @@ const Tv = () => {
                     </div>
                 )}
                 <Suspense fallback={<></>}>{/* <Details /> */}</Suspense>
-
-                {/* {reviews && reviews.results && reviews.results.length > 0 && (
+                {reviews && reviews.results && reviews.results.length > 0 && (
                     <>
                         <div className='reviews'>
                             <h2 className='reviews-header'>Reviews</h2>
@@ -146,7 +144,7 @@ const Tv = () => {
                                                 rating,
                                             } = author_details;
                                             return (
-                                                <ReviewItem
+                                                <TvReviewItem
                                                     author={author}
                                                     avatarPath={avatar_path}
                                                     content={content}
@@ -256,10 +254,10 @@ const Tv = () => {
                             </button>
                         </div>
                     </>
-                )} */}
-                {/* <Suspense fallback={<></>}>
-                    <SimilarMovies id={id} />
-                </Suspense> */}
+                )}{' '}
+                <Suspense fallback={<></>}>
+                    <SimilarTvShows id={id} />
+                </Suspense>
             </div>
         </TvContext.Provider>
     );

@@ -6,6 +6,7 @@ import './TvInfoCard.css';
 const TvInfoCard = React.memo(({ id }) => {
     const [tvVideos, setTvVideos] = useState([]);
     const [countryCode, setCountryCode] = useState([]);
+    const [contentRatings, setContentRatings] = useState([]);
     const [displayTrailer, setDisplayTrailer] = useState(false);
     const [displayInfo, setDisplayInfo] = useState(false);
 
@@ -41,6 +42,17 @@ const TvInfoCard = React.memo(({ id }) => {
             .then((response) => response.json())
             .then((data) => setTvVideos(data.results));
 
+        fetch(
+            'https://api.themoviedb.org/3/tv/' +
+                id +
+                '/content_ratings' +
+                '?api_key=' +
+                '792dde4161d1a8ae31ac0fa85780d7fc' +
+                '&language=en-US'
+        )
+            .then((response) => response.json())
+            .then((data) => setContentRatings(data.results));
+
         fetch('https://ipapi.co/json/')
             .then((response) => response.json())
             .then((data) => setCountryCode(data.country_code));
@@ -50,34 +62,12 @@ const TvInfoCard = React.memo(({ id }) => {
         document.title = tv.name ? tv.name + ' - Moviezz' : 'Moviezz';
     }, [tv]);
 
-    const setDirectorValue = (tvCrew) => {
+    const setCreditsValue = (tvCrew, job) => {
         return tvCrew
-            ? tvCrew.filter((person) => person.job === 'Director')
-            : '';
-    };
-
-    const setWriterValue = (tvCrew) => {
-        return tvCrew
-            ? tvCrew.filter(
-                  (person) => person.job === 'Writer' || person.job === 'Story'
+            ? tvCrew.filter((person) =>
+                  person.jobs.find((jobs) => jobs.job === job)
               )
             : '';
-    };
-
-    const setScreenplayValue = (tvCrew) => {
-        return tvCrew
-            ? tvCrew.filter((person) => person.job === 'Screenplay')
-            : '';
-    };
-
-    const setCharactersValue = (tvCrew) => {
-        return tvCrew
-            ? tvCrew.filter((person) => person.job === 'Characters')
-            : '';
-    };
-
-    const setNovelValue = (tvCrew) => {
-        return tvCrew ? tvCrew.filter((person) => person.job === 'Novel') : '';
     };
 
     const {
@@ -85,28 +75,36 @@ const TvInfoCard = React.memo(({ id }) => {
         name,
         vote_average,
         vote_count,
-        release_date,
+        first_air_date,
         runtime,
         genres,
         tagline,
         overview,
     } = tv;
 
-    const director = useMemo(() => setDirectorValue(tvCredits.crew), [
+    const executiveProducer = useMemo(
+        () => setCreditsValue(tvCredits.crew, 'Executive Producer'),
+        [tvCredits.crew]
+    );
+    const musicComposer = useMemo(
+        () => setCreditsValue(tvCredits.crew, 'Original Music Composer'),
+        [tvCredits.crew]
+    );
+    const writer = useMemo(() => setCreditsValue(tvCredits.crew, 'Writer'), [
         tvCredits.crew,
     ]);
-    const writer = useMemo(() => setWriterValue(tvCredits.crew), [
+    const characters = useMemo(
+        () => setCreditsValue(tvCredits.crew, 'Characters'),
+        [tvCredits.crew]
+    );
+    const novel = useMemo(() => setCreditsValue(tvCredits.crew, 'Novel'), [
         tvCredits.crew,
     ]);
-    const screenplay = useMemo(() => setScreenplayValue(tvCredits.crew), [
-        tvCredits.crew,
-    ]);
-    const characters = useMemo(() => setCharactersValue(tvCredits.crew), [
-        tvCredits.crew,
-    ]);
-    const novel = useMemo(() => setNovelValue(tvCredits.crew), [
-        tvCredits.crew,
-    ]);
+
+    const certification =
+        contentRatings.find((rating) => rating.iso_3166_1 === countryCode) ||
+        contentRatings.find((rating) => rating.iso_3166_1 === 'US') ||
+        contentRatings.find((rating) => rating.rating && rating.rating);
 
     return (
         <>
@@ -126,33 +124,34 @@ const TvInfoCard = React.memo(({ id }) => {
                     <div className='infocard'>
                         <h1 className='title'>
                             {name}
-                            {release_date && (
+                            {first_air_date && (
                                 <span className='gray'>
-                                    {' (' + release_date.split('-')[0] + ')'}
+                                    {' (' + first_air_date.split('-')[0] + ')'}
                                 </span>
                             )}
                         </h1>
                         <div className='tec-info'>
-                            {/* {releaseCertification && (
+                            {certification && (
                                 <>
                                     <h5 className='certification'>
-                                        {releaseCertification.certification &&
-                                            releaseCertification.certification}
+                                        {certification.rating &&
+                                            certification.rating}
                                     </h5>
                                     <h5>•</h5>
                                 </>
                             )}
-                            {releaseDate && (
+                            {first_air_date && (
                                 <>
                                     <h5>
-                                        {releaseDate.release_date.split(
-                                            'T'
-                                        )[0] +
-                                            (releaseCode &&
-                                                ' (' + releaseCode + ')')}
+                                        {first_air_date +
+                                            (certification &&
+                                                certification.iso_3166_1 &&
+                                                ' (' +
+                                                    certification.iso_3166_1 +
+                                                    ')')}
                                     </h5>
                                 </>
-                            )} */}
+                            )}
                             {genres && (
                                 <>
                                     <h5>•</h5>
@@ -224,12 +223,12 @@ const TvInfoCard = React.memo(({ id }) => {
                             </pre>
                         )}
                         <div className='director-writer'>
-                            {director.length > 0 && (
+                            {executiveProducer.length > 0 && (
                                 <p>
-                                    <b>Director </b> <br />
+                                    <b>Executive Producer </b> <br />
                                     <span>
-                                        {director
-                                            .map((dir) => dir.name)
+                                        {executiveProducer
+                                            .map((exec) => exec.name)
                                             .join(', ')}
                                     </span>
                                 </p>
@@ -244,16 +243,7 @@ const TvInfoCard = React.memo(({ id }) => {
                                     </span>
                                 </p>
                             )}
-                            {screenplay.length > 0 && (
-                                <p>
-                                    <b>Screenplay </b> <br />
-                                    <span>
-                                        {screenplay
-                                            .map((scr) => scr.name)
-                                            .join(', ')}
-                                    </span>
-                                </p>
-                            )}
+
                             {characters.length > 0 && (
                                 <p>
                                     <b>Characters </b> <br />
@@ -270,6 +260,16 @@ const TvInfoCard = React.memo(({ id }) => {
                                     <span>
                                         {novel
                                             .map((nov) => nov.name)
+                                            .join(', ')}
+                                    </span>
+                                </p>
+                            )}
+                            {musicComposer.length > 0 && (
+                                <p>
+                                    <b>Original music composer </b> <br />
+                                    <span>
+                                        {musicComposer
+                                            .map((musc) => musc.name)
                                             .join(', ')}
                                     </span>
                                 </p>
@@ -293,8 +293,8 @@ const TvInfoCard = React.memo(({ id }) => {
                             '?autoplay=1'
                         }
                         ref={wrapperRef}
-                        webkitallowfullscreen
-                        mozallowfullscreen
+                        webkitallowfullscreen='true'
+                        mozallowfullscreen='true'
                         allowFullScreen
                         allow='autoplay'
                     ></iframe>

@@ -3,7 +3,7 @@ import './Details.css';
 import { useContext } from 'react';
 import { MovieContext } from './Movie';
 
-const Details = () => {
+const Details = React.memo(() => {
     const { state } = useContext(MovieContext);
     const { movie } = state;
 
@@ -74,6 +74,6 @@ const Details = () => {
             )}
         </>
     );
-};
+});
 
 export default Details;

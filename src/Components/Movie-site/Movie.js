@@ -13,7 +13,7 @@ import MovieInfoCard from './MovieInfoCard';
 import './Movie.css';
 
 const PersonItem = lazy(() => import('../PersonItem'));
-const ReviewItem = lazy(() => import('./ReviewItem'));
+const MovieReviewItem = lazy(() => import('./MovieReviewItem'));
 const Details = lazy(() => import('./Details'));
 const SimilarMovies = lazy(() => import('./SimilarMovies'));
 
@@ -49,6 +49,8 @@ const Movie = () => {
     };
 
     useEffect(() => {
+        setDisplayAllCast(false);
+        setReviewSize(0);
         fetch(
             'https://api.themoviedb.org/3/movie/' +
                 id +
@@ -145,7 +147,7 @@ const Movie = () => {
                                                 rating,
                                             } = author_details;
                                             return (
-                                                <ReviewItem
+                                                <MovieReviewItem
                                                     author={author}
                                                     avatarPath={avatar_path}
                                                     content={content}

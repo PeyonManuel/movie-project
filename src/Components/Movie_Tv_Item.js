@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const MovieTvItem = React.memo(
     ({ id, title, rating, poster, overview, mediaType }) => {
         const [posterSrc, setPosterSrc] = useState(poster);
-        console.log('hi2');
         return (
             <div className='movietv'>
                 <Link to={'/' + mediaType + '/' + id} className='link img'>

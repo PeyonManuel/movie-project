@@ -129,6 +129,8 @@
 
 .director-writer > * {
     margin: 0;
+    display: block;
+    white-space: pre-wrap;
 }
 .trailer::after {
     background-color: black;

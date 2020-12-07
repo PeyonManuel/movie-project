@@ -59,7 +59,7 @@ const MovieInfoCard = React.memo(({ id }) => {
         fetch('https://ipapi.co/json/')
             .then((response) => response.json())
             .then((data) => setCountryCode(data.country_code));
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         document.title = movie.title ? movie.title + ' - Moviezz' : 'Moviezz';
@@ -94,6 +94,14 @@ const MovieInfoCard = React.memo(({ id }) => {
     const setNovelValue = (movieCrew) => {
         return movieCrew
             ? movieCrew.filter((person) => person.job === 'Novel')
+            : '';
+    };
+
+    const setMusicComposerValue = (movieCrew) => {
+        return movieCrew
+            ? movieCrew.filter(
+                  (person) => person.job === 'Original Music Composer'
+              )
             : '';
     };
 
@@ -179,6 +187,11 @@ const MovieInfoCard = React.memo(({ id }) => {
     const novel = useMemo(() => setNovelValue(movieCredits.crew), [
         movieCredits.crew,
     ]);
+    const musicComposer = useMemo(
+        () => setMusicComposerValue(movieCredits.crew),
+        [movieCredits.crew]
+    );
+
     let releaseDate = useMemo(
         () => setReleaseDateValue(releaseDates, countryCode),
         [releaseDates, countryCode]
@@ -350,6 +363,16 @@ const MovieInfoCard = React.memo(({ id }) => {
                                     <span>
                                         {novel
                                             .map((nov) => nov.name)
+                                            .join(', ')}
+                                    </span>
+                                </p>
+                            )}
+                            {musicComposer.length > 0 && (
+                                <p>
+                                    <b>Original music composer </b> <br />
+                                    <span>
+                                        {musicComposer
+                                            .map((musc) => musc.name)
                                             .join(', ')}
                                     </span>
                                 </p>

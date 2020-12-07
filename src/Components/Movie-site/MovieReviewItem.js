@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import './ReviewItem.css';
+import './MovieReviewItem.css';
 import Marked from 'marked';
 
-const ReviewItem = ({
+const MovieReviewItem = ({
     author,
     avatarPath,
     content,
@@ -142,4 +142,4 @@ const ReviewItem = ({
     );
 };
 
-export default ReviewItem;
+export default MovieReviewItem;
