@@ -23,7 +23,7 @@ const SimilarTvShows = React.memo(({ id }) => {
                     .slice(0, 10);
                 setSimilarMovies(temporaryMovies);
             });
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <>
@@ -65,7 +65,7 @@ const SimilarTvShows = React.memo(({ id }) => {
                                         rating={vote_average}
                                         poster={poster}
                                         overview={overview}
-                                        mediaType={'movie'}
+                                        mediaType={'tv'}
                                     />
                                 );
                             })}

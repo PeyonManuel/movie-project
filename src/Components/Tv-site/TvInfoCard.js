@@ -56,7 +56,7 @@ const TvInfoCard = React.memo(({ id }) => {
         fetch('https://ipapi.co/json/')
             .then((response) => response.json())
             .then((data) => setCountryCode(data.country_code));
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         document.title = tv.name ? tv.name + ' - Moviezz' : 'Moviezz';

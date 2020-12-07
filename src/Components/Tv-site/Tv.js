@@ -52,6 +52,8 @@ const Tv = () => {
     };
 
     useEffect(() => {
+        setDisplayAllCast(false);
+        setReviewSize(0);
         fetch(
             'https://api.themoviedb.org/3/tv/' +
                 id +
@@ -183,16 +185,6 @@ const Tv = () => {
                                         document.getElementById('reviews-div')
                                             .style.height
                                     ) {
-                                        case firstThreeReviewsSize:
-                                            document.getElementById(
-                                                'reviews-div'
-                                            ).style.height = firstReviewSize;
-                                            document.getElementById(
-                                                'reviews-div'
-                                            ).style.overflow = 'visible';
-                                            setReviewSize(1);
-
-                                            break;
                                         case firstReviewSize:
                                             document.getElementById(
                                                 'reviews-div'
@@ -201,7 +193,15 @@ const Tv = () => {
                                                 'reviews-div'
                                             ).style.overflow = 'visible';
                                             setReviewSize(0);
-
+                                            break;
+                                        case firstThreeReviewsSize:
+                                            document.getElementById(
+                                                'reviews-div'
+                                            ).style.height = firstReviewSize;
+                                            document.getElementById(
+                                                'reviews-div'
+                                            ).style.overflow = 'visible';
+                                            setReviewSize(1);
                                             break;
                                         default:
                                             break;
