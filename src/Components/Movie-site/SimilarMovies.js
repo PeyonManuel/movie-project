@@ -30,7 +30,6 @@ const SimilarMovies = React.memo(({ id }) => {
                     .sort((a, b) => b.popularity - a.popularity)
                     .slice(0, 10);
                 setSimilarMovies(temporaryMovies);
-                console.log('fetching');
             });
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -8,6 +8,7 @@ const MovieInfoCard = React.memo(({ id }) => {
     const [releaseDates, setReleaseDates] = useState([]);
     const [countryCode, setCountryCode] = useState([]);
     const [releaseCode, setReleaseCode] = useState('');
+    const [trailerInfo, setTrailerInfo] = useState('');
     const [displayTrailer, setDisplayTrailer] = useState(false);
     const [displayInfo, setDisplayInfo] = useState(false);
 
@@ -60,6 +61,15 @@ const MovieInfoCard = React.memo(({ id }) => {
             .then((response) => response.json())
             .then((data) => setCountryCode(data.country_code));
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        movieVideos.length > 0 &&
+            setTrailerInfo(
+                movieVideos.find((video) => video.type === 'Trailer') ||
+                    movieVideos.find((video) => video.type === 'Teaser') ||
+                    movieVideos.find((video) => video.type && video.type)
+            );
+    }, [movieVideos]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         document.title = movie.title ? movie.title + ' - Moviezz' : 'Moviezz';
@@ -285,7 +295,7 @@ const MovieInfoCard = React.memo(({ id }) => {
                                         onClick={() => setDisplayTrailer(true)}
                                     >
                                         <i className='fas fa-play'></i>
-                                        {' Watch trailer'}
+                                        {' Watch ' + trailerInfo.type}
                                     </h5>
                                 )}
                             </div>
@@ -389,10 +399,7 @@ const MovieInfoCard = React.memo(({ id }) => {
                         title='trailer'
                         src={
                             'https://www.youtube.com/embed/' +
-                            (movieVideos.find((mov) => mov.type === 'Trailer')
-                                .key ||
-                                movieVideos.find((mov) => mov.type === 'Teaser')
-                                    .key) +
+                            trailerInfo.key +
                             '?autoplay=1'
                         }
                         ref={wrapperRef}

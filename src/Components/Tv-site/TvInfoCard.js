@@ -7,6 +7,7 @@ const TvInfoCard = React.memo(({ id }) => {
     const [tvVideos, setTvVideos] = useState([]);
     const [countryCode, setCountryCode] = useState([]);
     const [contentRatings, setContentRatings] = useState([]);
+    const [trailerInfo, setTrailerInfo] = useState('');
     const [displayTrailer, setDisplayTrailer] = useState(false);
     const [displayInfo, setDisplayInfo] = useState(false);
 
@@ -57,6 +58,15 @@ const TvInfoCard = React.memo(({ id }) => {
             .then((response) => response.json())
             .then((data) => setCountryCode(data.country_code));
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        tvVideos.length > 0 &&
+            setTrailerInfo(
+                tvVideos.find((video) => video.type === 'Trailer') ||
+                    tvVideos.find((video) => video.type === 'Teaser') ||
+                    tvVideos.find((video) => video.type && video.type)
+            );
+    }, [tvVideos]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         document.title = tv.name ? tv.name + ' - Moviezz' : 'Moviezz';
@@ -191,11 +201,12 @@ const TvInfoCard = React.memo(({ id }) => {
                                 </div>
                                 {tvVideos && tvVideos.length > 0 && (
                                     <h5
+                                        id='watch-trailer'
                                         className='watch-trailer'
                                         onClick={() => setDisplayTrailer(true)}
                                     >
                                         <i className='fas fa-play'></i>
-                                        {' Watch trailer'}
+                                        {' Watch ' + trailerInfo.type}
                                     </h5>
                                 )}
                             </div>
@@ -290,10 +301,7 @@ const TvInfoCard = React.memo(({ id }) => {
                         title='trailer'
                         src={
                             'https://www.youtube.com/embed/' +
-                            (tvVideos.find((ser) => ser.type === 'Trailer')
-                                .key ||
-                                tvVideos.find((ser) => ser.type === 'Teaser')
-                                    .key) +
+                            trailerInfo.key +
                             '?autoplay=1'
                         }
                         ref={wrapperRef}
