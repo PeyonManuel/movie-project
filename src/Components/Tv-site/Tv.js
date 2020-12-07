@@ -14,7 +14,7 @@ import './Tv.css';
 
 const PersonItem = lazy(() => import('../PersonItem'));
 const TvReviewItem = lazy(() => import('./TvReviewItem'));
-//const Details = lazy(() => import('./Details'));
+const TvDetails = lazy(() => import('./TvDetails'));
 const SimilarTvShows = lazy(() => import('./SimilarTvShows'));
 
 export const TvContext = createContext();
@@ -124,7 +124,9 @@ const Tv = () => {
                         </Suspense>
                     </div>
                 )}
-                <Suspense fallback={<></>}>{/* <Details /> */}</Suspense>
+                <Suspense fallback={<></>}>
+                    <TvDetails />
+                </Suspense>
                 {reviews && reviews.results && reviews.results.length > 0 && (
                     <>
                         <div className='reviews'>

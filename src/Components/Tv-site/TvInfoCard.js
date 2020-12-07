@@ -76,7 +76,7 @@ const TvInfoCard = React.memo(({ id }) => {
         vote_average,
         vote_count,
         first_air_date,
-        runtime,
+        episode_run_time,
         genres,
         tagline,
         overview,
@@ -162,13 +162,17 @@ const TvInfoCard = React.memo(({ id }) => {
                                     </h5>
                                 </>
                             )}
-                            {runtime > 0 && (
+                            {episode_run_time[0] > 0 && (
                                 <>
                                     <h5>•</h5>
                                     <h5 className='runtime'>
-                                        {Math.floor(runtime / 60) / 60 > 0 &&
-                                            Math.floor(runtime / 60) + 'h'}
-                                        {(runtime % 60) + 'm'}
+                                        {Math.floor(episode_run_time[0] / 60) /
+                                            60 >
+                                            0 &&
+                                            Math.floor(
+                                                episode_run_time[0] / 60
+                                            ) + 'h'}
+                                        {(episode_run_time[0] % 60) + 'm'}
                                     </h5>
                                 </>
                             )}

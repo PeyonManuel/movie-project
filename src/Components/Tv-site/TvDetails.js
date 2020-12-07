@@ -1,27 +1,23 @@
 import React from 'react';
-import './Details.css';
+import './TvDetails.css';
 import { useContext } from 'react';
-import { MovieContext } from './Movie';
+import { TvContext } from './Tv';
 
-const Details = React.memo(() => {
-    const { state } = useContext(MovieContext);
-    const { movie } = state;
-
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
+const TvDetails = React.memo(() => {
+    const { state } = useContext(TvContext);
+    const { tv } = state;
 
     const {
-        budget,
         original_language,
         production_countries,
-        revenue,
         status,
-    } = movie;
+        number_of_seasons,
+        number_of_episodes,
+    } = tv;
 
     return (
         <>
-            {movie.length !== 0 && (
+            {tv.length !== 0 && (
                 <div className='details-div'>
                     <h2 className='details-header'>Details</h2>
                     <div className='details'>
@@ -53,19 +49,23 @@ const Details = React.memo(() => {
                                 </h5>
                             </div>
                         )}
-                        {budget > 0 && (
+                        {number_of_seasons && (
                             <div>
-                                <h4 className='detail-item'>Budget</h4>
+                                <h4 className='detail-item'>
+                                    Number of seasons
+                                </h4>
                                 <h5 className='detail-item detail-info'>
-                                    {'$' + numberWithCommas(budget)}
+                                    {number_of_seasons}
                                 </h5>
                             </div>
                         )}
-                        {revenue > 0 && (
+                        {number_of_episodes && (
                             <div>
-                                <h4 className='detail-item'>Revenue</h4>
+                                <h4 className='detail-item'>
+                                    Number of episodes
+                                </h4>
                                 <h5 className='detail-item detail-info'>
-                                    {'$' + numberWithCommas(revenue)}
+                                    {number_of_episodes}
                                 </h5>
                             </div>
                         )}
@@ -76,4 +76,4 @@ const Details = React.memo(() => {
     );
 });
 
-export default Details;
+export default TvDetails;

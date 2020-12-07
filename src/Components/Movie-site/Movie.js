@@ -14,7 +14,7 @@ import './Movie.css';
 
 const PersonItem = lazy(() => import('../PersonItem'));
 const MovieReviewItem = lazy(() => import('./MovieReviewItem'));
-const Details = lazy(() => import('./Details'));
+const MovieDetails = lazy(() => import('./MovieDetails'));
 const SimilarMovies = lazy(() => import('./SimilarMovies'));
 
 export const MovieContext = createContext();
@@ -123,7 +123,7 @@ const Movie = () => {
                     </div>
                 )}
                 <Suspense fallback={<></>}>
-                    <Details />
+                    <MovieDetails />
                 </Suspense>
 
                 {reviews && reviews.results && reviews.results.length > 0 && (
