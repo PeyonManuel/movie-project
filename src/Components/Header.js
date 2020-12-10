@@ -104,7 +104,7 @@ const Header = () => {
                             onClick={() => handleSearchBarClick()}
                             onKeyDown={(e) => handleSearchonKeyDown(e)}
                         />
-                        <a className='searchbtn' href='asd'>
+                        <a className='searchbtn' href='../search'>
                             <i className='icon fas fa-search fa-lg'></i>
                         </a>
                     </div>

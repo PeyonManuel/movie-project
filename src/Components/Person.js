@@ -6,7 +6,7 @@ import Loading from './Loading';
 import './Person.css';
 
 const Person = () => {
-    const [person, setPerson] = useState([]);
+    const [person, setPerson] = useState('');
     const [personCredits, setPersonCredits] = useState([]);
     const [profilePath, setProfilePath] = useState(
         'https://i.imgur.com/sdkYiCr.png'
@@ -51,7 +51,7 @@ const Person = () => {
         );
 
         Promise.all([promise1, promise2]).then((files) => {
-            files[0].json().then((data) => setPerson(data));
+            files[0].json().then((data) => {data.status_code !== 34 ? setPerson(data) : window.location.replace("../error")});
             files[1].json().then((data) => setPersonCredits(data));
         });
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps

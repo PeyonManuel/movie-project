@@ -1,0 +1,47 @@
+.search-site {
+  width: 100vw;
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 100vh;
+  padding: 2rem 10vw 2rem 10vw;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  flex-direction: row;
+}
+
+.box {
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+}
+
+.search-selection {
+  width: 25%;
+}
+
+.results-selection > h2 {
+  padding: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: #256e76;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.results-option {
+}
+
+.results-option:hover {
+  background-color: rgba(211, 211, 211, 0.5);
+}
+
+.results-option > h3 {
+  font-weight: 100;
+  margin: 0;
+  padding: 1rem;
+}
+
+.search-results {
+  margin-left: 1rem;
+  width: 70%;
+}

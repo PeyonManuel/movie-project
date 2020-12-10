@@ -10,6 +10,7 @@ import {
 import { useParams } from 'react-router-dom';
 import MovieReducer from './MovieReducer';
 import MovieInfoCard from './MovieInfoCard';
+import Loading from '../Loading'
 import './Movie.css';
 
 const PersonItem = lazy(() => import('../PersonItem'));
@@ -21,7 +22,7 @@ export const MovieContext = createContext();
 
 const Movie = () => {
     const defaultState = {
-        movie: [],
+        movie: '',
         movieCredits: [],
     };
 
@@ -81,12 +82,15 @@ const Movie = () => {
                 '&language=en-US'
         )
             .then((response) => response.json())
-            .then((data) => dispatch({ type: 'SET_MOVIE', payload: data }));
+            .then((data) => {
+                data.status_code !== 34 ?
+                dispatch({ type: 'SET_MOVIE', payload: data }) : window.location.replace("../error");});
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const { movieCredits } = state;
+    const { movieCredits, movie } = state;
     return (
-        <MovieContext.Provider value={{ dispatch: dispatch, state: state }}>
+        <>
+        {movie ? <MovieContext.Provider value={{ dispatch: dispatch, state: state }}>
             <div className='moviecard'>
                 <MovieInfoCard id={id} />
 
@@ -261,7 +265,8 @@ const Movie = () => {
                     <SimilarMovies id={id} />
                 </Suspense>
             </div>
-        </MovieContext.Provider>
+        </MovieContext.Provider> : <Loading />}
+            </>
     );
 };
 

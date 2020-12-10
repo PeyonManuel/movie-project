@@ -10,6 +10,7 @@ import {
 import { useParams } from 'react-router-dom';
 import TvReducer from './TvReducer';
 import TvInfoCard from './TvInfoCard';
+import Loading from '../Loading'
 import './Tv.css';
 
 const PersonItem = lazy(() => import('../PersonItem'));
@@ -21,7 +22,7 @@ export const TvContext = createContext();
 
 const Tv = () => {
     const defaultState = {
-        tv: [],
+        tv: '',
         tvCredits: [],
     };
 
@@ -84,12 +85,15 @@ const Tv = () => {
                 '&language=en-US'
         )
             .then((response) => response.json())
-            .then((data) => dispatch({ type: 'SET_TV', payload: data }));
+            .then((data) => {
+                data.status_code !== 34 ?
+                dispatch({ type: 'SET_TV', payload: data }) : window.location.replace("../error")});
     }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const { tvCredits } = state;
+    const { tvCredits, tv } = state;
     return (
-        <TvContext.Provider value={{ dispatch: dispatch, state: state }}>
+        <>
+        {tv ? <TvContext.Provider value={{ dispatch: dispatch, state: state }}>
             <div className='tvcard'>
                 <TvInfoCard id={id} />
                 {tvCredits.cast && (
@@ -261,7 +265,8 @@ const Tv = () => {
                     <SimilarTvShows id={id} />
                 </Suspense>
             </div>
-        </TvContext.Provider>
+        </TvContext.Provider> : <Loading />}
+        </>
     );
 };
 

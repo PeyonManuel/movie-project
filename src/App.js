@@ -5,6 +5,7 @@ import PeopleList from './Components/PeopleList';
 import Movie from './Components/Movie-site/Movie';
 import Tv from './Components/Tv-site/Tv';
 import Person from './Components/Person';
+import SearchSite from './Components/SearchSite';
 import Error from './Components/Error';
 import { useReducer, createContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -44,13 +45,18 @@ function App() {
                         path='/person/:id'
                         children={<Person />}
                     ></Route>
+                    <Route
+                        key='search'
+                        path='/search'
+                        children={<SearchSite />}
+                    ></Route>
                     <Route key='*' path='*'>
                         <Error />
                     </Route>
                 </Switch>
             </GlobalContext.Provider>
         </Router>
-    );
+    ); 
 }
 
 export default App;
