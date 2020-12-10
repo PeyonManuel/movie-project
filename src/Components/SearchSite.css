@@ -17,6 +17,13 @@
 
 .search-selection {
   width: 25%;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-areas:
+    "header"
+    "1"
+    "2"
+    "3";
 }
 
 .results-selection > h2 {
@@ -42,6 +49,7 @@
 }
 
 .search-results {
+  padding: 1rem;
   margin-left: 1rem;
-  width: 70%;
+  width: 75%;
 }
