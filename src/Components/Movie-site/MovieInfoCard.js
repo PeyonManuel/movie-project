@@ -319,7 +319,7 @@ const MovieInfoCard = React.memo(({ id }) => {
                                 </div>
                             )
                         )}
-                        <h4 className='tagline'>{tagline}</h4>
+                        {tagline && <h4 className='tagline'>{tagline}</h4>}
                         {overview && (
                             <pre className='description'>
                                 <h4>Overview</h4>

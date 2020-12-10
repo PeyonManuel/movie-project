@@ -39,7 +39,7 @@ const TvDetails = React.memo(() => {
                                 </h5>
                             </div>
                         )}
-                        {production_countries && (
+                        {production_countries.length > 0 && (
                             <div>
                                 <h4 className='detail-item'>Countries</h4>
                                 <h5 className='detail-item detail-info'>

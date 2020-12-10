@@ -100,9 +100,6 @@ const TvInfoCard = React.memo(({ id }) => {
         () => setCreditsValue(tvCredits.crew, 'Original Music Composer'),
         [tvCredits.crew]
     );
-    const writer = useMemo(() => setCreditsValue(tvCredits.crew, 'Writer'), [
-        tvCredits.crew,
-    ]);
     const characters = useMemo(
         () => setCreditsValue(tvCredits.crew, 'Characters'),
         [tvCredits.crew]
@@ -176,13 +173,12 @@ const TvInfoCard = React.memo(({ id }) => {
                                 <>
                                     <h5>•</h5>
                                     <h5 className='runtime'>
-                                        {Math.floor(episode_run_time[0] / 60) /
-                                            60 >
-                                            0 &&
-                                            Math.floor(
-                                                episode_run_time[0] / 60
-                                            ) + 'h'}
-                                        {(episode_run_time[0] % 60) + 'm'}
+                                        {
+                                        episode_run_time.sort((a, b) => a - b).map(time => Math.floor(time / 60) >=
+                                        1 ? (Math.floor(
+                                            time / 60       
+                                        ) + 'h '  + ((time % 60) > 0 ? (time % 60) + 'm' : '')) : (time % 60) + 'm').join(' - ')}
+                                        
                                     </h5>
                                 </>
                             )}
@@ -230,7 +226,7 @@ const TvInfoCard = React.memo(({ id }) => {
                                 </div>
                             )
                         )}
-                        <h4 className='tagline'>{tagline}</h4>
+                        {tagline && <h4 className='tagline'>{tagline}</h4>}
                         {overview && (
                             <pre className='description'>
                                 <h4>Overview</h4>
@@ -244,16 +240,6 @@ const TvInfoCard = React.memo(({ id }) => {
                                     <span>
                                         {executiveProducer
                                             .map((exec) => exec.name)
-                                            .join(', ')}
-                                    </span>
-                                </p>
-                            )}
-                            {writer.length > 0 && (
-                                <p>
-                                    <b>Writer </b> <br />
-                                    <span>
-                                        {writer
-                                            .map((wri) => wri.name)
                                             .join(', ')}
                                     </span>
                                 </p>

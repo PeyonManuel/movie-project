@@ -42,7 +42,7 @@ const Tv = () => {
                     id={id}
                     name={name}
                     profile={profile}
-                    character={roles.map((role) => role.character).join(', ')}
+                    character={roles.map((role) => role.character !== '' ? role.character : 'Unknown' ).join(', ')}
                     episodeCount={roles
                         .map((role) => role.episode_count)
                         .join(', ')}
@@ -95,7 +95,7 @@ const Tv = () => {
                 {tvCredits.cast && (
                     <div className='cast-div'>
                         <h2 className='cast-header'>Cast</h2>
-                        <Suspense fallback={<h3>Loading...</h3>}>
+                        <Suspense fallback={<></>}>
                             <div className='cast'>
                                 {tvCredits.cast.length > 30 ? (
                                     <>
@@ -131,7 +131,7 @@ const Tv = () => {
                     <>
                         <div className='reviews'>
                             <h2 className='reviews-header'>Reviews</h2>
-                            <Suspense fallback={<h3>Loading...</h3>}>
+                            <Suspense fallback={<></>}>
                                 <div id='reviews-div' className='reviews-div'>
                                     {reviews &&
                                         reviews.results &&
