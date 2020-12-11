@@ -1,152 +1,156 @@
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto&display=swap");
 
 .headerdiv {
-    position: absolute;
-    top: 0px;
-    width: 100vw;
+  position: absolute;
+  top: 0px;
+  width: 100vw;
 }
 
 .header {
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    height: 4rem;
-    background-color: #143a3e;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 99;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 4rem;
+  background-color: #143a3e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
 }
 
 .logo {
-    height: 100%;
-    margin-left: 2rem;
-    left: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-decoration: none;
+  height: 100%;
+  margin-left: 2rem;
+  left: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
 }
 
 .logo > img {
-    height: 100%;
+  height: 100%;
 }
 
 .logo > h1 {
-    font-family: 'Permanent Marker', cursive;
-    margin-left: 0.7rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    color: black;
+  font-family: "Permanent Marker", cursive;
+  margin-left: 0.7rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: black;
 }
 .searchdiv {
-    height: 50%;
-    position: relative;
-    width: 20rem;
+  height: 50%;
+  position: relative;
+  width: 20rem;
 }
 
 .autocontainer {
-    display: grid;
-    position: absolute;
-    background-color: white;
-    top: 30px;
-    width: calc(100% - 2rem);
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    z-index: 99;
+  display: grid;
+  position: absolute;
+  background-color: white;
+  top: 30px;
+  width: calc(100% - 2rem);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  z-index: 99;
 }
 
 .result {
-    display: grid;
-    grid-template-rows: repeat(2, 1.5rem);
-    grid-template-columns: 15% 85%;
-    grid-template-areas:
-        'img title'
-        'img type';
-    text-decoration: none;
-    padding: 0.5rem;
-    width: calc(100% - 1rem);
-    height: 3rem;
+  display: grid;
+  grid-template-rows: repeat(2, 1.5rem);
+  grid-template-columns: 15% 85%;
+  grid-template-areas:
+    "img title"
+    "img type";
+  text-decoration: none;
+  padding: 0.5rem;
+  width: calc(100% - 1rem);
+  height: 3rem;
 }
 
 .selected {
-    background-color: lightgray;
+  background-color: lightgray;
 }
 
 .result > img {
-    margin: 0;
-    grid-area: img;
-    height: 100%;
+  margin: 0;
+  grid-area: img;
+  height: 100%;
 }
 
 .result > h2 {
-    color: black;
-    font-size: 14px;
-    margin: 0;
-    grid-area: title;
-    word-break: break-word;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow-wrap: break-word;
-    overflow: hidden;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */ /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none;
+  color: black;
+  font-size: 14px;
+  margin: 0;
+  grid-area: title;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */ /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 .result > p {
-    color: black;
-    font-size: 13px;
-    margin: 0;
-    grid-area: type;
-    word-break: break-word;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow-wrap: break-word;
-    overflow: hidden;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */ /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none;
+  color: black;
+  font-size: 13px;
+  margin: 0;
+  grid-area: type;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */ /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 .searchbar {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    margin-right: 2rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-right: 2rem;
 }
 
 .search {
-    outline: none;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    border: none;
-    height: 100%;
-    width: 80%;
-    padding-left: 0.5rem;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+  outline: none;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border: none;
+  height: 100%;
+  width: 80%;
+  padding-left: 0.5rem;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
 }
 
 .searchbtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20%;
-    background: white;
-    height: 105%;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  background: white;
+  height: 105%;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  text-decoration: none;
+  background: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 .icon {
-    background: white;
-    color: black;
+  background: white;
+  color: black;
 }

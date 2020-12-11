@@ -7,23 +7,27 @@ const Header = () => {
   const [options, setOptions] = useState([]);
   const [displayOptions, setDisplayOptions] = useState(false);
   const [search, setSearch] = useState("");
-  const [selectedOption, setSelectedOption] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(-1);
 
   const wrapperRef = useRef(null);
 
   const history = useHistory();
 
+  const handleSearchBtnClick = () => {
+    search.length > 0 && history.push("../search?query=" + search);
+  };
+
   const handleClickOutside = (event) => {
     const { current: wrap } = wrapperRef;
     if (wrap && !wrap.contains(event.target)) {
-      setSelectedOption(0);
+      setSelectedOption(-1);
       setDisplayOptions(false);
     }
   };
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
-    setSelectedOption(0);
+    setSelectedOption(-1);
   };
 
   const handleSearchBarClick = () => {
@@ -46,10 +50,14 @@ const Header = () => {
       setSelectedOption(selectedOption + 1);
     }
     if (e.keyCode === 13) {
-      setSelectedOption(0);
-      setDisplayOptions(false);
-      const { media_type, id } = options[selectedOption];
-      history.push("/" + media_type + "/" + id);
+      if (selectedOption === 0) {
+        setSelectedOption(-1);
+        setDisplayOptions(false);
+        const { media_type, id } = options[selectedOption];
+        history.push("/" + media_type + "/" + id);
+      } else {
+        search.length > 0 && history.push("../search?query=" + search);
+      }
     }
   };
 
@@ -104,9 +112,12 @@ const Header = () => {
               onClick={() => handleSearchBarClick()}
               onKeyDown={(e) => handleSearchonKeyDown(e)}
             />
-            <a className="searchbtn" href={"../search?query=" + search}>
+            <button
+              className="searchbtn"
+              onClick={() => handleSearchBtnClick()}
+            >
               <i className="icon fas fa-search fa-lg"></i>
-            </a>
+            </button>
           </div>
           {displayOptions > 0 && (
             <div className="autocontainer">
