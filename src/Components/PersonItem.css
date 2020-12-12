@@ -1,62 +1,62 @@
 .person {
-    position: relative;
-    display: grid;
-    border-radius: 2px;
-    background-color: #256e76;
-    height: 26rem;
-    width: 15rem;
-    justify-content: center;
-    align-items: center;
-    grid-template-rows: 87% 13%;
-    font-family: 'Merriweather Sans', sans-serif;
-    grid-template-areas:
-        'profile'
-        'name';
-    margin-right: 1rem;
-    margin-left: 2px;
-    font-size: 14px;
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-    overflow: hidden;
+  position: relative;
+  display: grid;
+  border-radius: 2px;
+  background-color: #256e76;
+  height: 26rem;
+  width: 15rem;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: 87% 13%;
+  font-family: "Merriweather Sans", sans-serif;
+  grid-template-areas:
+    "profile"
+    "name";
+  margin-right: 1rem;
+  margin-left: 2px;
+  font-size: 14px;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
 }
 
 .person > .link {
-    width: 100%;
+  width: 100%;
 }
 .name-character {
-    grid-area: name;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    padding-bottom: 0.3rem;
+  grid-area: name;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding-bottom: 0.3rem;
 }
 
 .name {
-    font-size: 14px;
-    height: 1.6rem;
+  font-size: 14px;
+  height: 1.6rem;
 }
 
 .character {
-    font-size: 13px;
-    margin: 0;
-    padding-left: 1rem;
-    font-weight: 100;
-    width: 100%;
+  font-size: 13px;
+  margin: 0;
+  padding-left: 1rem;
+  font-weight: 100;
+  width: 100%;
 }
 
 .tv-episode-count {
-    font-weight: 100;
-    font-size: 11px;
-    margin: 0;
-    padding-left: 1rem;
-    color: rgb(22, 22, 22);
+  font-weight: 100;
+  font-size: 11px;
+  margin: 0;
+  padding-left: 1rem;
+  color: rgb(22, 22, 22);
 }
 
 .person > .link > img {
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    width: 100%;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  width: 100%;
 }
 .person > .img {
-    grid-area: profile;
+  grid-area: profile;
 }

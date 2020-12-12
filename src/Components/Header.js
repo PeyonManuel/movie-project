@@ -145,7 +145,17 @@ const Header = () => {
                     key={i}
                     onClick={() => handleLinkClick()}
                   >
-                    <img id="img" src={image} alt="" />
+                    <img
+                      id="img"
+                      src={image}
+                      alt=""
+                      onError={(e) =>
+                        (e.target.src =
+                          media_type === "person"
+                            ? "https://i.imgur.com/sdkYiCr.png"
+                            : "https://i.imgur.com/XCOGZWQ.png")
+                      }
+                    />
                     <h2>{title || name}</h2>
                     <p>
                       {media_type.charAt(0).toUpperCase() + media_type.slice(1)}

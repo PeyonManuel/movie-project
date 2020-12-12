@@ -6,6 +6,7 @@
   flex-wrap: wrap;
   align-items: flex-start;
   flex-direction: row;
+  min-height: calc(100vh - 8rem);
 }
 
 .box {
@@ -20,6 +21,7 @@
   grid-template-rows: repeat(4, 1fr);
   grid-template-columns: 100%;
   grid-auto-flow: row;
+  display: none;
 }
 
 .results-selection > h2 {
@@ -52,7 +54,8 @@
 }
 
 .results-option > h4 {
-  width: 2.5rem;
+  padding: 0.1rem;
+  min-width: 2.5rem;
   height: 1.5rem;
   display: flex;
   border-radius: 2px;
@@ -70,6 +73,8 @@
   padding: 1rem;
   margin-left: 1rem;
   width: calc(80% - 4rem);
+  display: none;
+  flex-wrap: wrap;
 }
 
 .big-result {
@@ -77,11 +82,25 @@
   grid-template-columns: 15% 85%;
   padding-bottom: 1rem;
   grid-gap: 1rem;
+  width: 100%;
+}
+
+.result-img-div {
+  grid-area: 1;
+  width: 100%;
+  min-height: 12rem;
+  overflow: hidden;
+  position: relative;
+  background: transparent
+    url("https://miro.medium.com/max/1158/1*9EBHIOzhE1XfMYoKz1JcsQ.gif") center
+    no-repeat;
 }
 
 .result-img {
+  display: block;
   width: 100%;
-  grid-area: 1;
+  height: auto !important;
+  -ms-interpolation-mode: bicubic;
 }
 
 .result-title {
@@ -101,4 +120,8 @@
 .movie-tv-link {
   text-decoration: none;
   color: black;
+}
+
+.pagebtns {
+  margin: 0 auto;
 }

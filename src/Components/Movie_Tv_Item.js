@@ -11,7 +11,7 @@ const MovieTvItem = React.memo(
               src={poster}
               alt={title + " poster"}
               onError={(e) =>
-                (e.target.src = "https://i.imgur.com/CfKSsjz.png")
+                (e.target.src = "https://i.imgur.com/sdkYiCr.png")
               }
             />
           </div>
