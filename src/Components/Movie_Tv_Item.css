@@ -1,111 +1,111 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
 .movietv {
-    position: relative;
-    display: grid;
-    border-radius: 2px;
-    background-color: #256e76;
-    height: 26rem;
-    width: 15rem;
-    justify-content: center;
-    align-items: center;
-    grid-template-rows: 87% 13%;
-    grid-template-columns: 75% 25%;
-    grid-template-areas:
-        'poster poster'
-        'title rating';
-    font-family: 'Merriweather Sans', sans-serif;
-    margin-right: 1rem;
-    margin-left: 2px;
-    font-size: 14px;
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-    overflow: hidden;
+  position: relative;
+  display: grid;
+  border-radius: 2px;
+  background-color: #256e76;
+  height: 26rem;
+  width: 15rem;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: 87% 13%;
+  grid-template-columns: 75% 25%;
+  grid-template-areas:
+    'poster poster'
+    'title rating';
+  font-family: 'Merriweather Sans', sans-serif;
+  margin-right: 1rem;
+  margin-left: 2px;
+  font-size: 14px;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
 }
 
 .link > h2 {
-    font-size: 14px;
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
-    color: black;
-    word-break: break-word;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow-wrap: break-word;
-    overflow: hidden;
+  font-size: 14px;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  color: black;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  overflow: hidden;
 }
 
 .imgdiv {
-    align-self: flex-start;
-    height: 22.5rem;
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
+  align-self: flex-start;
+  height: 22.5rem;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 
 .imgdiv > img {
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    width: 100%;
-    height: auto;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  width: 100%;
+  height: auto;
 }
 
 .rating {
-    float: right;
-    width: 2.5rem;
-    height: 1.5rem;
-    display: flex;
-    border-radius: 2px;
-    align-items: center;
-    justify-content: center;
-    background-color: #1b4c52;
+  float: right;
+  width: 2.5rem;
+  height: 1.5rem;
+  display: flex;
+  border-radius: 2px;
+  align-items: center;
+  justify-content: center;
+  background-color: #1b4c52;
 }
 
 .red {
-    color: rgb(163, 0, 0);
+  color: rgb(163, 0, 0);
 }
 
 .yellow {
-    color: rgb(191, 191, 0);
+  color: rgb(191, 191, 0);
 }
 
 .green {
-    color: rgb(26, 201, 26);
+  color: rgb(26, 201, 26);
 }
 
 .white {
-    color: lightgray;
+  color: lightgray;
 }
 
 .overview {
-    position: absolute;
-    bottom: 0;
-    background-color: white;
-    padding: 0rem 1rem 1rem 1rem;
-    max-height: 100%;
-    width: calc(100% - 2rem);
-    overflow: auto;
-    transform: translateY(102%);
-    transition: transform 0.5s;
-    color: black;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  padding: 0rem 1rem 1rem 1rem;
+  max-height: 100%;
+  width: 100%;
+  overflow: auto;
+  transform: translateY(102%);
+  transition: transform 0.5s;
+  color: black;
 }
 
 .overview > h4 {
-    padding-top: 1rem;
+  padding-top: 1rem;
 }
 
 .link {
-    text-decoration: none;
-    width: 100%;
+  text-decoration: none;
+  width: 100%;
 }
 
 .img {
-    grid-area: poster;
-    align-self: flex-start;
+  grid-area: poster;
+  align-self: flex-start;
 }
 
 .title {
-    grid-area: title;
+  grid-area: title;
 }
 
 .movietv:hover .overview {
-    transform: translateY(0);
+  transform: translateY(0);
 }

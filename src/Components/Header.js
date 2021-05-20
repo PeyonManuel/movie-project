@@ -1,12 +1,12 @@
-import React from "react";
-import { useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
-import "./Header.css";
+import React from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { desktopScreenCondition } from '../Utilities/Utilities';
 
 const Header = () => {
   const [options, setOptions] = useState([]);
   const [displayOptions, setDisplayOptions] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [selectedOption, setSelectedOption] = useState(-1);
 
   const wrapperRef = useRef(null);
@@ -14,7 +14,7 @@ const Header = () => {
   const history = useHistory();
 
   const handleSearchBtnClick = () => {
-    search.length > 0 && history.push("../search?query=" + search);
+    search.length > 0 && history.push('../search?query=' + search);
   };
 
   const handleClickOutside = (event) => {
@@ -54,9 +54,9 @@ const Header = () => {
         setSelectedOption(-1);
         setDisplayOptions(false);
         const { media_type, id } = options[selectedOption];
-        history.push("/" + media_type + "/" + id);
+        history.push('/' + media_type + '/' + id);
       } else {
-        search.length > 0 && history.push("../search?query=" + search);
+        search.length > 0 && history.push('../search?query=' + search);
       }
     }
   };
@@ -67,20 +67,20 @@ const Header = () => {
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   useEffect(() => {
     if (search.length > 0) {
       fetch(
-        "https://api.themoviedb.org/3/search/multi?api_key=" +
-          "792dde4161d1a8ae31ac0fa85780d7fc" +
-          "&language=en-US&query=" +
+        'https://api.themoviedb.org/3/search/multi?api_key=' +
+          '792dde4161d1a8ae31ac0fa85780d7fc' +
+          '&language=en-US&query=' +
           search +
-          "&page=1&include_adult=false"
+          '&page=1&include_adult=false'
       )
         .then((response) => response.json())
         .then((data) => setOptions(data.results.slice(0, 10)));
@@ -92,35 +92,35 @@ const Header = () => {
   }, [options]);
 
   return (
-    <div className="headerdiv">
-      <div className="header">
-        <Link to="/" className="logo">
+    <div className='headerdiv'>
+      <div className='header'>
+        <Link to='/' className='logo'>
           <img
-            src="https://cdn4.iconfinder.com/data/icons/planner-color/64/popcorn-movie-time-512.png"
-            alt="popcorn"
+            src='https://cdn4.iconfinder.com/data/icons/planner-color/64/popcorn-movie-time-512.png'
+            alt='popcorn'
           />
-          <h1>Moviezz</h1>
+          {desktopScreenCondition && <h1>Moviezz</h1>}
         </Link>
-        <div className="searchdiv" ref={wrapperRef}>
-          <div className="searchbar">
+        <div className='searchdiv' ref={wrapperRef}>
+          <div className='searchbar'>
             <input
-              className="search"
-              type="text"
-              placeholder="Search..."
+              className='search'
+              type='text'
+              placeholder='Search...'
               value={search}
               onChange={(e) => handleSearchChange(e)}
               onClick={() => handleSearchBarClick()}
               onKeyDown={(e) => handleSearchonKeyDown(e)}
             />
             <button
-              className="searchbtn"
+              className='searchbtn'
               onClick={() => handleSearchBtnClick()}
             >
-              <i className="icon fas fa-search fa-lg"></i>
+              <i className='icon fas fa-search fa-lg'></i>
             </button>
           </div>
           {displayOptions > 0 && (
-            <div className="autocontainer">
+            <div className='autocontainer'>
               {options.map((result, i) => {
                 const {
                   id,
@@ -132,34 +132,37 @@ const Header = () => {
                 } = result;
 
                 let image =
-                  media_type === "person"
-                    ? "https://image.tmdb.org/t/p/w500/" + profile_path
-                    : "https://image.tmdb.org/t/p/w500/" + poster_path;
+                  media_type === 'person'
+                    ? 'https://image.tmdb.org/t/p/w500/' + profile_path
+                    : 'https://image.tmdb.org/t/p/w500/' + poster_path;
                 return (
                   <Link
-                    to={"/" + media_type + "/" + id}
+                    to={'/' + media_type + '/' + id}
                     className={
-                      selectedOption === i ? "result selected" : "result"
+                      selectedOption === i ? 'result selected' : 'result'
                     }
                     onMouseOver={() => handleResultOnMouseOver(i)}
                     key={i}
                     onClick={() => handleLinkClick()}
                   >
                     <img
-                      id="img"
+                      id='img'
                       src={image}
-                      alt=""
+                      alt=''
                       onError={(e) =>
                         (e.target.src =
-                          media_type === "person"
-                            ? "https://i.imgur.com/sdkYiCr.png"
-                            : "https://i.imgur.com/XCOGZWQ.png")
+                          media_type === 'person'
+                            ? 'https://i.imgur.com/sdkYiCr.png'
+                            : 'https://i.imgur.com/XCOGZWQ.png')
                       }
                     />
-                    <h2>{title || name}</h2>
-                    <p>
-                      {media_type.charAt(0).toUpperCase() + media_type.slice(1)}
-                    </p>
+                    <div className='column'>
+                      <h2>{title || name}</h2>
+                      <p>
+                        {media_type.charAt(0).toUpperCase() +
+                          media_type.slice(1)}
+                      </p>
+                    </div>
                   </Link>
                 );
               })}

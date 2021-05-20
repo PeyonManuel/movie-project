@@ -1,12 +1,11 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import MovieTvItem from "./Movie_Tv_Item";
-import Loading from "./Loading";
-import "./Person.css";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import MovieTvItem from './Movie_Tv_Item';
+import Loading from './Loading';
 
 const Person = () => {
-  const [person, setPerson] = useState("");
+  const [person, setPerson] = useState('');
   const [personCredits, setPersonCredits] = useState([]);
   const [showAllFilmography, setShowAllFilmography] = useState(false);
   const { id } = useParams();
@@ -33,7 +32,7 @@ const Person = () => {
         overview,
         media_type,
       } = result;
-      const poster = "https://image.tmdb.org/t/p/w500/" + poster_path;
+      const poster = 'https://image.tmdb.org/t/p/w500/' + poster_path;
       return (
         <MovieTvItem
           key={id}
@@ -49,34 +48,34 @@ const Person = () => {
   };
 
   useEffect(() => {
-    document.title = person.name ? person.name + " - Moviezz" : "Moviezz";
+    document.title = person.name ? person.name + ' - Moviezz' : 'Moviezz';
   }, [person]);
 
   useEffect(() => {
     setShowAllFilmography(false);
 
     let promise1 = fetch(
-      "https://api.themoviedb.org/3/person/" +
+      'https://api.themoviedb.org/3/person/' +
         id +
-        "?api_key=" +
-        "792dde4161d1a8ae31ac0fa85780d7fc" +
-        "&language=en-US"
+        '?api_key=' +
+        '792dde4161d1a8ae31ac0fa85780d7fc' +
+        '&language=en-US'
     );
 
     let promise2 = fetch(
-      "https://api.themoviedb.org/3/person/" +
+      'https://api.themoviedb.org/3/person/' +
         id +
-        "/combined_credits" +
-        "?api_key=" +
-        "792dde4161d1a8ae31ac0fa85780d7fc" +
-        "&language=en-US"
+        '/combined_credits' +
+        '?api_key=' +
+        '792dde4161d1a8ae31ac0fa85780d7fc' +
+        '&language=en-US'
     );
 
     Promise.all([promise1, promise2]).then((files) => {
       files[0].json().then((data) => {
         data.status_code !== 34
           ? setPerson(data)
-          : window.location.replace("../error");
+          : window.location.replace('../error');
       });
       files[1].json().then((data) => setPersonCredits(data));
     });
@@ -133,7 +132,7 @@ const Person = () => {
       !filmographyNoDups.find(
         (filmographyItem) => film.id === filmographyItem.id
       ) && filmographyNoDups.push(film);
-      return "";
+      return '';
     });
   filmographyNoDups &&
     filmographyNoDups.sort((a, b) => b.popularity - a.popularity);
@@ -141,7 +140,7 @@ const Person = () => {
   let filmography = cast && crew && [...cast, ...crew];
 
   let filmographyDepartmentsArray =
-    filmography && filmography.map((item) => item.department || "Acting");
+    filmography && filmography.map((item) => item.department || 'Acting');
 
   filmographyDepartmentsArray = filmographyDepartmentsArray && [
     ...new Set(filmographyDepartmentsArray),
@@ -154,7 +153,7 @@ const Person = () => {
 
   filmography &&
     filmography.map((item) => {
-      const department = item.department || "Acting";
+      const department = item.department || 'Acting';
       const findingDepartment = filmographyDepartmentsObject[department].find(
         (department) =>
           department.id === item.id && department.mediaType === item.media_type
@@ -162,16 +161,16 @@ const Person = () => {
       return findingDepartment
         ? (filmographyDepartmentsObject[department][
             filmographyDepartmentsObject[department].indexOf(findingDepartment)
-          ].job.push(item.job || item.character || "Unknown"),
+          ].job.push(item.job || item.character || 'Unknown'),
           filmographyDepartmentsObject[department][
             filmographyDepartmentsObject[department].indexOf(findingDepartment)
           ].episodeCount.push(item.episode_count))
         : filmographyDepartmentsObject[department].push({
             id: item.id,
             mediaType: item.media_type,
-            title: item.title || item.name || "-",
+            title: item.title || item.name || '-',
             release: item.release_date || item.first_air_date,
-            job: [item.job || item.character || "Unknown"],
+            job: [item.job || item.character || 'Unknown'],
             episodeCount: [item.episode_count],
           });
     });
@@ -179,75 +178,75 @@ const Person = () => {
     <>
       {person ? (
         <>
-          <div className="personcard">
-            <div className="imginfo">
-              <div className="infodiv">
-                <div className="person-img-div">
+          <div className='personcard'>
+            <div className='imginfo'>
+              <div className='infodiv'>
+                <div className='person-img-div'>
                   <img
                     src={
-                      "https://image.tmdb.org/t/p/w500/" + person.profile_path
+                      'https://image.tmdb.org/t/p/w500/' + person.profile_path
                     }
-                    alt={person.title + " poster"}
+                    alt={person.title + ' poster'}
                     onError={(e) =>
-                      (e.target.src = "https://i.imgur.com/sdkYiCr.png")
+                      (e.target.src = 'https://i.imgur.com/sdkYiCr.png')
                     }
                   />
                 </div>
-                <h3 key="h3header">Personal Info</h3>
-                <h4 key="h4birth">{"Birth date "}</h4>
-                <h5 key="h5birth">
+                <h3 key='h3header'>Personal Info</h3>
+                <h4 key='h4birth'>{'Birth date '}</h4>
+                <h5 key='h5birth'>
                   {birthday
-                    ? birthday + " (" + getAge(birthday) + " Years)"
-                    : "-"}
+                    ? birthday + ' (' + getAge(birthday) + ' Years)'
+                    : '-'}
                 </h5>
                 {deathday && (
                   <>
-                    <h4 key="h4death">Day of death</h4>
-                    <h5 key="h5death">{deathday}</h5>
+                    <h4 key='h4death'>Day of death</h4>
+                    <h5 key='h5death'>{deathday}</h5>
                   </>
                 )}
 
-                <h4 key="h4gender">{"Gender "}</h4>
-                <h5 key="h5gender">
-                  {gender ? (gender === 1 ? "Female" : "Male") : "-"}
+                <h4 key='h4gender'>{'Gender '}</h4>
+                <h5 key='h5gender'>
+                  {gender ? (gender === 1 ? 'Female' : 'Male') : '-'}
                 </h5>
-                <h4 key="h4known">{"Known for "}</h4>
-                <h5 key="h5known">
-                  {known_for_department ? known_for_department : "-"}
+                <h4 key='h4known'>{'Known for '}</h4>
+                <h5 key='h5known'>
+                  {known_for_department ? known_for_department : '-'}
                 </h5>
-                <h4 key="h4place">Place of birth</h4>
-                <h5>{place_of_birth ? place_of_birth : "-"}</h5>
-                <h4 key="h4also">{"Also known as "}</h4>
+                <h4 key='h4place'>Place of birth</h4>
+                <h5>{place_of_birth ? place_of_birth : '-'}</h5>
+                <h4 key='h4also'>{'Also known as '}</h4>
                 {also_known_as &&
                   (also_known_as.length > 0
                     ? also_known_as.map((known) => <h5 key={known}>{known}</h5>)
-                    : "-")}
+                    : '-')}
               </div>
             </div>
-            <div className="career">
-              <h1 className="name">{name}</h1>
-              <div className="biography">
+            <div className='career'>
+              <h1 className='name'>{name}</h1>
+              <div className='biography'>
                 <h3>Biography </h3>
                 {biography ? (
                   <pre>{biography}</pre>
                 ) : (
                   <>
                     <br />
-                    <pre>{"We dont have a biography for " + name}</pre>
+                    <pre>{'We dont have a biography for ' + name}</pre>
                   </>
                 )}
               </div>
-              <div className="filmography">
+              <div className='filmography'>
                 <h3>Filmography</h3>
-                <div className="lists">
+                <div className='lists'>
                   {filmographyNoDups && filmographyNoDups.length > 30 ? (
                     <>
-                      {renderFilmography(filmographyNoDups.slice(0, 30))}{" "}
+                      {renderFilmography(filmographyNoDups.slice(0, 30))}{' '}
                       {!showAllFilmography ? (
                         <button
-                          className="person-load-allbtn"
+                          className='person-load-allbtn'
                           onClick={(e) => {
-                            e.target.innerText = "Loading...";
+                            e.target.innerText = 'Loading...';
                             setShowAllFilmography(true);
                           }}
                         >
@@ -263,11 +262,11 @@ const Person = () => {
                 </div>
               </div>
             </div>
-            <div className="filmography-details">
+            <div className='filmography-details'>
               {filmographyDepartmentsArray &&
                 filmographyDepartmentsArray.map((department) => (
-                  <div className="department">
-                    <h3>{department}</h3>{" "}
+                  <div className='department'>
+                    <h3>{department}</h3>{' '}
                     {filmographyDepartmentsObject[department].map(
                       (departmentItem) => {
                         const {
@@ -279,32 +278,32 @@ const Person = () => {
                           id,
                         } = departmentItem;
                         return (
-                          <p key={(mediaType, id)} className="credit">
-                            <span className="year">
-                              {release ? release.split("-")[0] : "TBA"}
+                          <p key={(mediaType, id)} className='credit'>
+                            <span className='year'>
+                              {release ? release.split('-')[0] : 'TBA'}
                             </span>
-                            <i className="fas fa-dot-circle"></i>
+                            <i className='fas fa-dot-circle'></i>
                             <span>
                               <Link
-                                to={"/" + mediaType + "/" + id}
-                                className="credit-title"
+                                to={'/' + mediaType + '/' + id}
+                                className='credit-title'
                               >
                                 <b>{title}</b>
                               </Link>
-                              <span className="episode-count">
+                              <span className='episode-count'>
                                 {episodeCount.filter(
                                   (count) => count && episodeCount
                                 ).length > 0 &&
-                                  " (" +
-                                    episodeCount.join(", ") +
+                                  ' (' +
+                                    episodeCount.join(', ') +
                                     (episodeCount > 1
-                                      ? " Episodes)"
-                                      : " Episode)")}
+                                      ? ' Episodes)'
+                                      : ' Episode)')}
                               </span>
-                              <span className="middle">
-                                {department !== "Acting" ? " ... " : " as "}
+                              <span className='middle'>
+                                {department !== 'Acting' ? ' ... ' : ' as '}
                               </span>
-                              <span className="job">{job.join(", ")}</span>
+                              <span className='job'>{job.join(', ')}</span>
                             </span>
                           </p>
                         );

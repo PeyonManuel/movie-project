@@ -2,103 +2,107 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap');
 
 * {
-    font-family: 'Merriweather Sans', sans-serif;
+  font-family: 'Merriweather Sans', sans-serif;
 }
 
 .moviecard {
-    background-color: rgba(255, 255, 255, 0.768);
-    border-radius: 4px;
-    padding: 2rem;
-    display: grid;
-    grid-gap: 1rem;
-    width: 100vw;
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+  background-color: rgba(255, 255, 255, 0.768);
+  border-radius: 4px;
+  padding: 2rem;
+  display: grid;
+  grid-gap: 1rem;
+  width: 100vw;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
 }
-
-.cast-div {
-    background-color: white;
-    border: 1px solid lightgray;
+@media (max-width: 1280px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 150dpi) {
+  .moviecard {
     padding: 0.5rem;
-    border-radius: 4px;
+  }
+}
+.cast-div {
+  background-color: white;
+  border: 1px solid lightgray;
+  padding: 0.5rem;
+  border-radius: 4px;
 }
 
 .cast-header {
-    width: 100%;
-    padding: 0 0 0 1rem;
-    margin: 0;
-    margin-top: 0.5rem;
-    margin-bottom: -0.5rem;
+  width: 100%;
+  padding: 0 0 0 1rem;
+  margin: 0;
+  margin-top: 0.5rem;
+  margin-bottom: -0.5rem;
 }
 
 .cast {
-    margin-top: 0;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    align-content: flex-start;
-    overflow: auto;
-    height: 30rem;
-    position: relative;
+  margin-top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  overflow: auto;
+  height: 30rem;
+  position: relative;
 }
 
 .load-all-castbtn {
-    height: 100%;
-    background: white;
-    border: none;
-    outline: none;
-    color: blue;
+  height: 100%;
+  background: white;
+  border: none;
+  outline: none;
+  color: blue;
 }
 
 .reviews {
-    position: relative;
-    background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 4px;
-    overflow: hidden;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    display: grid;
-    grid-template-columns: 90% repeat(2, 5%);
-    grid-template-areas:
-        'header . .'
-        'reviews reviews reviews';
+  position: relative;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  overflow: hidden;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  display: grid;
+  grid-template-columns: 90% repeat(2, 5%);
+  grid-template-areas:
+    'header . .'
+    'reviews reviews reviews';
 }
 
 .reviews-div {
-    grid-area: reviews;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    align-content: flex-start;
-    height: 0;
-    overflow: hidden;
-    transition: 0.5s;
+  grid-area: reviews;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  height: 0;
+  overflow: hidden;
+  transition: 0.5s;
 }
 
 .reviews-header {
-    grid-area: header;
-    width: 100%;
-    padding: 0 0 0 1rem;
+  grid-area: header;
+  width: 100%;
+  padding: 0 0 0 1rem;
 }
 
 .more-reviewsbtn-down {
-    position: absolute;
-    right: 0;
+  position: absolute;
+  right: 0;
 }
 
 .more-reviewsbtn-up {
-    position: absolute;
-    right: 2rem;
+  position: absolute;
+  right: 2rem;
 }
 
 .reviewsbtn {
-    height: 1.5rem;
-    border: none;
-    outline: none;
-    background-color: white;
-    bottom: 0;
+  height: 1.5rem;
+  border: none;
+  outline: none;
+  background-color: white;
+  bottom: 0;
 }

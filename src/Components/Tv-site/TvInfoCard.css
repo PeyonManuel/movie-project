@@ -1,166 +1,166 @@
 .img-info {
-    background-color: white;
-    border: 1px solid lightgray;
-    padding: 0.5rem;
-    border-radius: 4px;
-    display: grid;
-    grid-gap: 1rem;
-    grid-template-areas: 'img info';
-    height: 25.5rem;
-    overflow: hidden;
+  background-color: white;
+  border: 1px solid lightgray;
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-areas: 'img info';
+  height: 25.5rem;
+  overflow: hidden;
 }
 
 .posterdiv {
-    width: 17rem;
-    overflow: hidden;
+  width: 17rem;
+  overflow: hidden;
 }
 
 .posterdiv > img {
-    align-self: flex-start;
-    width: 100%;
-    border-radius: 4px;
-    grid-area: img;
+  align-self: flex-start;
+  width: 100%;
+  border-radius: 4px;
+  grid-area: img;
 }
 
 .infocard {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-content: flex-start;
-    overflow: scroll;
-    margin-bottom: -1rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: flex-start;
+  overflow: scroll;
+  margin-bottom: -1rem;
 }
 
 .title {
-    width: 100%;
-    grid-area: title;
-    margin: 0.5rem 0 0.2rem 0;
+  width: 100%;
+  grid-area: title;
+  margin: 0.5rem 0 0.2rem 0;
 }
 
 .tec-info {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .tec-info > h5 {
-    margin: 0 0.5rem 0.5rem 0;
+  margin: 0 0.5rem 0.5rem 0;
 }
 
 .vote-trailer {
-    margin-top: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
 }
 
 .vote {
-    grid-area: vote;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    min-width: 4.5rem;
-    justify-content: space-around;
+  grid-area: vote;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  min-width: 4.5rem;
+  justify-content: space-around;
 }
 
 .vote-numbers > * {
-    margin: 1px;
+  margin: 1px;
 }
 
 .vote-numbers > p {
-    color: rgb(75, 75, 75);
-    font-size: 12px;
+  color: rgb(75, 75, 75);
+  font-size: 12px;
 }
 
 .fa-star {
-    color: gold;
+  color: gold;
 }
 
 .average {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
 }
 
 .average > p {
-    color: rgb(75, 75, 75);
-    font-size: 12px;
+  color: rgb(75, 75, 75);
+  font-size: 12px;
 }
 .average * {
-    margin: 0;
+  margin: 0;
 }
 
 .watch-trailer {
-    cursor: pointer;
-    grid-area: trailer;
-    margin: 0.5rem;
+  cursor: pointer;
+  grid-area: trailer;
+  margin: 0.5rem;
 }
 
 .tagline {
-    color: rgb(75, 75, 75);
-    font-style: italic;
-    font-size: 18px;
-    margin-bottom: 0;
-    width: 100%;
+  color: rgb(75, 75, 75);
+  font-style: italic;
+  font-size: 18px;
+  margin-bottom: 0;
+  width: 100%;
 }
 
 .description {
-    display: block;
-    white-space: pre-wrap;
-    margin: 1rem 0 0.5rem 0;
-    font-family: 'Lato', sans-serif;
-    font-size: 18px;
+  display: block;
+  white-space: pre-wrap;
+  margin: 1rem 0 0.5rem 0;
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
 }
 
 .description > h4 {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .director-writer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 1fr);
-    grid-template-rows: repeat(auto-fill, 1fr);
-    grid-auto-flow: column;
-    grid-gap: 1rem;
-    margin-top: 1rem;
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
+  grid-auto-flow: column;
+  grid-gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
 }
 
 .director-writer > * {
-    margin: 0;
-    display: block;
-    white-space: pre-wrap;
+  margin: 0;
+  display: block;
+  white-space: pre-wrap;
 }
 .trailer::after {
-    background-color: black;
-    height: 100vh;
-    width: 100vw;
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
 }
 .trailer-div {
-    margin-left: -2rem;
-    align-self: center;
-    position: fixed;
-    text-align: center;
-    width: 100%;
-    height: 100vh;
-    vertical-align: middle;
-    display: table-cell;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.926);
-    z-index: 100;
-    top: 0;
+  margin-left: -2rem;
+  align-self: center;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  height: 100vh;
+  vertical-align: middle;
+  display: table-cell;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.926);
+  z-index: 100;
+  top: 0;
 }
 .trailer {
-    width: 90vw;
-    height: calc(90vw / 1.77777777778);
-    background-color: black;
-    border: none;
+  width: 90vw;
+  height: calc(90vw / 1.77777777778);
+  background-color: black;
+  border: none;
 }
 
 .gray {
-    color: rgb(109, 109, 109);
+  color: rgb(109, 109, 109);
 }
