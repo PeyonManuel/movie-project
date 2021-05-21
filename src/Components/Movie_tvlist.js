@@ -27,10 +27,14 @@ const MovieTvList = () => {
 
   useEffect(() => {
     let promise1 = fetch(
-      'https://api.themoviedb.org/3/movie/popular?api_key=792dde4161d1a8ae31ac0fa85780d7fc&language=en-US&page=1'
+      'https://api.themoviedb.org/3/movie/popular?api_key=' +
+        process.env.REACT_APP_MOVIEDB_KEY +
+        '&language=en-US&page=1'
     );
     let promise2 = fetch(
-      'https://api.themoviedb.org/3/tv/popular?api_key=792dde4161d1a8ae31ac0fa85780d7fc&language=en-US&page=1'
+      'https://api.themoviedb.org/3/tv/popular?api_key=' +
+        process.env.REACT_APP_MOVIEDB_KEY +
+        '&language=en-US&page=1'
     );
 
     Promise.all([promise1, promise2]).then((files) => {

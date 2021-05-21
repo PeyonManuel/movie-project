@@ -58,7 +58,7 @@ const Person = () => {
       'https://api.themoviedb.org/3/person/' +
         id +
         '?api_key=' +
-        '792dde4161d1a8ae31ac0fa85780d7fc' +
+        process.env.REACT_APP_MOVIEDB_KEY +
         '&language=en-US'
     );
 
@@ -67,7 +67,7 @@ const Person = () => {
         id +
         '/combined_credits' +
         '?api_key=' +
-        '792dde4161d1a8ae31ac0fa85780d7fc' +
+        process.env.REACT_APP_MOVIEDB_KEY +
         '&language=en-US'
     );
 

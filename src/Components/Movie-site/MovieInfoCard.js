@@ -38,7 +38,7 @@ const MovieInfoCard = React.memo(({ id }) => {
         id +
         '/videos' +
         '?api_key=' +
-        '792dde4161d1a8ae31ac0fa85780d7fc' +
+        process.env.REACT_APP_MOVIEDB_KEY +
         '&language=en-US'
     )
       .then((response) => response.json())
@@ -49,7 +49,7 @@ const MovieInfoCard = React.memo(({ id }) => {
         id +
         '/release_dates' +
         '?api_key=' +
-        '792dde4161d1a8ae31ac0fa85780d7fc' +
+        process.env.REACT_APP_MOVIEDB_KEY +
         '&language=en-US'
     )
       .then((response) => response.json())

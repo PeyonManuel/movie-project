@@ -77,7 +77,7 @@ const Header = () => {
     if (search.length > 0) {
       fetch(
         'https://api.themoviedb.org/3/search/multi?api_key=' +
-          '792dde4161d1a8ae31ac0fa85780d7fc' +
+          process.env.REACT_APP_MOVIEDB_KEY +
           '&language=en-US&query=' +
           search +
           '&page=1&include_adult=false'

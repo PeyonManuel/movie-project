@@ -9,7 +9,9 @@ const MovieTvList = () => {
 
   useEffect(() => {
     fetch(
-      'https://api.themoviedb.org/3/person/popular?api_key=792dde4161d1a8ae31ac0fa85780d7fc&language=en-US&page=1'
+      'https://api.themoviedb.org/3/person/popular?api_key=' +
+        process.env.REACT_APP_MOVIEDB_KEY +
+        '&language=en-US&page=1'
     )
       .then((response) => response.json())
       .then((data) => dispatch({ type: 'SET_PEOPLE', payload: data.results }));

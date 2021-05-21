@@ -77,7 +77,7 @@ const SearchSite = () => {
     }
     fetch(
       'https://api.themoviedb.org/3/search/person?api_key=' +
-        '792dde4161d1a8ae31ac0fa85780d7fc' +
+        process.env.REACT_APP_MOVIEDB_KEY +
         '&language=en-US&query=' +
         search +
         '&page=' +
@@ -89,7 +89,7 @@ const SearchSite = () => {
 
     fetch(
       'https://api.themoviedb.org/3/search/movie?api_key=' +
-        '792dde4161d1a8ae31ac0fa85780d7fc' +
+        process.env.REACT_APP_MOVIEDB_KEY +
         '&language=en-US&query=' +
         search +
         '&page=' +
@@ -101,7 +101,7 @@ const SearchSite = () => {
 
     fetch(
       'https://api.themoviedb.org/3/search/tv?api_key=' +
-        '792dde4161d1a8ae31ac0fa85780d7fc' +
+        process.env.REACT_APP_MOVIEDB_KEY +
         '&language=en-US&query=' +
         search +
         '&page=' +
@@ -161,7 +161,9 @@ const SearchSite = () => {
         <h2>Search results</h2>
         <div
           id='o1'
-          className={'results-option' + (selectedResults === 'Movies' ? ' selected' : '')}
+          className={
+            'results-option' + (selectedResults === 'Movies' ? ' selected' : '')
+          }
           onClick={(e) => {
             setSelectedResults(
               document.querySelector('#o1').children[0].dataset.option
@@ -171,7 +173,9 @@ const SearchSite = () => {
         ></div>
         <div
           id='o2'
-          className={'results-option' + (selectedResults === 'Tv' ? ' selected' : '')}
+          className={
+            'results-option' + (selectedResults === 'Tv' ? ' selected' : '')
+          }
           onClick={(e) => {
             setSelectedResults(
               document.querySelector('#o2').children[0].dataset.option
@@ -181,7 +185,9 @@ const SearchSite = () => {
         ></div>
         <div
           id='o3'
-          className={'results-option' + (selectedResults === 'People' ? ' selected' : '')}
+          className={
+            'results-option' + (selectedResults === 'People' ? ' selected' : '')
+          }
           onClick={(e) => {
             setSelectedResults(
               document.querySelector('#o3').children[0].dataset.option
