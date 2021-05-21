@@ -98,7 +98,6 @@ const SearchSite = () => {
     )
       .then((response) => response.json())
       .then((data) => setMovieResults(data));
-
     fetch(
       'https://api.themoviedb.org/3/search/tv?api_key=' +
         process.env.REACT_APP_MOVIEDB_KEY +
